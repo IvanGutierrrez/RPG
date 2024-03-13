@@ -43,22 +43,21 @@ public class GestionInicioSesion {
             if (archivos != null){ //si existen archivos en la carpeta
                 p = p.deserializar();
             }//Si esta vacia la carpeta no deserializamos y dejamos la partida a null
-            System.out.println("Introduzca su Nick");
-            String nick = this.leerString();
-            if (this.coincide(nick)){
+            System.out.println("Introduzca contraseña especial");
+            String passEspecial = this.leerString();
+            if (this.coincide(passEspecial)){
                 Operador op1 = new Operador();
                 op1.preguntarDetallesOperador();
-                if (op1.getContraseña() != null){
+                if (op1.getPass() != null){
                     p.setUsuarioActivo(op1);
                     ok = true;
                 }
             } else{//falta comprobar si el nick no esta ya en algun jugador
                 Jugador j1 = new Jugador();
-                j1.setNick(nick);
                 j1.preguntarDetallesJugador(p);
-                if (j1.getContraseña() != null) {
+                if (j1.getPass() != null) {
                     p.setUsuarioActivo(j1);
-                    p.getMapJugadores().put(nick, j1);
+                    p.getMapJugadores().put(j1.getNick(), j1);
                     ok = true;
                 }
             }

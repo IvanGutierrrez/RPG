@@ -7,8 +7,6 @@ import java.util.*;
  */
 public class Jugador extends Usuario implements Serializable {
 
-    private String Nick;
-
     private String NRegistro;
 
     private Personaje PersonajeActivo;
@@ -24,14 +22,6 @@ public class Jugador extends Usuario implements Serializable {
     private Combate[] HistorialCombates;
 
     private String ultimaDerrota;
-
-    public String getNick() {
-        return Nick;
-    }
-
-    public void setNick(String nick) {
-        Nick = nick;
-    }
 
     public String getNRegistro() {
         return NRegistro;
@@ -123,16 +113,16 @@ public class Jugador extends Usuario implements Serializable {
             System.out.println("Introduzca nombre");
             String nombre = this.leerString();
             this.setNombre(nombre);
-            String contraseña;
+            String pass;
             do {
-                System.out.println("Introduzca contraseña");
-                contraseña = this.leerString();
-            } while (contraseña.length()>12 || contraseña.length()<8);
-            this.setContraseña(contraseña);
+                System.out.println("Introduzca pass");
+                pass = this.leerString();
+            } while (pass.length()>12 || pass.length()<8);
+            this.setPass(pass);
             System.out.println("Introduzca 1 si esta de acuerdo con los datos introducidos");
             System.out.println("Nick: " + this.getNick());
             System.out.println("Nombre: " + this.getNombre());
-            System.out.println("Contraseña: " + this.getContraseña());
+            System.out.println("Contraseña: " + this.getPass());
             ok = this.leerString().equals("1");
             num++;
         }
@@ -146,7 +136,7 @@ public class Jugador extends Usuario implements Serializable {
             this.setUltimaDerrota(null);
             this.setRegistrosCombates((null));
         } else{
-            this.setContraseña(null);
+            this.setPass(null);
         }
     }
 

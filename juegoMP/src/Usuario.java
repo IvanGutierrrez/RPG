@@ -1,15 +1,24 @@
 
 import java.io.Serializable;
-import java.util.*;
 
 /**
  * 
  */
 public abstract class Usuario implements Serializable {
 
+    private String Nick;
     protected String Nombre;
 
-    protected String Contraseña;
+    protected String pass;
+
+    public String getNick() {
+        return Nick;
+    }
+
+    public void setNick(String nick) {
+        Nick = nick;
+    }
+
 
     public String getNombre() {
         return Nombre;
@@ -19,12 +28,12 @@ public abstract class Usuario implements Serializable {
         Nombre = nombre;
     }
 
-    public String getContraseña() {
-        return Contraseña;
+    public String getPass() {
+        return pass;
     }
 
-    public void setContraseña(String contraseña) {
-        Contraseña = contraseña;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public abstract void Menu(Partida p);
