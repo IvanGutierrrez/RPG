@@ -10,7 +10,7 @@ public class Operador extends Usuario implements Serializable {
     public void preguntarDetallesOperador() {
         boolean ok = false;
         int num = 0;
-        while (!ok || num>2){
+        while (!ok || num<2){
             System.out.println("Introduzca nombre");
             String nombre = this.leerString();
             this.setNombre(nombre);
