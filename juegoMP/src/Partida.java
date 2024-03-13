@@ -53,6 +53,19 @@ public class Partida implements Serializable {
         }
         return ok;
     }
+
+    public boolean nickUnico(String s){
+        Map<String,Jugador> mapa = this.getMapJugadores();
+        boolean ok = true;
+        for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
+            String clave = entry.getKey();
+            Jugador j = entry.getValue();
+            if (j.getNick().equals(s)){
+                ok = false;
+            }
+        }
+        return ok;
+    }
     public Partida(){
 
     }

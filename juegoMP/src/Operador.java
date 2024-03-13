@@ -14,6 +14,9 @@ public class Operador extends Usuario implements Serializable {
             System.out.println("Introduzca nombre");
             String nombre = this.leerString();
             this.setNombre(nombre);
+            System.out.println("Introduzca nick");
+            String nick = this.leerString();
+            this.setNick(nick);
             String pass;
             do {
                 System.out.println("Introduzca pass");

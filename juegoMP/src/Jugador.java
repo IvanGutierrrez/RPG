@@ -109,10 +109,18 @@ public class Jugador extends Usuario implements Serializable {
     public void preguntarDetallesJugador(Partida p) {
         boolean ok = false;
         int num = 0;
-        while (!ok || num>2){
+        while (!ok || num<2){
             System.out.println("Introduzca nombre");
             String nombre = this.leerString();
             this.setNombre(nombre);
+            String nick = null;
+            do{
+                if (nick != null){
+                    System.out.println("Ese nick ya esta cogido");
+                }
+                System.out.println("Introduzca nick");
+                nick = this.leerString();
+            } while(p.nickUnico(nick));
             String pass;
             do {
                 System.out.println("Introduzca pass");
