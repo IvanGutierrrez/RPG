@@ -7,23 +7,64 @@ import java.util.*;
  */
 public class Partida implements Serializable {
 
-    public transient Usuario UsuarioActivo;
-    private Map<String,Usuario> MapJugadores;
+    private transient Usuario UsuarioActivo;
+    private Map<String,Jugador> MapJugadores;
     private Combate ListaDesafiosSinValidar;
+
+    public Usuario getUsuarioActivo() {
+        return UsuarioActivo;
+    }
+
+    public Map<String, Jugador> getMapJugadores() {
+        return MapJugadores;
+    }
+
+    public void setMapJugadores(Map<String, Jugador> mapJugadores) {
+        MapJugadores = mapJugadores;
+    }
+
+    public Combate getListaDesafiosSinValidar() {
+        return ListaDesafiosSinValidar;
+    }
+
+    public void setListaDesafiosSinValidar(Combate listaDesafiosSinValidar) {
+        ListaDesafiosSinValidar = listaDesafiosSinValidar;
+    }
+
+    public Personaje[] getListaPersonajes() {
+        return ListaPersonajes;
+    }
+
+    public void setListaPersonajes(Personaje[] listaPersonajes) {
+        ListaPersonajes = listaPersonajes;
+    }
+
     private Personaje[] ListaPersonajes;
 
+    public boolean noExiste(String s){
+        Map<String,Jugador> mapa = this.getMapJugadores();
+        boolean ok = true;
+        for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
+            String clave = entry.getKey();
+            Jugador j = entry.getValue();
+            if (j.getNRegistro().equals(s)){
+                ok = false;
+            }
+        }
+        return ok;
+    }
     public Partida(){
 
     }
 
-    private void Serializar(Partida p) {
+    private void serializar(Partida p) {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public Partida Deserializar() {
+    public Partida deserializar() {
         // TODO implement here
         return null;
     }
