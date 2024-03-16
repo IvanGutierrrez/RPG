@@ -25,19 +25,6 @@ public class GestionInicioSesion {
         }
     }
 
-    private boolean partidaExits(){
-        // Crear un objeto File con la ruta de la carpeta
-        File directorio = new File("datos/partida");
-        if (directorio.exists() && directorio.isDirectory()) {//si la carpeta existe
-            // Obtener la lista de archivos en el directorio
-            File[] archivos = directorio.listFiles();
-            if (archivos != null){ //si existen archivos en la carpeta
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void inicioSesion() throws IOException {
         if (this.partidaExits()){
             Partida p = new Partida();
@@ -75,7 +62,7 @@ public class GestionInicioSesion {
         }
     }
 
-    public void registrarse() {
+    public void registrarse() throws IOException {
         boolean ok = false;
         Partida p = new Partida();
         if (this.partidaExits()){ //si existen archivos en la carpeta
@@ -84,10 +71,12 @@ public class GestionInicioSesion {
         System.out.println("Introduzca contraseña especial");
         String passEspecial = this.leerString();
         if (this.coincide(passEspecial)){
+            System.out.println("o");
             Operador op1 = new Operador();
             op1.preguntarDetallesOperador();
             if (op1.getPass() != null){
                 p.setUsuarioActivo(op1);
+                this.añadirOperador(op1);
                 ok = true;
             }
         } else{
@@ -104,58 +93,69 @@ public class GestionInicioSesion {
         }
     }
 
-    private String coincidePass(String nick, String pass) throws IOException {
-        Reader in = new FileReader("datos/operadores");
-        BufferedReader buf = new BufferedReader(in);
-        String linea = buf.readLine();//lees la primera linea
-        String[] result = linea.split(",");
-        while ((linea = buf.readLine()) != null) {
-            result = linea.split(",");
-            if (result[1] == nick && result[2] == pass){
-                return result[0];
-            }
-        }
-        return null;
-    }
-
-    private boolean existeOperador(String nick) throws IOException {
-        Reader in = new FileReader("datos/operadores");
-        BufferedReader buf = new BufferedReader(in);
-        String linea = buf.readLine();//lees la primera linea
-        String[] result = linea.split(",");
-        while ((linea = buf.readLine()) != null) {
-            result = linea.split(",");
-            if (result[1] == nick){
+    private boolean partidaExits(){
+        // Crear un objeto File con la ruta de la carpeta
+        File directorio = new File("Trabajo-MP/src/datos/partida");
+        if (directorio.exists() && directorio.isDirectory()) {//si la carpeta existe
+            // Obtener la lista de archivos en el directorio
+            File[] archivos = directorio.listFiles();
+            if (archivos != null){ //si existen archivos en la carpeta
                 return true;
             }
         }
         return false;
     }
 
-    private boolean coincide(String nike){
-        // Crear un objeto File con la ruta de la carpeta
-        File directorio = new File("datos/operadores");
-        if (directorio.exists() && directorio.isDirectory()) {
-            // Obtener el primer archivo del directorio
-            // Obtener la lista de archivos en el directorio
-            File[] archivos = directorio.listFiles();
+    private void añadirOperador(Operador op) throws IOException {
+        File file = new File("Trabajo-MP/datos/operadores/operador");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file, true)); // true para permitir la escritura al final del archivo
+        writer.write(op.getNombre() + "," + op.getNick() + "," + op.getPass()); // Escribir el nuevo operador al final del archivo
+        writer.newLine(); // Nueva línea para el próximo operador
+        writer.close(); // Cerrar el escritor
+    }
 
-            // Leer el contenido del primer archivo de texto (si hay alguno)
-            if (archivos != null && archivos.length > 0) {
-                File primerArchivo = archivos[0];
-                if (primerArchivo.isFile() && primerArchivo.getName().endsWith(".txt")) {
-                    try (BufferedReader br = new BufferedReader(new FileReader(primerArchivo))) {
-                        String primeraLinea = br.readLine();
-                        if (primeraLinea != null && primeraLinea.equals(nike)) {
-                            return true;
-                        }
-                    } catch (IOException e) {
-                        return false;
-                    }
-                }
+    private String coincidePass(String nick, String pass) throws IOException {
+        File archivo = new File("Trabajo-MP/datos/operadores/operador");
+        FileReader fileReader = new FileReader(archivo);
+        BufferedReader buf = new BufferedReader(fileReader);
+        String linea = buf.readLine(); // Lees la primera línea
+        String[] result;
+        while (linea != null) {
+            result = linea.split(",");
+            if (result[1].equals(nick) && result[2].equals(pass)) {
+                buf.close(); // Importante cerrar el BufferedReader
+                return result[0];
+            }
+            linea = buf.readLine(); // Lees la siguiente línea
+        }
+        buf.close(); // Importante cerrar el BufferedReader
+        return null;
+    }
+
+    private boolean existeOperador(String nick) throws IOException {
+        File archivo = new File("Trabajo-MP/datos/operadores/operador");
+        FileReader fileReader = new FileReader(archivo);
+        BufferedReader buf = new BufferedReader(fileReader);
+        String linea = buf.readLine(); // Lees la primera línea
+        String[] result;
+        while ((linea = buf.readLine()) != null) {
+            result = linea.split(",");
+            if (result[1] == nick){
+                buf.close(); // Importante cerrar el BufferedReader
+                return true;
             }
         }
+        buf.close(); // Importante cerrar el BufferedReader
         return false;
+    }
+
+    private boolean coincide(String passEspecial) throws IOException {
+        File archivo = new File("Trabajo-MP/datos/operadores/operador");
+        FileReader fileReader = new FileReader(archivo);
+        BufferedReader buf = new BufferedReader(fileReader);
+        String linea = buf.readLine(); // Lees la primera línea
+        buf.close(); // Importante cerrar el BufferedReader
+        return linea.equals(passEspecial);
     }
 
     public void salir() {

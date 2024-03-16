@@ -57,7 +57,6 @@ public class Partida implements Serializable {
     public Jugador coincidePass(String nick, String pass){
         Map<String,Jugador> mapa = this.getMapJugadores();
         for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
-            String clave = entry.getKey();
             Jugador j = entry.getValue();
             if (j.getNick().equals(nick) && j.getPass().equals(pass)){
                 return j;
@@ -68,15 +67,17 @@ public class Partida implements Serializable {
 
     public boolean nickUnico(String s){
         Map<String,Jugador> mapa = this.getMapJugadores();
-        boolean ok = true;
-        for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
-            String clave = entry.getKey();
-            Jugador j = entry.getValue();
-            if (j.getNick().equals(s)){
-                ok = false;
+        if (mapa == null){
+            return true;
+        } else {
+            for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
+                Jugador j = entry.getValue();
+                if (j.getNick().equals(s)) {
+                    return false;
+                }
             }
         }
-        return ok;
+        return true;
     }
     public Partida(){
 

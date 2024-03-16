@@ -109,7 +109,7 @@ public class Jugador extends Usuario implements Serializable {
     public void preguntarDetallesJugador(Partida p) {
         boolean ok = false;
         int num = 0;
-        while (!ok || num<2){
+        while (!ok && num<2){
             System.out.println("Introduzca nombre");
             String nombre = this.leerString();
             this.setNombre(nombre);
@@ -120,9 +120,13 @@ public class Jugador extends Usuario implements Serializable {
                 }
                 System.out.println("Introduzca nick");
                 nick = this.leerString();
-            } while(p.nickUnico(nick));
-            String pass;
+            } while(!p.nickUnico(nick));
+            this.setNick(nick);
+            String pass = null;
             do {
+                if (pass != null){
+                    System.out.println("La pass debe tener entre 8 y 12 caracteres");
+                }
                 System.out.println("Introduzca pass");
                 pass = this.leerString();
             } while (pass.length()>12 || pass.length()<8);
