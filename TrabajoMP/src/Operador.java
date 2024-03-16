@@ -7,6 +7,17 @@ import java.util.*;
  */
 public class Operador extends Usuario implements Serializable {
 
+    public Operador(){
+        this.setNick(null);
+        this.setPass(null);
+        this.setNombre(null);
+    }
+    public Operador(String name, String nick, String pass){
+        this.setNick(nick);
+        this.setPass(pass);
+        this.setNombre(name);
+    }
+
     public void preguntarDetallesOperador() {
         boolean ok = false;
         int num = 0;
