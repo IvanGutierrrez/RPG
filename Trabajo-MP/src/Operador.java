@@ -68,15 +68,11 @@ public class Operador extends Usuario implements Serializable {
 
     private int leerInt(){
         Scanner scanner = new Scanner(System.in);
-        int num = scanner.nextInt();
-        scanner.close();
-        return num;
+        return scanner.nextInt();
     }
 
     private String leerString(){
         Scanner scanner = new Scanner(System.in);
-        String valor = scanner.nextLine();
-        scanner.close();
-        return valor;
+        return scanner.nextLine();
     }
 }
