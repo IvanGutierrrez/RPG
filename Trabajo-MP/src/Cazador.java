@@ -10,6 +10,11 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
     private double Voluntad;
 
     @Override
+    public String getNombre() {
+        return this.Nombre;
+    }
+
+    @Override
     public double calcularPotencialAtaque() {
         // TODO implement here
         return 0.0d;

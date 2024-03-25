@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 
  */
-public abstract class Personaje implements Serializable {
+public abstract class Personaje implements Serializable, Cloneable {
 
     protected String Nombre;
 
@@ -33,6 +33,8 @@ public abstract class Personaje implements Serializable {
 
     protected int Version;
 
+    public abstract String getNombre();
+
     public abstract double calcularPotencialAtaque();
 
     public abstract double calcularPotencialDefensa();
@@ -49,4 +51,14 @@ public abstract class Personaje implements Serializable {
         // TODO implement here
     }
 
+    @Override
+    public Personaje clone() {
+        try {
+            Personaje clone = (Personaje) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

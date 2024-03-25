@@ -1,6 +1,7 @@
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.List;
 
 /**
  * 
@@ -31,15 +32,15 @@ public class Partida implements Serializable {
         ListaDesafiosSinValidar = listaDesafiosSinValidar;
     }
 
-    public Personaje[] getListaPersonajes() {
+    public List<Personaje> getListaPersonajes() {
         return ListaPersonajes;
     }
 
-    public void setListaPersonajes(Personaje[] listaPersonajes) {
+    public void setListaPersonajes(List<Personaje> listaPersonajes) {
         ListaPersonajes = listaPersonajes;
     }
 
-    private Personaje[] ListaPersonajes;
+    private List<Personaje> ListaPersonajes;
 
     public boolean noExiste(String s){
         Map<String,Jugador> mapa = this.getMapJugadores();
@@ -129,4 +130,8 @@ public class Partida implements Serializable {
         return null;
     }
 
+    public Personaje solveVersion(Personaje personaje) {
+        // TODO implement here
+        return null;
+    }
 }
