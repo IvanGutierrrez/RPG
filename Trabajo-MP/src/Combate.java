@@ -131,4 +131,14 @@ public class Combate {
     public void setPersonajeRetado(Personaje personajeRetado) {
         PersonajeRetado = personajeRetado;
     }
+
+    @Override
+    public String toString() {
+        return "Combate{" +
+                "JugadorRetador=" + JugadorRetador +
+                ", JugadorRetado=" + JugadorRetado +
+                ", OroApostado=" + OroApostado +
+                ", Fecha='" + Fecha + '\'' +
+                '}';
+    }
 }

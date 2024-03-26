@@ -10,7 +10,7 @@ public class Partida implements Serializable {
 
     private transient Usuario UsuarioActivo;
     private Map<String,Usuario> MapUsuarios;
-    private Combate ListaDesafiosSinValidar;
+    private Queue<Combate> combateQueue;
 
     public Usuario getUsuarioActivo() {
         return UsuarioActivo;
@@ -24,12 +24,12 @@ public class Partida implements Serializable {
         this.MapUsuarios = MapUsuarios;
     }
 
-    public Combate getListaDesafiosSinValidar() {
-        return ListaDesafiosSinValidar;
+    public Queue<Combate> getCombateQueue() {
+        return combateQueue;
     }
 
-    public void setListaDesafiosSinValidar(Combate listaDesafiosSinValidar) {
-        ListaDesafiosSinValidar = listaDesafiosSinValidar;
+    public void setCombateQueue(Queue<Combate> combateQueue) {
+        this.combateQueue = combateQueue;
     }
 
     public List<Personaje> getListaPersonajes() {
@@ -132,10 +132,8 @@ public class Partida implements Serializable {
         // TODO implement here
     }
 
-    public Combate getCombatesNoVal() {
-        // TODO implement here
-        return null;
-    }
+
+
 
     public void darDeBajaUsuario(Usuario user) {
         Map<String,Usuario> mapa = this.getMapUsuarios();
