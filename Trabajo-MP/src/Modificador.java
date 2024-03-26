@@ -15,4 +15,7 @@ public class Modificador implements Serializable, Cloneable {
         // TODO implement here
     }
 
+    public String getNombre() {
+        return Nombre;
+    }
 }

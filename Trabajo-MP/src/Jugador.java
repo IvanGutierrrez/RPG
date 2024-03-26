@@ -19,9 +19,7 @@ public class Jugador extends Usuario implements Serializable {
 
     private List<Personaje> Personajes;
 
-    private Combate[] RegistrosCombates;
-
-    private Combate[] HistorialCombates;
+    private List<Combate> HistorialCombates;
 
     private String ultimaDerrota;
 
@@ -84,19 +82,11 @@ public class Jugador extends Usuario implements Serializable {
         Personajes = personajes;
     }
 
-    public Combate[] getRegistrosCombates() {
-        return RegistrosCombates;
-    }
-
-    public void setRegistrosCombates(Combate[] registrosCombates) {
-        RegistrosCombates = registrosCombates;
-    }
-
-    public Combate[] getHistorialCombates() {
+    public List<Combate> getHistorialCombates() {
         return HistorialCombates;
     }
 
-    public void setHistorialCombates(Combate[] historialCombates) {
+    public void setHistorialCombates(List<Combate> historialCombates) {
         HistorialCombates = historialCombates;
     }
 
@@ -148,7 +138,6 @@ public class Jugador extends Usuario implements Serializable {
             this.setPersonajeActivo(null);
             this.setPersonajes(null);
             this.setUltimaDerrota(null);
-            this.setRegistrosCombates((null));
         } else{
             this.setPass(null);
         }
@@ -188,8 +177,10 @@ public class Jugador extends Usuario implements Serializable {
                 } else if (opcion == 6) {
                     this.mostrarHistorial();
                 } else if (opcion == 7) {
-                    this.mostrarRanking(p.getMapJugadores());
-                } else if (opcion == 8 || opcion == 9) {
+                    this.mostrarRanking(p.getMapUsuarios());
+                } else if (opcion == 8) {
+                    p.darDeBajaUsuario(this);
+                } else if (opcion == 9) {
                     System.out.println("Esperamos volverte a ver pronto");
                 }
             } else {
@@ -201,7 +192,6 @@ public class Jugador extends Usuario implements Serializable {
 
     public void RegistrarPersonaje(Partida p) {
         List<Personaje> allCharacters = p.getListaPersonajes();
-        Scanner scanner = new Scanner(System.in);
         boolean personajeElegido = false;
 
         for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
@@ -211,7 +201,7 @@ public class Jugador extends Usuario implements Serializable {
             }
 
             System.out.println("Seleccione un personaje:");
-            int opc = scanner.nextInt();
+            int opc = this.leerInt();
 
             if (opc >= 1 && opc <= allCharacters.size()) {
                 Personaje personajeElegidoTmp = allCharacters.get(opc - 1);
@@ -231,7 +221,6 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     public void DarDeBajaPersonaje() {
-        Scanner scanner = new Scanner(System.in);
         boolean personajeElegido = false;
 
         for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
@@ -241,7 +230,7 @@ public class Jugador extends Usuario implements Serializable {
             }
 
             System.out.println("Seleccione un personaje:");
-            int opc = scanner.nextInt();
+            int opc = this.leerInt();
 
             if (opc >= 1 && opc <= this.Personajes.size()) {
                 Personaje personajeElegidoTmp = this.Personajes.get(opc - 1);
@@ -249,7 +238,7 @@ public class Jugador extends Usuario implements Serializable {
                 personajeElegido = true;
 
                 System.out.println("¿Seguro que quiere dar de baja este personaje definitivamente? (si desea continuar escriba: 1234)");
-                int conf = scanner.nextInt();
+                int conf = this.leerInt();
                 if (conf == 1234){
                     this.Personajes.remove(opc-1);
                 }
@@ -267,8 +256,19 @@ public class Jugador extends Usuario implements Serializable {
         // TODO implement here
     }
 
-    public void mostrarRanking(Map<String,Jugador> mapaJugadores) {
-        // TODO implement here
+    public void mostrarRanking(Map<String,Usuario> mapaJugadores) {
+        for (Map.Entry<String, Usuario> entry : mapaJugadores.entrySet()) {
+            Usuario usuario = entry.getValue();
+            if (usuario instanceof Jugador jugador) {
+                System.out.println("Nombre: " + jugador.getNombre());
+                System.out.println("Número de Registro: " + jugador.getNRegistro());
+                System.out.println("Personaje Activo: " + jugador.getPersonajeActivo().getNombre());
+                System.out.println("Bloqueado: " + (jugador.getBloqueado() ? "Sí" : "No"));
+                System.out.println("Desafío: " + (jugador.getDesafio() != null ? "Sí" : "No"));
+                System.out.println("Última Derrota: " + jugador.getUltimaDerrota());
+                System.out.println("---------------------------------------------");
+            }
+        }
     }
 
     private void pedirDesafiado() {
@@ -280,7 +280,6 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     public void selecPersonajeActivo(Partida p) {
-        Scanner scanner = new Scanner(System.in);
         boolean personajeElegido = false;
 
         for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
@@ -290,7 +289,7 @@ public class Jugador extends Usuario implements Serializable {
             }
 
             System.out.println("Seleccione un personaje:");
-            int opt = scanner.nextInt();
+            int opt = this.leerInt();
 
             if (opt >= 1 && opt <= this.Personajes.size()) {
                 Personaje personajeElegidoTmp = this.Personajes.get(opt - 1);
@@ -319,7 +318,26 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     public void mostrarHistorial() {
-        // TODO implement here
+        for (Combate elemento : this.HistorialCombates) {
+            System.out.println("Jugador Retador: " + elemento.getJugadorRetador().getNombre());
+            System.out.println("Jugador Retado: " + elemento.getJugadorRetado().getNombre());
+            System.out.println("Oro Apostado: " + elemento.getOroApostado());
+            System.out.println("Rondas: " + elemento.getRondas());
+            System.out.println("Fecha: " + elemento.getFecha());
+            System.out.println("Ganador: " + (elemento.getGanador() != null ? elemento.getGanador().getNombre() : "N/A"));
+            System.out.println("Jugadores con Esbirros Sin Derrotar:");
+            for (Jugador jugador : elemento.getJugadorConEsbirrosSinDerrotar()) {
+                System.out.println("- " + jugador.getNombre());
+            }
+            System.out.println("Modificadores:");
+            for (Modificador modificador : elemento.getModificadores()) {
+                System.out.println("- " + modificador.getNombre());
+            }
+            System.out.println("Valido: " + (elemento.isValido() ? "Sí" : "No"));
+            System.out.println("Personaje Retador: " + elemento.getPersonajeRetador().getNombre());
+            System.out.println("Personaje Retado: " + elemento.getPersonajeRetado().getNombre());
+            System.out.println("---------------------------------------------");
+        }
     }
 
     public void bloquearse() {

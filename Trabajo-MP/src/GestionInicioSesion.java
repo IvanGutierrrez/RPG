@@ -36,9 +36,9 @@ public class GestionInicioSesion {
                 if (!p.nickUnico(nick)){//si el nick no es unico significa que ya existe un jugador con ese nick
                     System.out.println("Introduzca su pass");
                     String pass = this.leerString();
-                    Jugador j = p.coincidePass(nick,pass);
-                    if (j != null) {
-                        p.setUsuarioActivo(j);
+                    Usuario u = p.coincidePass(nick,pass);
+                    if (u != null) {
+                        p.setUsuarioActivo(u);
                     } else{
                         System.out.println("No coincide la pass");
                     }
@@ -84,7 +84,7 @@ public class GestionInicioSesion {
             j1.preguntarDetallesJugador(p);
             if (j1.getPass() != null) {
                 p.setUsuarioActivo(j1);
-                p.getMapJugadores().put(j1.getNick(), j1);
+                p.getMapUsuarios().put(j1.getNick(), j1);
                 ok = true;
             }
         }

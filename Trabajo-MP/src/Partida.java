@@ -9,19 +9,19 @@ import java.util.List;
 public class Partida implements Serializable {
 
     private transient Usuario UsuarioActivo;
-    private Map<String,Jugador> MapJugadores;
+    private Map<String,Usuario> MapUsuarios;
     private Combate ListaDesafiosSinValidar;
 
     public Usuario getUsuarioActivo() {
         return UsuarioActivo;
     }
 
-    public Map<String, Jugador> getMapJugadores() {
-        return MapJugadores;
+    public Map<String,Usuario> getMapUsuarios() {
+        return MapUsuarios;
     }
 
-    public void setMapJugadores(Map<String, Jugador> mapJugadores) {
-        MapJugadores = mapJugadores;
+    public void setMapJugadores(Map<String,Usuario> MapUsuarios) {
+        this.MapUsuarios = MapUsuarios;
     }
 
     public Combate getListaDesafiosSinValidar() {
@@ -43,37 +43,39 @@ public class Partida implements Serializable {
     private List<Personaje> ListaPersonajes;
 
     public boolean noExiste(String s){
-        Map<String,Jugador> mapa = this.getMapJugadores();
+        Map<String,Usuario> mapa = this.getMapUsuarios();
         boolean ok = true;
-        for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
+        for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
             String clave = entry.getKey();
-            Jugador j = entry.getValue();
-            if (j.getNRegistro().equals(s)){
-                ok = false;
+            Usuario u = entry.getValue();
+            if (u instanceof Jugador jugador) {
+                if (jugador.getNRegistro().equals(s)) {
+                    ok = false;
+                }
             }
         }
         return ok;
     }
 
-    public Jugador coincidePass(String nick, String pass){
-        Map<String,Jugador> mapa = this.getMapJugadores();
-        for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
-            Jugador j = entry.getValue();
-            if (j.getNick().equals(nick) && j.getPass().equals(pass)){
-                return j;
+    public Usuario coincidePass(String nick, String pass){
+        Map<String,Usuario> mapa = this.getMapUsuarios();
+        for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
+            Usuario u = entry.getValue();
+            if (u.getNick().equals(nick) && u.getPass().equals(pass)){
+                return u;
             }
         }
         return null;
     }
 
     public boolean nickUnico(String s){
-        Map<String,Jugador> mapa = this.getMapJugadores();
+        Map<String,Usuario> mapa = this.getMapUsuarios();
         if (mapa == null){
             return true;
         } else {
-            for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
-                Jugador j = entry.getValue();
-                if (j.getNick().equals(s)) {
+            for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
+                Usuario u = entry.getValue();
+                if (u.getNick().equals(s)) {
                     return false;
                 }
             }
@@ -135,8 +137,16 @@ public class Partida implements Serializable {
         return null;
     }
 
-    public void darDeBajaUsuario() {
-        // TODO implement here
+    public void darDeBajaUsuario(Usuario user) {
+        Map<String,Usuario> mapa = this.getMapUsuarios();
+        for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
+            Usuario u = entry.getValue();
+            if (u == user) {
+                this.getMapUsuarios().remove(entry.getKey());
+                break;
+            }
+        }
+
     }
 
     public void getPersonaje() {
