@@ -1,5 +1,5 @@
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -84,20 +84,43 @@ public class Partida implements Serializable {
 
     }
 
-    private void serializar(Partida p) {
-        // TODO implement here
+    private void serializar() {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("Trabajo-MP/src/datos/partida"); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+
+            // Escribe la instancia actual de la clase Game en el archivo
+            objectOutputStream.writeObject(this);
+
+            System.out.println("Partida guardada correctamente");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * 
      */
     public Partida deserializar() {
-        // TODO implement here
-        return null;
+        try (FileInputStream fileInputStream = new FileInputStream("Trabajo-MP/src/datos/partida"); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+
+            // Leer la instancia de la clase Game desde el archivo
+            Partida loadedGame = (Partida) objectInputStream.readObject();
+
+            System.out.println("Partida cargada correctamente");
+            return loadedGame;
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("No se an encontrado este fichero ERROR");
+            System.exit(0);
+        }
+        return  null;
     }
 
     public void Play() {
-        // TODO implement here
+        Usuario jugador = this.getUsuarioActivo();
+        jugador.Menu(this);
+        this.serializar();
     }
 
     public void setUsuarioActivo(Usuario u) {
