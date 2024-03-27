@@ -116,6 +116,7 @@ public class Jugador extends Usuario implements Serializable {
                 nick = this.leerString();
             } while(!p.nickUnico(nick));
             this.setNick(nick);
+
             String pass = null;
             do {
                 if (pass != null){
@@ -181,9 +182,9 @@ public class Jugador extends Usuario implements Serializable {
                 } else if (opcion == 7) {
                     this.mostrarRanking(p.getMapUsuarios());
                 } else if (opcion == 8) {
-                    p.darDeBajaUsuario(this);
-                } else if (opcion == 9) {
                     System.out.println("Esperamos volverte a ver pronto");
+                } else if (opcion == 9) {
+                    p.darDeBajaUsuario(this);
                 }
             } else {
                 this.desafiadoResuelve();

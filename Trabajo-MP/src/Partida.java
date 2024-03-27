@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Partida implements Serializable {
 
+
     public Partida(){
         Map<String,Usuario> m = new HashMap<>();
         this.setMapJugadores(m);
@@ -70,6 +71,7 @@ public class Partida implements Serializable {
         for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
             Usuario u = entry.getValue();
             if (u.getNick().equals(nick) && u.getPass().equals(pass)){
+                System.out.println("ayuda");
                 return u;
             }
         }
@@ -92,12 +94,10 @@ public class Partida implements Serializable {
     }
 
     public void serializar() {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("Trabajo-MP/datos/partida/partida");
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-
-            // Escribe la instancia actual de la clase Game en el archivo
-            objectOutputStream.writeObject(this);
-
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Trabajo-MP/datos/partida/partida"));
+            oos.writeObject(this);
+            oos.close();
             System.out.println("Partida guardada correctamente");
 
         } catch (IOException e) {
@@ -110,20 +110,18 @@ public class Partida implements Serializable {
      * 
      */
     public Partida deserializar() {
-        try (FileInputStream fileInputStream = new FileInputStream("Trabajo-MP/datos/partida/partida"); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Trabajo-MP/datos/partida/partida"))) {
 
             // Leer la instancia de la clase Game desde el archivo
-            Partida loadedGame = (Partida) objectInputStream.readObject();
+            Partida loadedGame = (Partida) ois.readObject();
 
             System.out.println("Partida cargada correctamente");
             return loadedGame;
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
             System.out.println("No se an encontrado este fichero ERROR");
-            System.exit(0);
+            return null;
         }
-        return  null;
     }
 
     public void Play() {
@@ -139,7 +137,7 @@ public class Partida implements Serializable {
     }
 
     public void darDeBajaUsuario(Usuario user) {
-        Map<String,Usuario> mapa = this.getMapUsuarios();
+        Map<String,Usuario> mapa = getMapUsuarios();
         for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
             Usuario u = entry.getValue();
             if (u == user) {

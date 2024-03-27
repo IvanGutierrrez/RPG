@@ -7,28 +7,39 @@ import java.util.*;
  */
 public class GestionInicioSesion {
 
-    public void menuOptions() throws IOException {
+
+    public void Iniciar() throws IOException {
+        asegurarArchivos();
+        Partida p = new Partida();
+        Partida partidaGuardada = p.deserializar();
+        if (partidaGuardada != null){
+           menuOptions(partidaGuardada);
+        } else {
+            menuOptions(p);
+        }
+    }
+
+    public void menuOptions(Partida p) throws IOException {
         int opcion = 0;
         while (opcion != 3){
             System.out.println("Eliga la opción");
             System.out.println("1.-Registrarse");
             System.out.println("2.-Iniciar sesión");
             System.out.println("3.-Salir");
+            System.out.println(p.getMapUsuarios().size());
             opcion = this.leerInt();
             if (opcion == 1){
-                this.registrarse();
+                this.registrarse(p);
             } else if (opcion == 2){
-                this.inicioSesion();
+                this.inicioSesion(p);
             } else{
                 System.out.println("Hasta la proxima");
             }
         }
     }
 
-    public void inicioSesion() throws IOException {
+    public void inicioSesion(Partida p) throws IOException {
         if (this.partidaExits()){
-            Partida p = new Partida();
-            p.deserializar();
             int ok = 0;
             while (ok<2){
                 System.out.println("Introduzca su nick");
@@ -39,6 +50,8 @@ public class GestionInicioSesion {
                     Usuario u = p.coincidePass(nick,pass);
                     if (u != null) {
                         p.setUsuarioActivo(u);
+                        p.Play();
+                        ok = 2;
                     } else{
                         System.out.println("No coincide la pass");
                     }
@@ -62,12 +75,9 @@ public class GestionInicioSesion {
         }
     }
 
-    public void registrarse() throws IOException {
+    public void registrarse(Partida p) throws IOException {
         boolean ok = false;
-        Partida p = new Partida();
-        if (this.partidaExits()){ //si existen archivos en la carpeta
-            p = p.deserializar();
-        }//Si esta vacia la carpeta no deserializamos y dejamos la partida a null
+        //Si esta vacia la carpeta no deserializamos y dejamos la partida a null
         System.out.println("Introduzca contraseña especial");
         String passEspecial = this.leerString();
         if (this.coincide(passEspecial)){
@@ -85,6 +95,7 @@ public class GestionInicioSesion {
             if (j1.getPass() != null) {
                 p.setUsuarioActivo(j1);
                 p.getMapUsuarios().put(j1.getNick(), j1);
+                System.out.println(p.getMapUsuarios().get(j1.getNick()).getPass());
                 ok = true;
             }
         }
