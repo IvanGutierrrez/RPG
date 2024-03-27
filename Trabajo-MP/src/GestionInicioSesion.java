@@ -71,7 +71,7 @@ public class GestionInicioSesion {
         System.out.println("Introduzca contraseña especial");
         String passEspecial = this.leerString();
         if (this.coincide(passEspecial)){
-            System.out.println("o");
+            System.out.println("Bienvenido operador");
             Operador op1 = new Operador();
             op1.preguntarDetallesOperador();
             if (op1.getPass() != null){
@@ -95,11 +95,11 @@ public class GestionInicioSesion {
 
     private boolean partidaExits(){
         // Crear un objeto File con la ruta de la carpeta
-        File directorio = new File("Trabajo-MP/src/datos/partida");
+        File directorio = new File("Trabajo-MP/datos/partida");
         if (directorio.exists() && directorio.isDirectory()) {//si la carpeta existe
             // Obtener la lista de archivos en el directorio
             File[] archivos = directorio.listFiles();
-            if (archivos != null){ //si existen archivos en la carpeta
+            if (archivos != null && archivos.length > 0){ //si existen archivos en la carpeta
                 return true;
             }
         }

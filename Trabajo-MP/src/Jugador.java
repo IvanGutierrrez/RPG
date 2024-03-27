@@ -150,7 +150,7 @@ public class Jugador extends Usuario implements Serializable {
         int opcion = 0;
 
         while(opcion != 8 && opcion != 9) {
-            if (getDesafio() != null) {
+            if (getDesafio() == null) {
                 System.out.println("Eliga la opción");
                 System.out.println("1.-Desafiar");
                 System.out.println("2.-Gestionar Equipamineto");
@@ -188,8 +188,6 @@ public class Jugador extends Usuario implements Serializable {
             } else {
                 this.desafiadoResuelve();
             }
-
-            p.serializar();
         }
     }
 

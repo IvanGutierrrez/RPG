@@ -8,9 +8,19 @@ import java.util.List;
  */
 public class Partida implements Serializable {
 
+    public Partida(){
+        Map<String,Usuario> m = new HashMap<>();
+        this.setMapJugadores(m);
+        Queue<Combate> queue = new LinkedList<>();
+        this.setCombateQueue(queue);
+        this.setUsuarioActivo(null);
+        List<Personaje> lista = new ArrayList<>();
+        this.setListaPersonajes(lista);
+    }
     private transient Usuario UsuarioActivo;
     private Map<String,Usuario> MapUsuarios;
     private Queue<Combate> combateQueue;
+    private List<Personaje> ListaPersonajes;
 
     public Usuario getUsuarioActivo() {
         return UsuarioActivo;
@@ -40,8 +50,6 @@ public class Partida implements Serializable {
         ListaPersonajes = listaPersonajes;
     }
 
-    private List<Personaje> ListaPersonajes;
-
     public boolean noExiste(String s){
         Map<String,Usuario> mapa = this.getMapUsuarios();
         boolean ok = true;
@@ -68,9 +76,9 @@ public class Partida implements Serializable {
         return null;
     }
 
-    public boolean nickUnico(String s){
-        Map<String,Usuario> mapa = this.getMapUsuarios();
-        if (mapa == null){
+    public boolean nickUnico(String s) {
+        Map<String, Usuario> mapa = this.getMapUsuarios();
+        if (mapa == null) {
             return true;
         } else {
             for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
@@ -82,12 +90,10 @@ public class Partida implements Serializable {
         }
         return true;
     }
-    public Partida(){
-
-    }
 
     public void serializar() {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("Trabajo-MP/src/datos/partida"); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("Trabajo-MP/datos/partida");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
             // Escribe la instancia actual de la clase Game en el archivo
             objectOutputStream.writeObject(this);
@@ -96,6 +102,7 @@ public class Partida implements Serializable {
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error al intentar serializar la partida");
         }
     }
 
@@ -103,7 +110,7 @@ public class Partida implements Serializable {
      * 
      */
     public Partida deserializar() {
-        try (FileInputStream fileInputStream = new FileInputStream("Trabajo-MP/src/datos/partida"); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+        try (FileInputStream fileInputStream = new FileInputStream("Trabajo-MP/datos/partida"); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
 
             // Leer la instancia de la clase Game desde el archivo
             Partida loadedGame = (Partida) objectInputStream.readObject();
@@ -120,20 +127,16 @@ public class Partida implements Serializable {
     }
 
     public void Play() {
-        Usuario jugador = this.getUsuarioActivo();
-        jugador.Menu(this);
+        this.getUsuarioActivo().Menu(this);
         this.serializar();
     }
 
     public void setUsuarioActivo(Usuario u) {
-        // TODO implement here
+        this.UsuarioActivo = u;
     }
     public void addChallenge(Combate c) {
         this.combateQueue.add(c);
     }
-
-
-
 
     public void darDeBajaUsuario(Usuario user) {
         Map<String,Usuario> mapa = this.getMapUsuarios();
@@ -164,5 +167,15 @@ public class Partida implements Serializable {
     public Personaje solveVersion(Personaje personaje) {
         // TODO implement here
         return null;
+    }
+
+    private int leerInt(){
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
+    }
+
+    private String leerString(){
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
     }
 }

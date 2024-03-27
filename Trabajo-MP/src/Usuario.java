@@ -1,5 +1,6 @@
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 /**
  * 
@@ -37,5 +38,15 @@ public abstract class Usuario implements Serializable {
     }
 
     public abstract void Menu(Partida p);
+
+    private int leerInt(){
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
+    }
+
+    private String leerString(){
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
 
 }
