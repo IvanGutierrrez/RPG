@@ -119,7 +119,7 @@ public class Partida implements Serializable {
             return loadedGame;
 
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("No se an encontrado este fichero ERROR");
+            System.out.println("Creación de fichero nuevo");
             return null;
         }
     }
