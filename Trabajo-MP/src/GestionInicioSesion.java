@@ -93,13 +93,33 @@ public class GestionInicioSesion {
         }
     }
 
-    private boolean partidaExits(){
-        // Crear un objeto File con la ruta de la carpeta
+    private void asegurarArchivos() {
+        File partidaDirectorio = new File("Trabajo-MP/datos/partida");
+        File operadoresDirectorio = new File("Trabajo-MP/datos/operadores");
+        File operadorArchivo = new File("Trabajo-MP/datos/operadores/operador");
+
+        // Si los directorios o archivos no existen, se crean
+        if (!partidaDirectorio.exists()) {
+            partidaDirectorio.mkdirs(); // Crea el directorio y cualquier directorio padre necesario
+        }
+        if (!operadoresDirectorio.exists()) {
+            operadoresDirectorio.mkdirs(); // Crea el directorio y cualquier directorio padre necesario
+        }
+        if (!operadorArchivo.exists()) {
+            try {
+                operadorArchivo.createNewFile(); // Crea el archivo
+            } catch (IOException e) {
+                e.printStackTrace(); // Manejo de excepciones en caso de error
+            }
+        }
+    }
+
+    private boolean partidaExits() {
+        asegurarArchivos(); // Asegurar que los archivos y directorios existen
         File directorio = new File("Trabajo-MP/datos/partida");
-        if (directorio.exists() && directorio.isDirectory()) {//si la carpeta existe
-            // Obtener la lista de archivos en el directorio
+        if (directorio.exists() && directorio.isDirectory()) {
             File[] archivos = directorio.listFiles();
-            if (archivos != null && archivos.length > 0){ //si existen archivos en la carpeta
+            if (archivos != null && archivos.length > 0) {
                 return true;
             }
         }
@@ -154,6 +174,9 @@ public class GestionInicioSesion {
         FileReader fileReader = new FileReader(archivo);
         BufferedReader buf = new BufferedReader(fileReader);
         String linea = buf.readLine(); // Lees la primera línea
+        if (linea == null){
+            return false;
+        }
         buf.close(); // Importante cerrar el BufferedReader
         return linea.equals(passEspecial);
     }
