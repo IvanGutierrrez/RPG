@@ -180,7 +180,7 @@ public class Jugador extends Usuario implements Serializable {
                 } else if (opcion == 6) {
                     this.mostrarHistorial();
                 } else if (opcion == 7) {
-                    this.mostrarRanking(p.getMapJugadores());
+                    this.mostrarRanking(p.getMapUsuarios());
                 } else if (opcion == 8) {
                     System.out.println("Esperamos volverte a ver pronto");
                 } else if (opcion == 9) {
@@ -267,16 +267,19 @@ public class Jugador extends Usuario implements Serializable {
         }
     }
 
-    public void mostrarRanking(Map<String,Jugador> mapaJugadores) {
-        for (Map.Entry<String, Jugador> entry : mapaJugadores.entrySet()) {
-            Jugador jugador = entry.getValue();
-            System.out.println("Nombre: " + jugador.getNombre());
-            System.out.println("Número de Registro: " + jugador.getNRegistro());
-            System.out.println("Personaje Activo: " + jugador.getPersonajeActivo().getNombre());
-            System.out.println("Bloqueado: " + (jugador.getBloqueado() ? "Sí" : "No"));
-            System.out.println("Desafío: " + (jugador.getDesafio() != null ? "Sí" : "No"));
-            System.out.println("Última Derrota: " + jugador.getUltimaDerrota());
-            System.out.println("---------------------------------------------");
+    public void mostrarRanking(Map<String, Usuario> mapaJugadores) {
+        for (Map.Entry<String, Usuario> entry : mapaJugadores.entrySet()) {
+            Usuario usuario = entry.getValue();
+            if (usuario instanceof Jugador jugador){
+                System.out.println("Nombre: " + jugador.getNombre());
+                System.out.println("Número de Registro: " + jugador.getNRegistro());
+                System.out.println("Personaje Activo: " + jugador.getPersonajeActivo().getNombre());
+                System.out.println("Bloqueado: " + (jugador.getBloqueado() ? "Sí" : "No"));
+                System.out.println("Desafío: " + (jugador.getDesafio() != null ? "Sí" : "No"));
+                System.out.println("Última Derrota: " + jugador.getUltimaDerrota());
+                System.out.println("---------------------------------------------");
+            }
+
         }
     }
 
@@ -284,7 +287,7 @@ public class Jugador extends Usuario implements Serializable {
         for (int intento = 0; intento <= 2; intento++){
             System.out.println("Introduzca el nick del jugador a retar: ");
             String nickRetado = this.leerString();
-            Map<String,Jugador> mapaUsuarios = p.getMapJugadores();
+            Map<String,Usuario> mapaUsuarios = p.getMapUsuarios();
 
             if (mapaUsuarios.containsKey(nickRetado) && mapaUsuarios.get(nickRetado) instanceof Jugador jugador && jugador.getDesafio() == null && !jugador.getBloqueado() && jugador.getPersonajeActivo() != null){
                 long diferenciaEnHoras = ChronoUnit.HOURS.between(jugador.getUltimaDerrota(), LocalDateTime.now());
