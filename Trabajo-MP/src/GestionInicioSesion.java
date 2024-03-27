@@ -9,6 +9,7 @@ public class GestionInicioSesion {
 
     public void menuOptions() throws IOException {
         int opcion = 0;
+        asegurarArchivos(); // Asegurar que los archivos y directorios existen
         while (opcion != 3){
             System.out.println("Eliga la opción");
             System.out.println("1.-Registrarse");
@@ -19,8 +20,10 @@ public class GestionInicioSesion {
                 this.registrarse();
             } else if (opcion == 2){
                 this.inicioSesion();
-            } else{
+            } else if (opcion == 3){
                 System.out.println("Hasta la proxima");
+            } else{
+                System.out.println("Opcion no valida");
             }
         }
     }
@@ -28,7 +31,7 @@ public class GestionInicioSesion {
     public void inicioSesion() throws IOException {
         if (this.partidaExits()){
             Partida p = new Partida();
-            p.deserializar();
+            p = p.deserializar();
             int ok = 0;
             while (ok<2){
                 System.out.println("Introduzca su nick");
@@ -39,6 +42,7 @@ public class GestionInicioSesion {
                     Usuario u = p.coincidePass(nick,pass);
                     if (u != null) {
                         p.setUsuarioActivo(u);
+                        p.Play();
                     } else{
                         System.out.println("No coincide la pass");
                     }
@@ -49,13 +53,17 @@ public class GestionInicioSesion {
                     if (name != null) {
                         Operador op = new Operador(name, nick, pass);
                         p.setUsuarioActivo(op);
+                        p.Play();
                     } else{
                         System.out.println("No coincide la pass");
                     }
                 } else{
-                    System.out.println("Ese nombre no existe, vuelva a introducirlo o registrese");
+                    System.out.println("Ese nick no existe, vuelva a introducirlo o registrese");
                 }
                 ok++;
+            }
+            if (ok >= 2) {
+                System.out.println("Se ha equivocado dos veces, va a volver al menu principal");
             }
         } else{
             System.out.println("Es nuestro primer usuario, registrese");
@@ -84,7 +92,7 @@ public class GestionInicioSesion {
             j1.preguntarDetallesJugador(p);
             if (j1.getPass() != null) {
                 p.setUsuarioActivo(j1);
-                p.getMapUsuarios().put(j1.getNick(), j1);
+                p.getMapJugadores().put(j1.getNick(), j1);
                 ok = true;
             }
         }
@@ -115,7 +123,6 @@ public class GestionInicioSesion {
     }
 
     private boolean partidaExits() {
-        asegurarArchivos(); // Asegurar que los archivos y directorios existen
         File directorio = new File("Trabajo-MP/datos/partida");
         if (directorio.exists() && directorio.isDirectory()) {
             File[] archivos = directorio.listFiles();

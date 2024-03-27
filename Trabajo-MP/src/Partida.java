@@ -9,7 +9,7 @@ import java.util.List;
 public class Partida implements Serializable {
 
     public Partida(){
-        Map<String,Usuario> m = new HashMap<>();
+        Map<String,Jugador> m = new HashMap<>();
         this.setMapJugadores(m);
         Queue<Combate> queue = new LinkedList<>();
         this.setCombateQueue(queue);
@@ -18,7 +18,7 @@ public class Partida implements Serializable {
         this.setListaPersonajes(lista);
     }
     private transient Usuario UsuarioActivo;
-    private Map<String,Usuario> MapUsuarios;
+    private Map<String,Jugador> MapJugadores;
     private Queue<Combate> combateQueue;
     private List<Personaje> ListaPersonajes;
 
@@ -26,12 +26,12 @@ public class Partida implements Serializable {
         return UsuarioActivo;
     }
 
-    public Map<String,Usuario> getMapUsuarios() {
-        return MapUsuarios;
+    public Map<String,Jugador> getMapJugadores() {
+        return MapJugadores;
     }
 
-    public void setMapJugadores(Map<String,Usuario> MapUsuarios) {
-        this.MapUsuarios = MapUsuarios;
+    public void setMapJugadores(Map<String,Jugador> MapUsuarios) {
+        this.MapJugadores = MapUsuarios;
     }
 
     public Queue<Combate> getCombateQueue() {
@@ -51,24 +51,22 @@ public class Partida implements Serializable {
     }
 
     public boolean noExiste(String s){
-        Map<String,Usuario> mapa = this.getMapUsuarios();
+        Map<String,Jugador> mapa = this.getMapJugadores();
         boolean ok = true;
-        for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
+        for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
             String clave = entry.getKey();
-            Usuario u = entry.getValue();
-            if (u instanceof Jugador jugador) {
-                if (jugador.getNRegistro().equals(s)) {
-                    ok = false;
-                }
+            Jugador u = entry.getValue();
+            if (u.getNRegistro().equals(s)) {
+                ok = false;
             }
         }
         return ok;
     }
 
     public Usuario coincidePass(String nick, String pass){
-        Map<String,Usuario> mapa = this.getMapUsuarios();
-        for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
-            Usuario u = entry.getValue();
+        Map<String,Jugador> mapa = this.getMapJugadores();
+        for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
+            Jugador u = entry.getValue();
             if (u.getNick().equals(nick) && u.getPass().equals(pass)){
                 return u;
             }
@@ -77,12 +75,12 @@ public class Partida implements Serializable {
     }
 
     public boolean nickUnico(String s) {
-        Map<String, Usuario> mapa = this.getMapUsuarios();
+        Map<String, Jugador> mapa = this.getMapJugadores();
         if (mapa == null) {
             return true;
         } else {
-            for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
-                Usuario u = entry.getValue();
+            for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
+                Jugador u = entry.getValue();
                 if (u.getNick().equals(s)) {
                     return false;
                 }
@@ -110,7 +108,8 @@ public class Partida implements Serializable {
      * 
      */
     public Partida deserializar() {
-        try (FileInputStream fileInputStream = new FileInputStream("Trabajo-MP/datos/partida/partida"); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+        try (FileInputStream fileInputStream = new FileInputStream("Trabajo-MP/datos/partida/partida");
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
 
             // Leer la instancia de la clase Game desde el archivo
             Partida loadedGame = (Partida) objectInputStream.readObject();
@@ -139,11 +138,11 @@ public class Partida implements Serializable {
     }
 
     public void darDeBajaUsuario(Usuario user) {
-        Map<String,Usuario> mapa = this.getMapUsuarios();
-        for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
-            Usuario u = entry.getValue();
+        Map<String,Jugador> mapa = this.getMapJugadores();
+        for (Map.Entry<String, Jugador> entry : mapa.entrySet()) {
+            Jugador u = entry.getValue();
             if (u == user) {
-                this.getMapUsuarios().remove(entry.getKey());
+                this.getMapJugadores().remove(entry.getKey());
                 break;
             }
         }
