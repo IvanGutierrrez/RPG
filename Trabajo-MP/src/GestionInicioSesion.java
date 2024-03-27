@@ -26,7 +26,6 @@ public class GestionInicioSesion {
             System.out.println("1.-Registrarse");
             System.out.println("2.-Iniciar sesión");
             System.out.println("3.-Salir");
-            System.out.println(p.getMapUsuarios().size());
             opcion = this.leerInt();
             if (opcion == 1){
                 this.registrarse(p);

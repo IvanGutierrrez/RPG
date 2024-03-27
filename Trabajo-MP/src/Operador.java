@@ -62,7 +62,7 @@ public class Operador extends Usuario implements Serializable {
             if (opcion == 1) {
                 this.revisarCombatesNoVal(p.getCombateQueue());
             } else if (opcion == 2) {
-                this.bloquearJugador(p.getMapJugadores());
+                this.bloquearJugador(p.getMapUsuarios());
             } else if (opcion == 3) {
                 this.editarPersonaje(p);
             } else if (opcion == 4) {
@@ -130,19 +130,22 @@ public class Operador extends Usuario implements Serializable {
         }
     }
 
-    public void bloquearJugador(Map<String,Jugador> mapaJugadores) {
+    public void bloquearJugador(Map<String, Usuario> mapaJugadores) {
         int contador = 0;
         boolean done = false;
         while (contador < 2 && !done) {
             System.out.println("Introduzca el nick del usuario a bloquear/desbloquar");
             String nick = leerString();
-            for (Map.Entry<String, Jugador> entry : mapaJugadores.entrySet()) {
-                Jugador u = entry.getValue();
-                if (u.getNick().equals(nick)) {
-                    bloquarse(u);
-                    done = true;
-                    break;
+            for (Map.Entry<String, Usuario> entry : mapaJugadores.entrySet()) {
+                Usuario u = entry.getValue();
+                if (u instanceof Jugador jugador){
+                    if (jugador.getNick().equals(nick)) {
+                        bloquarse(jugador);
+                        done = true;
+                        break;
+                    }
                 }
+
             }
             if(!done){
                 System.out.println("No se ha encontrado, intente de nuevo");
