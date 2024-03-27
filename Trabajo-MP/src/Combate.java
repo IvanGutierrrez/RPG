@@ -1,4 +1,5 @@
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -14,7 +15,7 @@ public class Combate {
 
     private int Rondas;
 
-    private String Fecha;
+    private LocalDateTime Fecha;
 
     private Jugador Ganador;
 
@@ -27,6 +28,20 @@ public class Combate {
     private Personaje PersonajeRetador;
 
     private Personaje PersonajeRetado;
+
+    public Combate (Jugador retador, Jugador retado,int apuesta, Personaje personajeRetador, Personaje personajeRetado, LocalDateTime fecha) {
+        this.JugadorRetador = retador;
+        this.JugadorRetado = retado;
+        this.OroApostado = apuesta;
+        this.PersonajeRetador = personajeRetador;
+        this.PersonajeRetado = personajeRetado;
+        this.Fecha = fecha;
+        this.Ganador = null;
+        this.JugadorConEsbirrosSinDerrotar = null;
+        this.Modificadores = null;
+        this.Rondas = 0;
+        this.Valido = false;
+    }
 
     public void calcularResutado() {
         // TODO implement here
@@ -76,11 +91,11 @@ public class Combate {
         Rondas = rondas;
     }
 
-    public String getFecha() {
+    public LocalDateTime getFecha() {
         return Fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDateTime fecha) {
         Fecha = fecha;
     }
 

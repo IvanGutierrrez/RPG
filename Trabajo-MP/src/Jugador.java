@@ -3,6 +3,8 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * 
@@ -21,7 +23,7 @@ public class Jugador extends Usuario implements Serializable {
 
     private List<Combate> HistorialCombates;
 
-    private String ultimaDerrota;
+    private LocalDateTime ultimaDerrota;
 
     public String getNRegistro() {
         return NRegistro;
@@ -90,11 +92,11 @@ public class Jugador extends Usuario implements Serializable {
         HistorialCombates = historialCombates;
     }
 
-    public String getUltimaDerrota() {
+    public LocalDateTime getUltimaDerrota() {
         return ultimaDerrota;
     }
 
-    public void setUltimaDerrota(String ultimaDerrota) {
+    public void setUltimaDerrota(LocalDateTime ultimaDerrota) {
         this.ultimaDerrota = ultimaDerrota;
     }
 
@@ -161,7 +163,7 @@ public class Jugador extends Usuario implements Serializable {
                 System.out.println("9.-Dar de Baja Usuario");
                 opcion = this.leerInt();
                 if (opcion == 1) {
-                    this.Desafiar();
+                    this.Desafiar(p);
                 } else if (opcion == 2) {
                     if (this.getPersonajeActivo() == null) {
                         this.selecPersonajeActivo(p);
@@ -187,6 +189,7 @@ public class Jugador extends Usuario implements Serializable {
                 this.desafiadoResuelve();
             }
 
+            p.serializar();
         }
     }
 
@@ -252,8 +255,17 @@ public class Jugador extends Usuario implements Serializable {
         }
     }
 
-    public void Desafiar() {
-        // TODO implement here
+    public void Desafiar(Partida p) {
+        Jugador retado = this.pedirDesafiado(p);
+        if (retado != null) {
+            int apuesta = this.seleccionApuesta(retado);
+            if (apuesta != -1) {
+                Combate combate = new Combate(this,retado,apuesta,this.getPersonajeActivo(),retado.getPersonajeActivo(),LocalDateTime.now());
+                p.addChallenge(combate);
+                this.setDesafio(combate);
+                retado.setDesafio(combate);
+            }
+        }
     }
 
     public void mostrarRanking(Map<String,Usuario> mapaJugadores) {
@@ -271,12 +283,31 @@ public class Jugador extends Usuario implements Serializable {
         }
     }
 
-    private void pedirDesafiado() {
-        // TODO implement here
+    private Jugador pedirDesafiado(Partida p) {
+        for (int intento = 0; intento <= 2; intento++){
+            System.out.println("Introduzca el nick del jugador a retar: ");
+            String nickRetado = this.leerString();
+            Map<String,Usuario> mapaUsuarios = p.getMapUsuarios();
+
+            if (mapaUsuarios.containsKey(nickRetado) && mapaUsuarios.get(nickRetado) instanceof Jugador jugador && jugador.getDesafio() == null && !jugador.getBloqueado() && jugador.getPersonajeActivo() != null){
+                long diferenciaEnHoras = ChronoUnit.HOURS.between(jugador.getUltimaDerrota(), LocalDateTime.now());
+                if (diferenciaEnHoras >= 24){
+                    return (jugador);
+                } else { System.out.println("Jugador introducido no valido");}
+            } else { System.out.println("Jugador introducido no valido");}
+        }
+        return null;
     }
 
-    public void seleccionApuesta() {
-        // TODO implement here
+    public int seleccionApuesta(Jugador retado) {
+        for (int intento = 0; intento <= 2; intento++) {
+            System.out.println("Introduzca la cantidad apostada: ");
+            int apuesta = this.leerInt();
+            if (retado.getPersonajeActivo().checkApuesta(apuesta) && this.getPersonajeActivo().checkApuesta(apuesta)){
+                return apuesta;
+            }
+        }
+        return -1;
     }
 
     public void selecPersonajeActivo(Partida p) {

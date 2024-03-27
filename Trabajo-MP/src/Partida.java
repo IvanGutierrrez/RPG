@@ -86,7 +86,7 @@ public class Partida implements Serializable {
 
     }
 
-    private void serializar() {
+    public void serializar() {
         try (FileOutputStream fileOutputStream = new FileOutputStream("Trabajo-MP/src/datos/partida"); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
             // Escribe la instancia actual de la clase Game en el archivo
@@ -129,7 +129,7 @@ public class Partida implements Serializable {
         // TODO implement here
     }
     public void addChallenge(Combate c) {
-        // TODO implement here
+        this.combateQueue.add(c);
     }
 
 

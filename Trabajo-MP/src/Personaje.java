@@ -39,7 +39,9 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     public abstract double calcularPotencialDefensa();
 
-    public abstract boolean checkApuesta();
+    public boolean checkApuesta(int apuesta){
+        return this.Oro - apuesta > 0;
+    }
 
     public abstract void gestionEquipamiento();
 
