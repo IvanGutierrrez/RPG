@@ -1,11 +1,12 @@
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
 /**
  * 
  */
-public class Combate {
+public class Combate implements Serializable {
 
     private Jugador JugadorRetador;
 
