@@ -13,8 +13,10 @@ public class Demonio extends Esbirro implements Serializable, Cloneable{
 
     private Esbirro Esbirros;
 
-    public void Clone() {
-        // TODO implement here
+    @Override
+    public Demonio clone() {
+        Demonio clone = (Demonio) super.clone();
+        clone.Esbirros = this.Esbirros.clone();
+        return clone;
     }
-
 }

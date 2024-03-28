@@ -137,15 +137,18 @@ public class Partida implements Serializable {
     }
 
     public void darDeBajaUsuario(Usuario user) {
-        Map<String,Usuario> mapa = getMapUsuarios();
-        for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
-            Usuario u = entry.getValue();
-            if (u == user) {
-                this.getMapUsuarios().remove(entry.getKey());
-                break;
+        int conf = this.leerInt();
+        System.out.println("¿Esta seguro de que quiere dar de baja este usuario? (1234 para confirmar)");
+        if (conf == 1234) {
+            Map<String, Usuario> mapa = getMapUsuarios();
+            for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
+                Usuario u = entry.getValue();
+                if (u == user) {
+                    this.getMapUsuarios().remove(entry.getKey());
+                    break;
+                }
             }
         }
-
     }
 
     public void getPersonaje() {
@@ -157,14 +160,27 @@ public class Partida implements Serializable {
         return null;
     }
 
-    public Boolean checkVersion(Personaje p) {
-        // TODO implement here
+    public Personaje checkVersion(Personaje p) {
+        String nombre = p.getNombre();
+        for (Personaje personje: this.ListaPersonajes){
+            if (Objects.equals(personje.getNombre(), nombre)){
+                if (personje.getVersion() == p.getVersion()){
+                    return p;
+                } else {
+                    return this.solveVersion(p,personje);
+                }
+            }
+        }
         return null;
     }
 
-    public Personaje solveVersion(Personaje personaje) {
-        // TODO implement here
-        return null;
+    private Personaje solveVersion(Personaje pOutdated, Personaje pNew) {
+        Double oro = pOutdated.getOro();
+        pOutdated = pNew.clone();
+        pOutdated.setOro(oro);
+        System.out.println("El personaje ha sido actualizado por un operador");
+        pOutdated.gestionEquipamiento();
+        return pOutdated;
     }
 
     private int leerInt(){

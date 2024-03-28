@@ -15,8 +15,12 @@ public class HabilidadEspecial implements Serializable, Cloneable{
 
     private double Coste;
 
-    public void Clone() {
-        // TODO implement here
+    @Override
+    public HabilidadEspecial clone() {
+        try {
+            return (HabilidadEspecial) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
-
 }

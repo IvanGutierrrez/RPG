@@ -46,7 +46,9 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
         // TODO implement here
     }
 
-    public void Clone() {
-        // TODO implement here
+
+    @Override
+    public Vampiro clone() {
+        return (Vampiro) super.clone();
     }
 }

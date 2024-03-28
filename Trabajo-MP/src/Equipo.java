@@ -11,8 +11,16 @@ public class Equipo implements Serializable, Cloneable{
 
     private double Modificador;
 
-    public void Clone() {
-        // TODO implement here
+    @Override
+    public Equipo clone() {
+        try {
+            return (Equipo) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 
+    public String getNombre() {
+        return Nombre;
+    }
 }

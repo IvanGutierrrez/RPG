@@ -325,11 +325,7 @@ public class Jugador extends Usuario implements Serializable {
             if (opt >= 1 && opt <= this.Personajes.size()) {
                 Personaje personajeElegidoTmp = this.Personajes.get(opt - 1);
 
-                boolean control = p.checkVersion(personajeElegidoTmp);
-
-                if (!control) {
-                    personajeElegidoTmp = p.solveVersion(personajeElegidoTmp);
-                }
+                personajeElegidoTmp = p.checkVersion(personajeElegidoTmp);
 
                 this.PersonajeActivo = personajeElegidoTmp;
                 System.out.println("Se ha seleccionado a " + this.PersonajeActivo.getNombre() + " como el personaje activo");
@@ -345,7 +341,14 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     private void desafiadoResuelve() {
-        // TODO implement here
+        System.out.println("Ha sido desafiado");
+        System.out.println("¿Desea aceptar el desafio? (1 para aceptar)");
+        int conf = this.leerInt();
+        if (conf == 1) {
+            this.Desafio.combatir();
+        } else {
+            this.Desafio.cancelarCombate();
+        }
     }
 
     public void mostrarHistorial() {

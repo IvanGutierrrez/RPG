@@ -11,8 +11,17 @@ public class Arma extends Equipo implements Serializable, Cloneable {
 
     private boolean Tipo;
 
-    public void Clone() {
-        // TODO implement here
+
+    @Override
+    public Arma clone() {
+        return (Arma) super.clone();
     }
 
+    public boolean getTipo() {
+        return Tipo;
+    }
+
+    public void setTipo(boolean tipo) {
+        Tipo = tipo;
+    }
 }

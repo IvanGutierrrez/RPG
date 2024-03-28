@@ -9,8 +9,9 @@ public class Armadura extends Equipo implements Serializable, Cloneable{
 
     private double ModATQ;
 
-    public void Clone() {
-        // TODO implement here
-    }
 
+    @Override
+    public Armadura clone() {
+        return (Armadura) super.clone();
+    }
 }

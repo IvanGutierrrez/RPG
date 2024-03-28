@@ -11,11 +11,18 @@ public class Modificador implements Serializable, Cloneable {
 
     private double Valor;
 
-    public void Clone() {
-        // TODO implement here
-    }
+
 
     public String getNombre() {
         return Nombre;
+    }
+
+    @Override
+    public Modificador clone() {
+        try {
+            return (Modificador) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

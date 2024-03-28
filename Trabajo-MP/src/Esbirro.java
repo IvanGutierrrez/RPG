@@ -11,8 +11,12 @@ public class Esbirro implements Serializable, Cloneable{
 
     private double Salud;
 
-    public void Clone() {
-        // TODO implement here
+    @Override
+    public Esbirro clone() {
+        try {
+            return (Esbirro) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
-
 }
