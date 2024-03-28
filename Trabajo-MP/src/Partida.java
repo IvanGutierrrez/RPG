@@ -95,7 +95,7 @@ public class Partida implements Serializable {
 
     public void serializar() {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Trabajo-MP/datos/partida/partida"));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Trabajo-MP/datos/partida/partida.dat"));
             oos.writeObject(this);
             oos.close();
             System.out.println("Partida guardada correctamente");
@@ -110,7 +110,7 @@ public class Partida implements Serializable {
      * 
      */
     public Partida deserializar() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Trabajo-MP/datos/partida/partida"))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Trabajo-MP/datos/partida/partida.dat"))) {
 
             // Leer la instancia de la clase Game desde el archivo
             Partida loadedGame = (Partida) ois.readObject();
