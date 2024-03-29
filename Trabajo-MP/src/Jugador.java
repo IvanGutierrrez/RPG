@@ -186,8 +186,10 @@ public class Jugador extends Usuario implements Serializable {
                 } else if (opcion == 9) {
                     p.darDeBajaUsuario(this);
                 }
-            } else {
+            } else if (this.getDesafio() != null && this.getDesafio().isValido()){
                 this.desafiadoResuelve();
+            } else {
+                System.out.println("Se encuentra a la espera de validación de su desafio por parte de un operador, sea paciente porfavor");
             }
         }
     }
@@ -212,6 +214,7 @@ public class Jugador extends Usuario implements Serializable {
                 Personaje personajeNuevo = personajeElegidoTmp.clone();
                 this.Personajes.add(personajeNuevo);
                 this.PersonajeActivo = personajeNuevo;
+                this.PersonajeActivo.gestionEquipamiento();
             } else {
                 System.out.println("Opción no válida. Por favor, seleccione un número válido");
             }
@@ -289,7 +292,7 @@ public class Jugador extends Usuario implements Serializable {
             String nickRetado = this.leerString();
             Map<String,Usuario> mapaUsuarios = p.getMapUsuarios();
 
-            if (mapaUsuarios.containsKey(nickRetado) && mapaUsuarios.get(nickRetado) instanceof Jugador jugador && jugador.getDesafio() == null && !jugador.getBloqueado() && jugador.getPersonajeActivo() != null){
+            if (mapaUsuarios.containsKey(nickRetado) && mapaUsuarios.get(nickRetado) instanceof Jugador jugador && jugador.getDesafio() == null && !jugador.getBloqueado() && jugador.getPersonajeActivo() != null && this.getPersonajeActivo() != null){
                 long diferenciaEnHoras = ChronoUnit.HOURS.between(jugador.getUltimaDerrota(), LocalDateTime.now());
                 if (diferenciaEnHoras >= 24){
                     return (jugador);
