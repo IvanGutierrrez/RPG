@@ -44,6 +44,7 @@ public class GestionInicioSesion {
                 System.out.println("Introduzca su nick");
                 String nick = this.leerString();
                 if (!p.nickUnico(nick)){//si el nick no es unico significa que ya existe un jugador con ese nick
+                    System.out.println("Bienvenido jugador");
                     System.out.println("Introduzca su pass");
                     String pass = this.leerString();
                     Usuario u = p.coincidePass(nick,pass);
@@ -55,6 +56,7 @@ public class GestionInicioSesion {
                         System.out.println("No coincide la pass");
                     }
                 } else if(this.existeOperador(nick)){
+                    System.out.println("Bienvenido operador");
                     System.out.println("Introduzca su pass");
                     String pass = this.leerString();
                     String name = this.coincidePass(nick,pass);
@@ -91,6 +93,7 @@ public class GestionInicioSesion {
                 ok = true;
             }
         } else{
+            System.out.println("Bienvenido jugador");
             Jugador j1 = new Jugador();
             j1.preguntarDetallesJugador(p);
             if (j1.getPass() != null) {
