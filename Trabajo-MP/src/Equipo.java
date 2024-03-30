@@ -23,4 +23,10 @@ public class Equipo implements Serializable, Cloneable{
     public String getNombre() {
         return Nombre;
     }
+
+    public double getModificador() {
+        return Modificador;
+    }
+
+
 }

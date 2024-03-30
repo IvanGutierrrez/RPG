@@ -159,4 +159,34 @@ public abstract class Personaje implements Serializable, Cloneable {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
+
+    public double darVidaEsbirros() {
+        double suma = 0;
+        for(int i = 0; i < Esbirros.length; i++) {
+            suma=suma+Esbirros[i].getSalud();
+        }
+        return suma;
+    }
+
+    protected double DarValorAtqEquipo() {
+        double suma=0;
+        for(int i = 0; i < ArmasActivas.length; i++) {
+            suma=suma+ArmasActivas[i].getModificador();
+        }
+        suma=suma+ArmaduraActiva.getModATQ();
+
+        return suma;
+    }
+
+    protected double DarValorDefEquipo() {
+        double suma=0;
+        for(int i = 0; i < ArmasActivas.length; i++) {
+            suma=suma+ArmasActivas[i].getModDFS();
+        }
+        suma=suma+ArmaduraActiva.getModificador();
+
+        return suma;
+    }
+
+
 }

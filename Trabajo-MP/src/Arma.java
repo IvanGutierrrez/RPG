@@ -21,6 +21,8 @@ public class Arma extends Equipo implements Serializable, Cloneable {
         return Tipo;
     }
 
+    public double getModDFS() { return ModDFS;}
+
     public void setTipo(boolean tipo) {
         Tipo = tipo;
     }

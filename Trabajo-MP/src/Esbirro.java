@@ -7,9 +7,14 @@ import java.util.*;
  */
 public class Esbirro implements Serializable, Cloneable{
 
-    private String Nombre;
+    public String Nombre;
 
-    private double Salud;
+    public double Salud;
+
+
+    public String getNombre(){return this.Nombre;}
+
+    public double getSalud(){return this.Salud;}
 
     @Override
     public Esbirro clone() {

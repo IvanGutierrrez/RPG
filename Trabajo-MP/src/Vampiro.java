@@ -14,6 +14,13 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
 
     private double Sangre;
 
+    public void SubirSangre(){
+        this.Sangre=this.Sangre+4;
+        if(this.Sangre>10){
+            this.Sangre=10;
+        }
+    }
+
     @Override
     public String getNombre() {
         return this.Nombre;
@@ -21,14 +28,31 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
 
     @Override
     public double calcularPotencialAtaque() {
-        // TODO implement here
-        return 0.0d;
+        double suma=0;
+        suma=suma+super.Poder;
+        suma=suma+super.DarValorAtqEquipo();
+        if(this.Sangre>=5){
+            suma=suma+2;
+        }
+        suma=suma+super.HabilidadEspecial.DarAtq(this.Sangre);
+
+        return suma;
     }
 
     @Override
     public double calcularPotencialDefensa() {
-        // TODO implement here
-        return 0.0d;
+        double suma=0;
+        suma=suma+super.Poder;
+        suma=suma+super.DarValorDefEquipo();
+        if(this.Sangre>=5){
+            suma=suma+2;
+        }
+        double aux=super.HabilidadEspecial.DarDef(this.Sangre);
+        if(aux!=0){
+            this.Sangre=this.Sangre-super.HabilidadEspecial.getCoste();
+            suma=suma+aux;
+        }
+        return suma;
     }
 
     @Override
@@ -51,4 +75,8 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
     public Vampiro clone() {
         return (Vampiro) super.clone();
     }
+
+
+
+
 }

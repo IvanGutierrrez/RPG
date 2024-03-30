@@ -17,6 +17,10 @@ public class Modificador implements Serializable, Cloneable {
         return Nombre;
     }
 
+    public double getValor() {
+        return Valor;
+    }
+
     @Override
     public Modificador clone() {
         try {

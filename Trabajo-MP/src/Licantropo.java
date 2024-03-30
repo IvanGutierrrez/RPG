@@ -9,6 +9,13 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
 
     private double Rabia;
 
+    public void SubirRabia(){
+        this.Rabia=this.Rabia+1;
+        if(this.Rabia>3){
+            this.Rabia=3;
+        }
+    }
+
     @Override
     public String getNombre() {
         return this.Nombre;
@@ -16,14 +23,24 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
 
     @Override
     public double calcularPotencialAtaque() {
-        // TODO implement here
-        return 0.0d;
+        double suma=0;
+        suma=suma+super.Poder;
+        suma=suma+super.DarValorAtqEquipo();
+        suma=suma+this.Rabia;
+        suma=suma+super.HabilidadEspecial.DarAtq(this.Rabia);
+
+        return suma;
     }
 
     @Override
     public double calcularPotencialDefensa() {
-        // TODO implement here
-        return 0.0;
+        double suma=0;
+        suma=suma+super.Poder;
+        suma=suma+super.DarValorDefEquipo();
+        suma=suma+this.Rabia;
+        suma=suma+super.HabilidadEspecial.DarDef(this.Rabia);
+
+        return suma;
     }
 
     @Override
@@ -45,4 +62,5 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
     public Licantropo clone() {
         return (Licantropo) super.clone();
     }
+
 }

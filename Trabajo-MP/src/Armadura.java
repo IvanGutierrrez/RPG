@@ -14,4 +14,6 @@ public class Armadura extends Equipo implements Serializable, Cloneable{
     public Armadura clone() {
         return (Armadura) super.clone();
     }
+
+    public double getModATQ() { return ModATQ;}
 }
