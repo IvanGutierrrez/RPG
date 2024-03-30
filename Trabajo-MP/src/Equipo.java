@@ -7,9 +7,17 @@ import java.util.*;
  */
 public class Equipo implements Serializable, Cloneable{
 
-    private String Nombre;
+    protected String Nombre;
 
-    private double Modificador;
+    protected double Modificador;
+
+    public Equipo(){}
+
+
+    public Equipo(String nombre, double modificador) {
+        this.Nombre = nombre;
+        this.Modificador = modificador;
+    }
 
     @Override
     public Equipo clone() {

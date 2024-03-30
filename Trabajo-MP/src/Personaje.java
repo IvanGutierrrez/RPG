@@ -11,11 +11,11 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     protected HabilidadEspecial HabilidadEspecial;
 
-    protected Arma[] Armas;
+    protected List<Arma> Armas;
 
     protected Arma[] ArmasActivas;
 
-    protected Armadura[] Armaduras;
+    protected List<Armadura> Armaduras;
 
     protected Armadura ArmaduraActiva;
 
@@ -46,6 +46,7 @@ public abstract class Personaje implements Serializable, Cloneable {
     public void gestionEquipamiento() {
         int opcion = 0;
         int intento = 0;
+
         while (opcion != 3 || intento > 1) {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Gestionar armas");
@@ -68,21 +69,21 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     private void gestionarArmas() {
         System.out.println("Armas disponibles:");
-        for (int i = 0; i < Armas.length; i++) {
-            Arma arma = Armas[i];
+        for (int i = 0; i < Armas.size(); i++) {
+            Arma arma = Armas.get(i);
             System.out.println((i + 1) + ". " + arma.getNombre() + " (Tipo: " + (arma.getTipo() ? "Tipo 1" : "Tipo 2") + ")");
         }
         System.out.print("Seleccione un arma: ");
         int opcionArma = leerInt();
-        if (opcionArma >= 1 && opcionArma <= Armas.length) {
-            Arma armaSeleccionada = Armas[opcionArma - 1];
+        if (opcionArma >= 1 && opcionArma <= Armas.size()) {
+            Arma armaSeleccionada = Armas.get(opcionArma - 1);
             if (armaSeleccionada.getTipo()) {
                 // Tipo 1
                 this.ArmasActivas[0] = armaSeleccionada;
                 System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
                 opcionArma = leerInt();
-                if (opcionArma >= 1 && opcionArma <= Armas.length) {
-                    armaSeleccionada = Armas[opcionArma - 1];
+                if (opcionArma >= 1 && opcionArma <= Armas.size()) {
+                    armaSeleccionada = Armas.get(opcionArma - 1);
                     if (armaSeleccionada.getTipo()) {
                         this.ArmasActivas[1] = armaSeleccionada;
                         System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
@@ -103,15 +104,15 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     private void gestionarArmaduras() {
         System.out.println("Armaduras disponibles:");
-        for (int i = 0; i < Armaduras.length; i++) {
-            System.out.println((i + 1) + ". " + Armaduras[i].getNombre());
+        for (int i = 0; i < Armaduras.size(); i++) {
+            System.out.println((i + 1) + ". " + Armaduras.get(i).getNombre());
         }
         System.out.print("Seleccione una armadura: ");
         int opcionArmadura = leerInt();
 
-        if (opcionArmadura >= 1 && opcionArmadura <= Armaduras.length) {
-            System.out.println("Has seleccionado la armadura: " + Armaduras[opcionArmadura - 1].getNombre());
-            this.ArmaduraActiva = Armaduras[opcionArmadura - 1];
+        if (opcionArmadura >= 1 && opcionArmadura <= Armaduras.size()) {
+            System.out.println("Has seleccionado la armadura: " + Armaduras.get(opcionArmadura - 1).getNombre());
+            this.ArmaduraActiva = Armaduras.get(opcionArmadura - 1);
         } else {
             System.out.println("Selección de armadura inválida.");
         }
@@ -141,10 +142,11 @@ public abstract class Personaje implements Serializable, Cloneable {
     public Personaje clone() {
         try {
             Personaje clone = (Personaje) super.clone();
-            clone.Armas = this.Armas.clone();
+
+            clone.Armas = new ArrayList<>(this.Armas);
             clone.HabilidadEspecial = this.HabilidadEspecial.clone();
             clone.ArmasActivas = this.ArmasActivas.clone();
-            clone.Armaduras = this.Armaduras.clone();
+            clone.Armaduras = new ArrayList<>(this.Armaduras);
             clone.Esbirros = this.Esbirros.clone();
             clone.Debilidades = this.Debilidades.clone();
             clone.Fortalezas = this.Fortalezas.clone();
@@ -188,5 +190,27 @@ public abstract class Personaje implements Serializable, Cloneable {
         return suma;
     }
 
+    protected void setArmaduraActiva(Armadura armaduraActiva) {
+        ArmaduraActiva = armaduraActiva;
+    }
 
+    public List<Arma> getArmas() {
+        return Armas;
+    }
+
+    public Arma[] getArmasActivas() {
+        return ArmasActivas;
+    }
+
+    public List<Armadura> getArmaduras() {
+        return Armaduras;
+    }
+
+    public Armadura getArmaduraActiva() {
+        return ArmaduraActiva;
+    }
+
+    public void setArmasActivas(Arma[] armasActivas) {
+        ArmasActivas = armasActivas;
+    }
 }

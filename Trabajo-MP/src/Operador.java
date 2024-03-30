@@ -88,7 +88,7 @@ public class Operador extends Usuario implements Serializable {
 
     public void revisarCombatesNoVal(Queue<Combate> listaDesafiosSinValidar) {
         boolean done = false;
-        int opcion = 0;
+        int opcion;
 
         if (listaDesafiosSinValidar.isEmpty()){
             System.out.println("No hay desafios que validar.");
@@ -167,8 +167,157 @@ public class Operador extends Usuario implements Serializable {
     }
 
     public void editarPersonaje(Partida p) {
-        // TODO implement here
+        List<Personaje> listaPersonajes = p.getListaPersonajes();
+        System.out.println("Personaje a editar:");
+        System.out.println();
+        int ans;
+        if (!listaPersonajes.isEmpty()){
+            do {
+                for (int i = 0; i < listaPersonajes.size(); i++){
+                    System.out.println(i+1 + ". " + listaPersonajes.get(i).getNombre());
+                }
+                System.out.println(listaPersonajes.size()+1 +". Salir");
+                ans = leerInt();
+                if (ans >= 1 && ans<=listaPersonajes.size()){
+                    Personaje personajeActual = listaPersonajes.get(ans -1);
+                    menuCambioPersonaje(personajeActual);
+                }
+            } while (ans!=listaPersonajes.size()+1);
+        } else {
+            System.out.println("Aun no hay personajes");
+        }
+
     }
+
+    private void menuCambioPersonaje(Personaje personaje) {
+        boolean edited = false;
+        int opcion = 0;
+        while(opcion != 4 && opcion != 5) {
+            System.out.println("Eliga la opción");
+            System.out.println("1.-Editar Armas");
+            System.out.println("2.-Editar Armadura");
+            System.out.println("3.-Editar Personaje");
+            System.out.println("4.-Cerrar Sesión");
+            System.out.println("5.-Dar de Baja Usuario");
+            opcion = this.leerInt();
+            if (opcion == 1) {
+                edited = gestionArmas(personaje);
+            } else if (opcion == 2) {
+                edited = gestionArmadura(personaje);
+            } else if (opcion == 3) {
+                System.out.println("TEst");
+            } else if (opcion == 4) {
+                System.out.println("Esperamos volverte a ver pronto");
+            }
+            if (edited){
+                personaje.setVersion(personaje.getVersion()+1);
+            }
+        }
+    }
+
+    private boolean gestionArmas(Personaje personaje) {
+        int ans;
+        boolean changed;
+        do {
+            System.out.println("1. Añadir Arma");
+            System.out.println("2. Remover Arma");
+            System.out.println("3. Salir");
+            ans = leerInt();
+            if(ans == 1){
+                changed = añadirArma(personaje);
+            } else {
+                changed = removerArma(personaje);
+            }
+        } while (ans!=3);
+
+        return changed;
+    }
+
+    private boolean gestionArmadura(Personaje personaje) {
+        int ans;
+        boolean changed;
+        do {
+            System.out.println("1. Añadir Armadura");
+            System.out.println("2. Remover Armadura");
+            System.out.println("3. Salir");
+            ans = leerInt();
+            if(ans == 1){
+                changed = añadirArmadura(personaje);
+            } else {
+                changed = removerArmadura(personaje);
+            }
+        } while (ans!=3);
+
+        return changed;
+    }
+
+    private boolean removerArma(Personaje personaje) {
+        List<Arma> listaArmas = personaje.getArmas();
+        if (listaArmas.isEmpty()){
+            System.out.println("No hay armas por eliminar");
+            return false;
+        } else{
+            System.out.println("¿Que arma vas a eliminar?");
+            for (int i = 0; i < listaArmas.size(); i++) {
+                System.out.println((i + 1) + ". " + listaArmas.get(i).getNombre());
+            }
+            int input;
+            do {
+                input = leerInt();
+                listaArmas.remove(input -1);
+                if (input>0 && input <=listaArmas.size()){
+                    System.out.println("Listo!");
+                    return true;
+                } else {
+                    System.out.println("Valor no valido, introduzca uno nuevo");
+                }
+            } while(!(input>0 && input <=listaArmas.size()));
+        }
+        return false;
+    }
+
+    private boolean removerArmadura(Personaje personaje) {
+        List<Arma> listaArnaduras = personaje.getArmas();
+        if (listaArnaduras.isEmpty()){
+            System.out.println("No hay armaduras por eliminar");
+            return false;
+        } else{
+            System.out.println("¿Que armadura vas a eliminar?");
+            for (int i = 0; i < listaArnaduras.size(); i++) {
+                System.out.println((i + 1) + ". " + listaArnaduras.get(i).getNombre());
+            }
+            int input;
+            do {
+                input = leerInt();
+                listaArnaduras.remove(input -1);
+                if (input>0 && input <=listaArnaduras.size()){
+                    System.out.println("Listo!");
+                    return true;
+                } else {
+                    System.out.println("Valor no valido, introduzca uno nuevo");
+                }
+            } while(!(input>0 && input <=listaArnaduras.size()));
+        }
+        return false;
+    }
+
+    private boolean añadirArma(Personaje personaje) {
+        Arma arma = new Arma();
+        personaje.getArmas().add(arma);
+        return true;
+    }
+
+    private boolean añadirArmadura(Personaje personaje) {
+        Armadura armarmadura = new Armadura();
+        personaje.getArmaduras().add(armarmadura);
+        return true;
+    }
+
+
+
+
+
+
 
     private int leerInt(){
         Scanner scanner = new Scanner(System.in);

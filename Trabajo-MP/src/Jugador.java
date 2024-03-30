@@ -363,9 +363,9 @@ public class Jugador extends Usuario implements Serializable {
             System.out.println("Fecha: " + elemento.getFecha());
             System.out.println("Ganador: " + (elemento.getGanador() != null ? elemento.getGanador().getNombre() : "N/A"));
             System.out.println("Jugadores con Esbirros Sin Derrotar:");
-            for (Jugador jugador : elemento.getJugadorConEsbirrosSinDerrotar()) {
-                System.out.println("- " + jugador.getNombre());
-            }
+            //for (Jugador jugador : elemento.getJugadorConEsbirrosSinDerrotar()) {
+            //    System.out.println("- " + jugador.getNombre());
+            //}
             System.out.println("Modificadores:");
             for (Modificador modificador : elemento.getModificadores()) {
                 System.out.println("- " + modificador.getNombre());
