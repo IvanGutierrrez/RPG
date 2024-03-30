@@ -61,6 +61,8 @@ public class GestionInicioSesion {
                     if (name != null) {
                         Operador op = new Operador(name, nick, pass);
                         p.setUsuarioActivo(op);
+                        p.Play();
+                        ok = 2;
                     } else{
                         System.out.println("No coincide la pass");
                     }
@@ -150,13 +152,12 @@ public class GestionInicioSesion {
         BufferedReader buf = new BufferedReader(fileReader);
         String linea = buf.readLine(); // Lees la primera línea
         String[] result;
-        while (linea != null) {
+        while ((linea = buf.readLine()) != null) {
             result = linea.split(",");
             if (result[1].equals(nick) && result[2].equals(pass)) {
                 buf.close(); // Importante cerrar el BufferedReader
                 return result[0];
             }
-            linea = buf.readLine(); // Lees la siguiente línea
         }
         buf.close(); // Importante cerrar el BufferedReader
         return null;
@@ -170,7 +171,7 @@ public class GestionInicioSesion {
         String[] result;
         while ((linea = buf.readLine()) != null) {
             result = linea.split(",");
-            if (result[1] == nick){
+            if (result[1].equals(nick)){
                 buf.close(); // Importante cerrar el BufferedReader
                 return true;
             }
