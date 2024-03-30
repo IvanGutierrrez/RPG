@@ -15,6 +15,10 @@ public class HabilidadEspecial implements Serializable, Cloneable{
 
     private double Coste;
 
+    public HabilidadEspecial(){
+        buildHabilidadEspecialFromInput();
+    }
+
     @Override
     public HabilidadEspecial clone() {
         try {
@@ -38,5 +42,37 @@ public class HabilidadEspecial implements Serializable, Cloneable{
             return this.ValorDFS;
         }
         return 0;
+    }
+
+    public void buildHabilidadEspecialFromInput() {
+        Scanner scanner = new Scanner(System.in);
+        String nombre;
+        do {
+            System.out.println("Ingrese nombre de la habilidad especial:");
+            nombre = scanner.nextLine();
+        } while (nombre.isEmpty());
+
+        double valorATC;
+        do {
+            System.out.println("Ingrese el valor de la habilidad especial para el ataque:");
+            valorATC = scanner.nextDouble();
+        } while (valorATC < 0);
+
+        double valorDFS;
+        do {
+            System.out.println("Ingrese el valor de la habilidad especial para la defensa:");
+            valorDFS = scanner.nextDouble();
+        } while (valorDFS < 0);
+
+        double coste;
+        do {
+            System.out.println("Ingrese el costo de la habilidad especial:");
+            coste = scanner.nextDouble();
+        } while (coste < 0);
+
+        this.Nombre = nombre;
+        this.ValorATC = valorATC;
+        this.ValorDFS = valorDFS;
+        this.Coste = coste;
     }
 }

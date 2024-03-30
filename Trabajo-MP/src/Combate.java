@@ -96,17 +96,17 @@ public class Combate implements Serializable {
 
     private double CalcularModificadores(Modificador[] modificadores, Personaje jugadorRetado) {
         double suma=0;
-        for (int i = 0; i < jugadorRetado.Debilidades.length; i++) {
+        for (int i = 0; i < jugadorRetado.Debilidades.size(); i++) {
             for (int j = 0; j < modificadores.length; j++) {
-                if (jugadorRetado.Debilidades[i] == modificadores[j]) {
-                    suma=suma+jugadorRetado.Debilidades[i].getValor();
+                if (jugadorRetado.Debilidades.get(i) == modificadores[j]) {
+                    suma=suma+jugadorRetado.Debilidades.get(i).getValor();
                 }
             }
         }
-        for (int i = 0; i < jugadorRetado.Fortalezas.length; i++) {
+        for (int i = 0; i < jugadorRetado.Fortalezas.size(); i++) {
             for (int j = 0; j < modificadores.length; j++) {
-                if (jugadorRetado.Fortalezas[i] == modificadores[j]) {
-                    suma=suma+jugadorRetado.Fortalezas[i].getValor();
+                if (jugadorRetado.Fortalezas.get(i) == modificadores[j]) {
+                    suma=suma+jugadorRetado.Fortalezas.get(i).getValor();
                 }
             }
         }
