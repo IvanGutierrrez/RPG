@@ -51,23 +51,26 @@ public class Operador extends Usuario implements Serializable {
     @Override
     public void Menu(Partida p) {
         int opcion = 0;
-        while(opcion != 4 && opcion != 5) {
+        while(opcion != 5 && opcion != 6) {
             System.out.println("Eliga la opción");
             System.out.println("1.-Revisar Combates no validos");
             System.out.println("2.-Bloquear/Desbloquear Jugador");
-            System.out.println("3.-Editar Personaje");
-            System.out.println("4.-Cerrar Sesión");
-            System.out.println("5.-Dar de Baja Usuario");
+            System.out.println("3.-Crear Personaje");
+            System.out.println("4.-Editar Personaje");
+            System.out.println("5.-Cerrar Sesión");
+            System.out.println("6.-Dar de Baja Usuario");
             opcion = this.leerInt();
             if (opcion == 1) {
                 this.revisarCombatesNoVal(p.getCombateQueue());
             } else if (opcion == 2) {
                 this.bloquearJugador(p.getMapUsuarios());
-            } else if (opcion == 3) {
-                this.editarPersonaje(p);
+            } else if (opcion == 3){
+                this.crearPersonaje(p);
             } else if (opcion == 4) {
-                System.out.println("Esperamos volverte a ver pronto");
+                this.editarPersonaje(p);
             } else if (opcion == 5) {
+                System.out.println("Esperamos volverte a ver pronto");
+            } else if (opcion == 6) {
                 int numBaja = 0;
                 System.out.println("¿Estas seguro?");
                 while (numBaja != 1 && numBaja != 2){
@@ -166,6 +169,27 @@ public class Operador extends Usuario implements Serializable {
         }
     }
 
+    public void crearPersonaje(Partida partida){
+        int ans;
+        do {
+            System.out.println("1. Crear vampiro");
+            System.out.println("2. Crear licantropo");
+            System.out.println("3. Crear cazador");
+            ans = leerInt();
+            if(ans == 1){
+                Personaje nuevoPersonaje = new Vampiro();
+                partida.getListaPersonajes().add(nuevoPersonaje);
+            } else if (ans == 2) {
+                Personaje nuevoPersonaje = new Licantropo();
+                partida.getListaPersonajes().add(nuevoPersonaje);
+            } else if (ans == 3) {
+                Personaje nuevoPersonaje = new Cazador();
+                partida.getListaPersonajes().add(nuevoPersonaje);
+            }
+
+        } while (ans<=0 || ans >3);
+    }
+
     public void editarPersonaje(Partida p) {
         List<Personaje> listaPersonajes = p.getListaPersonajes();
         System.out.println("Personaje a editar:");
@@ -192,28 +216,190 @@ public class Operador extends Usuario implements Serializable {
     private void menuCambioPersonaje(Personaje personaje) {
         boolean edited = false;
         int opcion = 0;
-        while(opcion != 4 && opcion != 5) {
+        while(opcion != 4) {
             System.out.println("Eliga la opción");
             System.out.println("1.-Editar Armas");
             System.out.println("2.-Editar Armadura");
             System.out.println("3.-Editar Personaje");
-            System.out.println("4.-Cerrar Sesión");
-            System.out.println("5.-Dar de Baja Usuario");
+            System.out.println("4.-Salir");
             opcion = this.leerInt();
             if (opcion == 1) {
                 edited = gestionArmas(personaje);
             } else if (opcion == 2) {
                 edited = gestionArmadura(personaje);
             } else if (opcion == 3) {
-                System.out.println("TEst");
+                edited = gestionHabilidadEspecial(personaje);
             } else if (opcion == 4) {
-                System.out.println("Esperamos volverte a ver pronto");
+                edited = false;
             }
             if (edited){
                 personaje.setVersion(personaje.getVersion()+1);
             }
         }
     }
+
+    private boolean gestionModificadores(Personaje personaje) {
+        int ans;
+        boolean changed;
+        do {
+            System.out.println("1. Modificar Fortalezas");
+            System.out.println("2. Modificar Debilidades");
+            System.out.println("3. Salir");
+            ans = leerInt();
+            if(ans == 1){
+                changed = ModificarFortalezas(personaje);
+            } else if (ans == 2) {
+                changed = removerHabilidadEspecial(personaje);
+            } else {
+                changed = false;
+            }
+
+        } while (ans!=3);
+
+        return changed;
+    }
+
+    private boolean ModificarDebilidades(Personaje personaje) {
+        int ans;
+        boolean changed;
+        do {
+            System.out.println("1. Añadir Debilidad");
+            System.out.println("2. Remover Debilidad");
+            System.out.println("3. Salir");
+            ans = leerInt();
+            if(ans == 1){
+                changed = añadirDebilidad(personaje);
+            } else if (ans == 2) {
+                changed = removerDebilidad(personaje);
+            } else {
+                changed = false;
+            }
+
+        } while (ans!=3);
+
+        return changed;
+    }
+
+    private boolean ModificarFortalezas(Personaje personaje) {
+        int ans;
+        boolean changed;
+        do {
+            System.out.println("1. Añadir Fortaleza");
+            System.out.println("2. Remover Fortaleza");
+            System.out.println("3. Salir");
+            ans = leerInt();
+            if(ans == 1){
+                changed = añadirFortaleza(personaje);
+            } else if (ans == 2) {
+                changed = removerFortaleza(personaje);
+            } else {
+                changed = false;
+            }
+
+        } while (ans!=3);
+
+        return changed;
+    }
+
+    private boolean añadirFortaleza(Personaje personaje) {
+        Modificador fortaleza = new Modificador();
+        personaje.getFortalezas().add(fortaleza);
+        return true;
+    }
+
+    private boolean removerFortaleza(Personaje personaje) {
+        List<Modificador> fortalezas = personaje.getFortalezas();
+        if (fortalezas.isEmpty()) {
+            System.out.println("No hay fortalezas por eliminar");
+            return false;
+        } else {
+            System.out.println("¿Qué fortaleza vas a eliminar?");
+            for (int i = 0; i < fortalezas.size(); i++) {
+                System.out.println((i + 1) + ". " + fortalezas.get(i).getNombre());
+            }
+            System.out.println(fortalezas.size() + 1 + ". Salir");
+            int input;
+            do {
+                input = leerInt();
+                if (input > 0 && input <= fortalezas.size()) {
+                    fortalezas.remove(input - 1);
+                    System.out.println("¡Fortaleza eliminada exitosamente!");
+                    return true;
+                } else if (input == fortalezas.size() + 1) {
+                    return false;
+                } else {
+                    System.out.println("Valor no válido, por favor introduzca uno nuevo");
+                }
+            } while (true);
+        }
+    }
+
+    private boolean removerDebilidad(Personaje personaje) {
+        List<Modificador> debilidades = personaje.getDebilidades();
+        if (debilidades.isEmpty()) {
+            System.out.println("No hay debilidades por eliminar");
+            return false;
+        } else {
+            System.out.println("¿Qué debilidad vas a eliminar?");
+            for (int i = 0; i < debilidades.size(); i++) {
+                System.out.println((i + 1) + ". " + debilidades.get(i).getNombre());
+            }
+            System.out.println(debilidades.size() + 1 + ". Salir");
+            int input;
+            do {
+                input = leerInt();
+                if (input > 0 && input <= debilidades.size()) {
+                    debilidades.remove(input - 1);
+                    System.out.println("¡Debilidad eliminada exitosamente!");
+                    return true;
+                } else if (input == debilidades.size() + 1) {
+                    return false;
+                } else {
+                    System.out.println("Valor no válido, por favor introduzca uno nuevo");
+                }
+            } while (true);
+        }
+    }
+
+    private boolean añadirDebilidad(Personaje personaje) {
+        Modificador debilidad = new Modificador();
+        personaje.getDebilidades().add(debilidad);
+        return true;
+    }
+
+
+    private boolean gestionHabilidadEspecial(Personaje personaje) {
+        int ans;
+        boolean changed;
+        do {
+            System.out.println("1. Añadir Habilidad Especial");
+            System.out.println("2. Remover Habilidad Especial");
+            System.out.println("3. Salir");
+            ans = leerInt();
+            if(ans == 1){
+                changed = añadirHabilidadEspecial(personaje);
+            } else if (ans == 2) {
+                changed = removerHabilidadEspecial(personaje);
+            } else {
+                changed = false;
+            }
+
+        } while (ans!=3);
+
+        return changed;
+    }
+
+    private boolean removerHabilidadEspecial(Personaje personaje) {
+        personaje.setHabilidadEspecial(null);
+        return true;
+    }
+
+    private boolean añadirHabilidadEspecial(Personaje personaje) {
+        HabilidadEspecial habilidadEspecial = new HabilidadEspecial();
+        personaje.setHabilidadEspecial(habilidadEspecial);
+        return true;
+    }
+
 
     private boolean gestionArmas(Personaje personaje) {
         int ans;
@@ -225,9 +411,12 @@ public class Operador extends Usuario implements Serializable {
             ans = leerInt();
             if(ans == 1){
                 changed = añadirArma(personaje);
-            } else {
+            } else if (ans == 2) {
                 changed = removerArma(personaje);
+            } else {
+                changed = false;
             }
+
         } while (ans!=3);
 
         return changed;
@@ -243,9 +432,12 @@ public class Operador extends Usuario implements Serializable {
             ans = leerInt();
             if(ans == 1){
                 changed = añadirArmadura(personaje);
-            } else {
+            } else if (ans == 2) {
                 changed = removerArmadura(personaje);
+            } else {
+                changed = false;
             }
+
         } while (ans!=3);
 
         return changed;
@@ -264,8 +456,8 @@ public class Operador extends Usuario implements Serializable {
             int input;
             do {
                 input = leerInt();
-                listaArmas.remove(input -1);
                 if (input>0 && input <=listaArmas.size()){
+                    listaArmas.remove(input-1);
                     System.out.println("Listo!");
                     return true;
                 } else {
@@ -312,11 +504,6 @@ public class Operador extends Usuario implements Serializable {
         personaje.getArmaduras().add(armarmadura);
         return true;
     }
-
-
-
-
-
 
 
     private int leerInt(){

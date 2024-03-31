@@ -33,25 +33,48 @@ public class Arma extends Equipo implements Serializable, Cloneable {
 
 
     public void buildArmaFromInput() {
+        this.Nombre = inputNombre();
+        this.Modificador = inputModificador();
+        this.Tipo = inputTipo();
+        this.ModDFS = inputModDFS();
+    }
+
+    protected String inputNombre() {
         Scanner scanner = new Scanner(System.in);
-        String name;
+        String nombre;
         do {
             System.out.println("Ingrese nombre del arma:");
-            name = scanner.nextLine();
-        } while (!name.isEmpty());
+            nombre = scanner.nextLine().trim();
+        } while (nombre.isEmpty());
+        return nombre;
+    }
 
-        Double modificador;
+    protected double inputModificador() {
+        double modif;
         do {
             System.out.println("Ingrese el valor del modificador:");
-            modificador = scanner.nextDouble();
-        } while (modificador < 0);
+            modif = leerDouble();
+            if (modif <= 0) {
+                System.out.println("El valor debe ser mayor que 0.");
+            }
+        } while (modif <= 0);
+        return modif;
+    }
 
-        double modDFS;
+    protected double inputModDFS() {
+        double modif;
         do {
-            System.out.println("Ingrese el valor de ModDFS:");
-            modDFS = scanner.nextDouble();
-        } while (modDFS < 0);
+            System.out.println("Ingrese el valor del ModDFS:");
+            modif = leerDouble();
+            if (modif <= 0) {
+                System.out.println("El valor debe ser mayor que 0.");
+            }
+        } while (modif <= 0);
+        return modif;
+    }
 
+    protected boolean inputTipo() {
+        Scanner scanner = new Scanner(System.in);
         String tipoStr;
         boolean tipo;
         do {
@@ -61,16 +84,16 @@ public class Arma extends Equipo implements Serializable, Cloneable {
                 System.out.println("Valor incorrecto. Por favor, ingrese 'true' o 'false'.");
             }
         } while (!tipoStr.equalsIgnoreCase("true") && !tipoStr.equalsIgnoreCase("false"));
-
         tipo = Boolean.parseBoolean(tipoStr);
-
-        this.Nombre = name;
-        this.Modificador = modificador;
-        this.ModDFS = modDFS;
-        this.Tipo =tipo;
+        return tipo;
     }
 
     public void setModDFS(double modDFS) {
         ModDFS = modDFS;
+    }
+
+    private double leerDouble() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextDouble();
     }
 }

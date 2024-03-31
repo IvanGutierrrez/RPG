@@ -7,7 +7,39 @@ import java.util.*;
  */
 public class Cazador extends Personaje implements Serializable, Cloneable {
 
+    public Cazador(){
+        buildPersonajeFromInput();
+    }
+
     private double Voluntad;
+
+    private void buildPersonajeFromInput() {
+        this.Armas = new ArrayList<>();
+        this.ArmasActivas = new ArrayList<>();
+        this.Armaduras = new ArrayList<>();
+        this.Esbirros = new ArrayList<>();
+        this.Debilidades = new ArrayList<>();
+        this.Fortalezas = new ArrayList<>();
+        this.Version = 1;
+        this.Nombre = inputNombre();
+        this.Voluntad = inputVoluntad();
+        this.Oro = inputOro();
+        this.Salud = inputSalud();
+        this.Poder = inputPoder();
+    }
+
+
+    protected double inputVoluntad() {
+        double voluntad;
+        do {
+            System.out.println("Ingrese cantidad de voluntad:");
+            voluntad = leerDouble();
+            if (voluntad <= 0) {
+                System.out.println("El valor de voluntad debe ser mayor que 0.");
+            }
+        } while (voluntad <= 0);
+        return voluntad;
+    }
 
     public void BajarVoluntad(){
         this.Voluntad=this.Voluntad-1;
@@ -41,6 +73,12 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
 
         return suma;
     }
+
+    private double leerDouble() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextDouble();
+    }
+
 
     @Override
     public void gestionEquipamiento() {

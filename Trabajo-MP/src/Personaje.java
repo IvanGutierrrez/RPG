@@ -13,13 +13,13 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     protected List<Arma> Armas;
 
-    protected Arma[] ArmasActivas;
+    protected List<Arma> ArmasActivas;
 
     protected List<Armadura> Armaduras;
 
     protected Armadura ArmaduraActiva;
 
-    protected Esbirro[] Esbirros;
+    protected List<Esbirro> Esbirros;
 
     protected double Oro;
 
@@ -27,9 +27,9 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     protected double Poder;
 
-    protected Modificador[] Debilidades;
+    protected List<Modificador> Debilidades;
 
-    protected Modificador[] Fortalezas;
+    protected List<Modificador> Fortalezas;
 
     protected int Version;
 
@@ -79,13 +79,13 @@ public abstract class Personaje implements Serializable, Cloneable {
             Arma armaSeleccionada = Armas.get(opcionArma - 1);
             if (armaSeleccionada.getTipo()) {
                 // Tipo 1
-                this.ArmasActivas[0] = armaSeleccionada;
+                this.ArmasActivas.set(0, armaSeleccionada);
                 System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
                 opcionArma = leerInt();
                 if (opcionArma >= 1 && opcionArma <= Armas.size()) {
                     armaSeleccionada = Armas.get(opcionArma - 1);
                     if (armaSeleccionada.getTipo()) {
-                        this.ArmasActivas[1] = armaSeleccionada;
+                        this.ArmasActivas.set(1, armaSeleccionada);
                         System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
                     } else {
                         System.out.print("Este arma es de dos manos y solo tienes una disponible");
@@ -93,8 +93,8 @@ public abstract class Personaje implements Serializable, Cloneable {
                 }
             } else {
                 // Tipo 2
-                this.ArmasActivas[0] = armaSeleccionada;
-                this.ArmasActivas[1] = null;
+                this.ArmasActivas.set(0, armaSeleccionada);
+                this.ArmasActivas.set(1, null);
                 System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
             }
         } else {
@@ -145,11 +145,11 @@ public abstract class Personaje implements Serializable, Cloneable {
 
             clone.Armas = new ArrayList<>(this.Armas);
             clone.HabilidadEspecial = this.HabilidadEspecial.clone();
-            clone.ArmasActivas = this.ArmasActivas.clone();
+            clone.ArmasActivas = new ArrayList<>(this.ArmasActivas);
             clone.Armaduras = new ArrayList<>(this.Armaduras);
-            clone.Esbirros = this.Esbirros.clone();
-            clone.Debilidades = this.Debilidades.clone();
-            clone.Fortalezas = this.Fortalezas.clone();
+            clone.Esbirros = new ArrayList<>(this.Esbirros);
+            clone.Debilidades = new ArrayList<>(this.Debilidades);
+            clone.Fortalezas = new ArrayList<>(this.Fortalezas);
             clone.ArmaduraActiva = this.ArmaduraActiva.clone();
             return clone;
         } catch (CloneNotSupportedException e) {
@@ -164,16 +164,16 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     public double darVidaEsbirros() {
         double suma = 0;
-        for(int i = 0; i < Esbirros.length; i++) {
-            suma=suma+Esbirros[i].getSalud();
+        for(int i = 0; i < Esbirros.size(); i++) {
+            suma=suma+Esbirros.get(i).getSalud();
         }
         return suma;
     }
 
     protected double DarValorAtqEquipo() {
         double suma=0;
-        for(int i = 0; i < ArmasActivas.length; i++) {
-            suma=suma+ArmasActivas[i].getModificador();
+        for(int i = 0; i < ArmasActivas.size(); i++) {
+            suma=suma+ArmasActivas.get(i).getModificador();
         }
         suma=suma+ArmaduraActiva.getModATQ();
 
@@ -182,35 +182,104 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     protected double DarValorDefEquipo() {
         double suma=0;
-        for(int i = 0; i < ArmasActivas.length; i++) {
-            suma=suma+ArmasActivas[i].getModDFS();
+        for(int i = 0; i < ArmasActivas.size(); i++) {
+            suma=suma+ArmasActivas.get(i).getModDFS();
         }
         suma=suma+ArmaduraActiva.getModificador();
 
         return suma;
     }
 
-    protected void setArmaduraActiva(Armadura armaduraActiva) {
-        ArmaduraActiva = armaduraActiva;
-    }
 
-    public List<Arma> getArmas() {
+
+    protected List<Arma> getArmas() {
         return Armas;
     }
 
-    public Arma[] getArmasActivas() {
+    protected List<Arma> getArmasActivas() {
         return ArmasActivas;
     }
 
-    public List<Armadura> getArmaduras() {
+    protected List<Armadura> getArmaduras() {
         return Armaduras;
     }
 
-    public Armadura getArmaduraActiva() {
-        return ArmaduraActiva;
+    protected List<Modificador> getDebilidades() {
+        return Debilidades;
     }
 
-    public void setArmasActivas(Arma[] armasActivas) {
-        ArmasActivas = armasActivas;
+    protected List<Modificador> getFortalezas() {
+        return Fortalezas;
+    }
+
+    private double leerDouble() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextDouble();
+    }
+
+    protected int inputOro() {
+        int oro;
+        do {
+            System.out.println("Ingrese cantidad de oro:");
+            oro = leerInt();
+            if (oro <= 0) {
+                System.out.println("El valor de oro debe ser mayor que 0.");
+            }
+        } while (oro <= 0);
+        return oro;
+
+    }
+
+    protected String inputNombre() {
+        Scanner scanner = new Scanner(System.in);
+        String nombre;
+        do {
+            System.out.println("Ingrese el nombre:");
+            nombre = scanner.nextLine().trim();
+            if (nombre.isEmpty()) {
+                System.out.println("El nombre no puede estar vacío. Por favor, ingrese un nombre válido.");
+            }
+        } while (nombre.isEmpty());
+        return nombre;
+    }
+
+    protected double inputSalud() {
+        double salud;
+        do {
+            System.out.println("Ingrese cantidad de salud:");
+            salud = leerDouble();
+            if (salud <= 0) {
+                System.out.println("El valor de salud debe ser mayor que 0.");
+            }
+        } while (salud <= 0);
+        return salud;
+    }
+
+    protected double inputPoder() {
+        double poder;
+        do {
+            System.out.println("Ingrese cantidad de poder:");
+            poder = leerDouble();
+            if (poder <= 0) {
+                System.out.println("El valor de poder debe ser mayor que 0.");
+            }
+        } while (poder <= 0);
+        return poder;
+    }
+
+    protected void setHabilidadEspecial(HabilidadEspecial habilidadEspecial) {
+        HabilidadEspecial = habilidadEspecial;
+    }
+
+    protected void setOro(double oro) {
+        Oro = oro;
+    }
+
+    protected void setSalud(double salud) {
+        Salud = salud;
+    }
+
+    protected void setPoder(double poder) {
+        Poder = poder;
     }
 }
