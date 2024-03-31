@@ -123,6 +123,12 @@ public class GestionInicioSesion {
         if (!operadorArchivo.exists()) {
             try {
                 operadorArchivo.createNewFile(); // Crea el archivo
+                //añade la contraseña epecial al principio del archivo
+                File file = new File("Trabajo-MP/datos/operadores/operador");
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file, true)); // true para permitir la escritura al final del archivo
+                writer.write("1password");
+                writer.newLine(); // Nueva línea para el próximo operador
+                writer.close(); // Cerrar el escritor
             } catch (IOException e) {
                 e.printStackTrace(); // Manejo de excepciones en caso de error
             }
@@ -193,15 +199,6 @@ public class GestionInicioSesion {
         }
         buf.close(); // Importante cerrar el BufferedReader
         return linea.equals(passEspecial);
-    }
-
-    public void salir() {
-        // TODO implement here
-    }
-
-    public Usuario preguntarDetallesIS() {
-        // TODO implement here
-        return null;
     }
 
     private int leerInt(){
