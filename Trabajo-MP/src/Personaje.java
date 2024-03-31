@@ -212,8 +212,59 @@ public abstract class Personaje implements Serializable, Cloneable {
         return Fortalezas;
     }
 
-    protected void buildPersonajeFromInput(){
+    private double leerDouble() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextDouble();
+    }
 
+    protected int inputOro() {
+        int oro;
+        do {
+            System.out.println("Ingrese cantidad de oro:");
+            oro = leerInt();
+            if (oro <= 0) {
+                System.out.println("El valor de oro debe ser mayor que 0.");
+            }
+        } while (oro <= 0);
+        return oro;
+
+    }
+
+    protected String inputNombre() {
+        Scanner scanner = new Scanner(System.in);
+        String nombre;
+        do {
+            System.out.println("Ingrese el nombre:");
+            nombre = scanner.nextLine().trim();
+            if (nombre.isEmpty()) {
+                System.out.println("El nombre no puede estar vacío. Por favor, ingrese un nombre válido.");
+            }
+        } while (nombre.isEmpty());
+        return nombre;
+    }
+
+    protected double inputSalud() {
+        double salud;
+        do {
+            System.out.println("Ingrese cantidad de salud:");
+            salud = leerDouble();
+            if (salud <= 0) {
+                System.out.println("El valor de salud debe ser mayor que 0.");
+            }
+        } while (salud <= 0);
+        return salud;
+    }
+
+    protected double inputPoder() {
+        double poder;
+        do {
+            System.out.println("Ingrese cantidad de poder:");
+            poder = leerDouble();
+            if (poder <= 0) {
+                System.out.println("El valor de poder debe ser mayor que 0.");
+            }
+        } while (poder <= 0);
+        return poder;
     }
 
     protected void setHabilidadEspecial(HabilidadEspecial habilidadEspecial) {

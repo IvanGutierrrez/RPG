@@ -16,6 +16,10 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
         }
     }
 
+    public Licantropo(){
+        buildPersonajeFromInput();
+    }
+
     @Override
     public String getNombre() {
         return this.Nombre;
@@ -43,6 +47,33 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
         return suma;
     }
 
+    private void buildPersonajeFromInput() {
+        this.Armas = new ArrayList<>();
+        this.Esbirros = new ArrayList<>();
+        this.ArmasActivas = new ArrayList<>();
+        this.Armaduras = new ArrayList<>();
+        this.Debilidades = new ArrayList<>();
+        this.Fortalezas = new ArrayList<>();
+        this.Version = 1;
+        this.Nombre = inputNombre();
+        this.Rabia = inputRabia();
+        this.Oro = inputOro();
+        this.Salud = inputSalud();
+        this.Poder = inputPoder();
+    }
+
+    protected double inputRabia() {
+        double rabia;
+        do {
+            System.out.println("Ingrese cantidad de rabia:");
+            rabia = leerDouble();
+            if (rabia < 0) {
+                System.out.println("El valor de la rabia debe ser mayor o igual a 0.");
+            }
+        } while (rabia < 0);
+        return rabia;
+    }
+
     @Override
     public void gestionEquipamiento() {
         // TODO implement here
@@ -61,6 +92,11 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
     @Override
     public Licantropo clone() {
         return (Licantropo) super.clone();
+    }
+
+    private double leerDouble() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextDouble();
     }
 
 }
