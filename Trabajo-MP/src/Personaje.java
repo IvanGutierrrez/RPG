@@ -190,7 +190,33 @@ public abstract class Personaje implements Serializable, Cloneable {
         return suma;
     }
 
+    protected void editNombre(){
+        System.out.println("Nombre actual: " + this.getNombre());
+        this.Nombre = inputNombre();
+    }
 
+    protected void editOro(){
+        System.out.println("Oro actual: " + this.getOro());
+        this.Oro = inputOro();
+    }
+
+    protected void editSalud(){
+        System.out.println("Salud actual: " + this.getSalud());
+        this.Salud = inputSalud();
+    }
+
+    protected void editPoder(){
+        System.out.println("Poder actual: " + this.getPoder());
+        this.Poder = inputPoder();
+    }
+
+    public double getPoder() {
+        return Poder;
+    }
+
+    public double getSalud() {
+        return Salud;
+    }
 
     protected List<Arma> getArmas() {
         return Armas;
@@ -265,6 +291,14 @@ public abstract class Personaje implements Serializable, Cloneable {
             }
         } while (poder <= 0);
         return poder;
+    }
+
+    public HabilidadEspecial getHabilidadEspecial() {
+        return HabilidadEspecial;
+    }
+
+    public List<Esbirro> getEsbirros() {
+        return Esbirros;
     }
 
     protected void setHabilidadEspecial(HabilidadEspecial habilidadEspecial) {

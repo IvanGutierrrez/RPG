@@ -14,11 +14,6 @@ public class Equipo implements Serializable, Cloneable{
     public Equipo(){}
 
 
-    public Equipo(String nombre, double modificador) {
-        this.Nombre = nombre;
-        this.Modificador = modificador;
-    }
-
     @Override
     public Equipo clone() {
         try {
