@@ -175,7 +175,11 @@ public class Jugador extends Usuario implements Serializable {
                         if (this.getPersonajeActivo() == null) {
                             this.selecPersonajeActivo(p);
                         }
-                        this.getPersonajeActivo().gestionEquipamiento();
+                        if (this.personajeActivo != null) {
+                            this.getPersonajeActivo().gestionEquipamiento();
+                        } else {
+                            System.out.println("Seleccione un personaje antes de gestionar su equipamiento");
+                        }
                     } else if (opcion == 3) {
                         this.selecPersonajeActivo(p);
                     } else if (opcion == 4) {
@@ -283,16 +287,18 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     public void desafiar(Partida p) {
-        Jugador retado = this.pedirDesafiado(p);
-        if (retado != null) {
-            int apuesta = this.seleccionApuesta(retado);
-            if (apuesta != -1) {
-                Combate combate = new Combate(this,retado,apuesta,this.getPersonajeActivo(),retado.getPersonajeActivo(),LocalDateTime.now());
-                p.addChallenge(combate);
-                this.setDesafio(combate);
-                retado.setDesafio(combate);
+        if (this.personajeActivo != null) {
+            Jugador retado = this.pedirDesafiado(p);
+            if (retado != null) {
+                int apuesta = this.seleccionApuesta(retado);
+                if (apuesta != -1) {
+                    Combate combate = new Combate(this, retado, apuesta, this.getPersonajeActivo(), retado.getPersonajeActivo(), LocalDateTime.now());
+                    p.addChallenge(combate);
+                    this.setDesafio(combate);
+                    retado.setDesafio(combate);
+                }
             }
-        }
+        } else {System.out.print("Seleccione un personaje antes de retar");}
     }
 
     public void mostrarRanking(Map<String, Usuario> mapaJugadores) {
@@ -324,10 +330,13 @@ public class Jugador extends Usuario implements Serializable {
             Map<String,Usuario> mapaUsuarios = p.getMapUsuarios();
 
             if (mapaUsuarios.containsKey(nickRetado) && mapaUsuarios.get(nickRetado) instanceof Jugador jugador && jugador.getDesafio() == null && !jugador.getBloqueado() && jugador.getPersonajeActivo() != null && this.getPersonajeActivo() != null){
-                long diferenciaEnHoras = ChronoUnit.HOURS.between(jugador.getUltimaDerrota(), LocalDateTime.now());
-                if (diferenciaEnHoras >= 24){
-                    return (jugador);
-                } else { System.out.println("Jugador introducido no valido");}
+                if (jugador.getUltimaDerrota() != null) {
+                    long diferenciaEnHoras = ChronoUnit.HOURS.between(jugador.getUltimaDerrota(), LocalDateTime.now());
+                    if (diferenciaEnHoras >= 24){
+                        return (jugador);
+                    } else { System.out.println("Jugador introducido no valido");}
+                } else {
+                    return jugador;}
             } else { System.out.println("Jugador introducido no valido");}
         }
         return null;
