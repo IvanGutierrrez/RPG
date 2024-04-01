@@ -179,8 +179,6 @@ public class Operador extends Usuario implements Serializable {
                 } else if (input == fortalezas.size() + 1) {
                     Modificador newfortaleza = new Modificador();
                     fortalezas.add(newfortaleza);
-                } else {
-                    System.out.println("Valor no válido, por favor introduzca uno nuevo");
                 }
             } while (!(input == fortalezas.size()+2));
         }
@@ -211,8 +209,6 @@ public class Operador extends Usuario implements Serializable {
                 } else if (input == debilidades.size() + 1) {
                     Modificador newfortaleza = new Modificador();
                     debilidades.add(newfortaleza);
-                } else {
-                    System.out.println("Valor no válido, por favor introduzca uno nuevo");
                 }
             } while (!(input == debilidades.size()+2));
         }
