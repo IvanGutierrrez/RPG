@@ -21,14 +21,19 @@ public class Jugador extends Usuario implements Serializable {
 
     private double totalOroGanado;
 
-    private List<Personaje> personajes;
+    private ArrayList<Personaje> personajes;
 
-    private List<Combate> historialCombates;
+    private ArrayList<Combate> historialCombates;
 
     private LocalDateTime ultimaDerrota;
 
     public String getNRegistro() {
         return nRegistro;
+    }
+
+    public Jugador(){
+        this.personajes = new ArrayList<>();
+        this.historialCombates = new ArrayList<>();
     }
 
     public final void setNRegistro(Partida p) {
@@ -78,19 +83,19 @@ public class Jugador extends Usuario implements Serializable {
         this.desafio = desafio;
     }
 
-    public List<Personaje> getPersonajes() {
+    public ArrayList<Personaje> getPersonajes() {
         return personajes;
     }
 
-    public void setPersonajes(List<Personaje> personajes) {
+    public void setPersonajes(ArrayList<Personaje> personajes) {
         this.personajes = personajes;
     }
 
-    public List<Combate> getHistorialCombates() {
+    public ArrayList<Combate> getHistorialCombates() {
         return historialCombates;
     }
 
-    public void setHistorialCombates(List<Combate> historialCombates) {
+    public void setHistorialCombates(ArrayList<Combate> historialCombates) {
         this.historialCombates = historialCombates;
     }
 
