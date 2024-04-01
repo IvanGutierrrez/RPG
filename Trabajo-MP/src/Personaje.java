@@ -92,6 +92,7 @@ public abstract class Personaje implements Serializable, Cloneable {
                         System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
                     } else {
                         System.out.print("Este arma es de dos manos y solo tienes una disponible");
+                        this.ArmasActivas.set(1, null);
                     }
                 } else {
                     this.ArmasActivas.set(1, null);
