@@ -22,7 +22,7 @@ public class Combate implements Serializable {
 
     private Jugador JugadorConEsbirrosSinDerrotar;
 
-    private Modificador[] Modificadores;
+    private List<Modificador> Modificadores;
 
     private boolean Valido;
 
@@ -68,8 +68,8 @@ public class Combate implements Serializable {
         System.out.println("DineroApostado: "+ this.OroApostado);
         System.out.println("Fecha: "+ this.Fecha);
         System.out.println("Las modificaciones presentes en el combate son: ");
-        for (int i = 0; i < Modificadores.length; i++) {
-            System.out.print(Modificadores[i].getNombre()+" ");
+        for (int i = 0; i < Modificadores.size(); i++) {
+            System.out.print(Modificadores.get(i).getNombre()+" ");
         }
         waitForEnter();
         System.out.println("A continuacion mostramos las rondas del combate:");
@@ -144,18 +144,18 @@ public class Combate implements Serializable {
         ResolverConbate(vidaJugador1,vidaJugador2);
     }
 
-    private double CalcularModificadores(Modificador[] modificadores, Personaje jugadorRetado) {
+    private double CalcularModificadores(List<Modificador> modificadores, Personaje jugadorRetado) {
         double suma=0;
         for (int i = 0; i < jugadorRetado.Debilidades.size(); i++) {
-            for (int j = 0; j < modificadores.length; j++) {
-                if (jugadorRetado.Debilidades.get(i) == modificadores[j]) {
+            for (int j = 0; j < modificadores.size(); j++) {
+                if (jugadorRetado.Debilidades.get(i) == modificadores.get(j)) {
                     suma=suma+jugadorRetado.Debilidades.get(i).getValor();
                 }
             }
         }
         for (int i = 0; i < jugadorRetado.Fortalezas.size(); i++) {
-            for (int j = 0; j < modificadores.length; j++) {
-                if (jugadorRetado.Fortalezas.get(i) == modificadores[j]) {
+            for (int j = 0; j < modificadores.size(); j++) {
+                if (jugadorRetado.Fortalezas.get(i) == modificadores.get(j)) {
                     suma=suma+jugadorRetado.Fortalezas.get(i).getValor();
                 }
             }
@@ -254,11 +254,11 @@ public class Combate implements Serializable {
         JugadorConEsbirrosSinDerrotar = jugadorConEsbirrosSinDerrotar;
     }
 
-    public Modificador[] getModificadores() {
+    public List<Modificador> getModificadores() {
         return Modificadores;
     }
 
-    public void setModificadores(Modificador[] modificadores) {
+    public void setModificadores(List<Modificador> modificadores) {
         Modificadores = modificadores;
     }
 
@@ -288,11 +288,10 @@ public class Combate implements Serializable {
 
     @Override
     public String toString() {
-        return "Combate{" +
-                "JugadorRetador=" + JugadorRetador +
-                ", JugadorRetado=" + JugadorRetado +
-                ", OroApostado=" + OroApostado +
-                ", Fecha='" + Fecha + '\'' +
-                '}';
+        return "Desafio Actual:\n" +
+                "Jugador Retador: " + JugadorRetador + "\n" +
+                "Jugador Retado: " + JugadorRetado + "\n" +
+                "Oro Apostado: " + OroApostado + "\n" +
+                "Fecha: '" + Fecha + '\'';
     }
 }

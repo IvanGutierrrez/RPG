@@ -61,7 +61,7 @@ public class Operador extends Usuario implements Serializable {
             System.out.println("6.-Dar de Baja Usuario");
             opcion = this.leerInt();
             if (opcion == 1) {
-                this.revisarCombatesNoVal(p.getCombateQueue());
+                this.revisarCombatesNoVal(p);
             } else if (opcion == 2) {
                 this.bloquearJugador(p.getMapUsuarios());
             } else if (opcion == 3){
@@ -90,7 +90,8 @@ public class Operador extends Usuario implements Serializable {
         }
     }
 
-    public void revisarCombatesNoVal(Queue<Combate> listaDesafiosSinValidar) {
+    public void revisarCombatesNoVal(Partida partida) {
+        Queue<Combate> listaDesafiosSinValidar =  partida.getCombateQueue();
         boolean done = false;
         int opcion;
 
@@ -122,9 +123,9 @@ public class Operador extends Usuario implements Serializable {
         while (opcionvalidar != 1 && opcionvalidar != 2){
             opcionvalidar = this.leerInt();
             if (opcionvalidar == 1){
+                ValidarRetador(desafioActual.getJugadorRetador(), desafioActual);
+                ValidarRetado(desafioActual.getJugadorRetado(), desafioActual);
                 desafioActual.setValido(true);
-                ValidarRetador(desafioActual.getJugadorRetador());
-                ValidarRetado(desafioActual.getJugadorRetado());
                 System.out.println("Desafio Valido");
             } else if (opcionvalidar ==2) {
                 System.out.println("Desafio rechazado");
@@ -136,23 +137,87 @@ public class Operador extends Usuario implements Serializable {
         }
     }
 
-    public void ValidarRetador(Jugador jugador){
+    public void ValidarRetador(Jugador jugador, Combate desafio){
         System.out.println("Personaje del Jugador Retador:");
         System.out.println("Debilidades:");
-        ModificarDebilidades(jugador.getPersonajeActivo());
+        ValidarDebilidades(jugador.getPersonajeActivo(), desafio);
         System.out.println("Fortalezas:");
-        ModificarFortalezas(jugador.getPersonajeActivo());
+        ValidarFortalezas(jugador.getPersonajeActivo(), desafio);
         System.out.println("Jugador retador validado");
     }
 
-    public void ValidarRetado(Jugador jugador){
+    public void ValidarRetado(Jugador jugador, Combate desafio){
         System.out.println("Personaje del Jugador Retado:");
         System.out.println("Debilidades:");
-        ModificarDebilidades(jugador.getPersonajeActivo());
+        ValidarDebilidades(jugador.getPersonajeActivo(), desafio);
         System.out.println("Fortalezas:");
-        ModificarFortalezas(jugador.getPersonajeActivo());
+        ValidarFortalezas(jugador.getPersonajeActivo(), desafio);
         System.out.println("Jugador retado validado");
     }
+
+    public void ValidarFortalezas(Personaje personaje, Combate desafioActual){
+        List<Modificador> fortalezas = personaje.getFortalezas();
+        if (fortalezas.isEmpty()) {
+            System.out.println("No hay fortalezas disponibles, cree nuevas");
+        } else {
+            int input;
+            do {
+                System.out.println("¿Qué fortaleza añadiras?");
+                for (int i = 0; i < fortalezas.size(); i++) {
+                    System.out.println((i + 1) + ". " + fortalezas.get(i).getNombre());
+                }
+                System.out.println(fortalezas.size() + 1 + ". Crear Fortaleza Nueva");
+                System.out.println(fortalezas.size() + 2 + ". Listo!");
+                input = leerInt();
+                if (input > 0 && input <= fortalezas.size()) {
+                    Modificador newfortaleza = fortalezas.get(input -1);
+                    if (desafioActual.getModificadores().contains(newfortaleza)){
+                        System.out.println("Fortaleza ya en el desafio, escoja otra");
+                    } else {
+                        desafioActual.getModificadores().add(newfortaleza);
+                    }
+                } else if (input == fortalezas.size() + 1) {
+                    Modificador newfortaleza = new Modificador();
+                    fortalezas.add(newfortaleza);
+                } else {
+                    System.out.println("Valor no válido, por favor introduzca uno nuevo");
+                }
+            } while (!(input == fortalezas.size()+2));
+        }
+    }
+
+    public void ValidarDebilidades(Personaje personaje, Combate desafioActual){
+        List<Modificador> debilidades = personaje.getDebilidades();
+        if (debilidades.isEmpty()) {
+            System.out.println("No hay debilidades disponibles, cree nuevas");
+        } else {
+            int input;
+            do {
+                System.out.println("¿Qué debilidades añadiras?");
+                for (int i = 0; i < debilidades.size(); i++) {
+                    System.out.println((i + 1) + ". " + debilidades.get(i).getNombre());
+                }
+                System.out.println(debilidades.size() + 1 + ". Crear Debilidad Nueva");
+                System.out.println(debilidades.size() + 2 + ". Listo!");
+                input = leerInt();
+                if (input > 0 && input <= debilidades.size()) {
+                    Modificador newfortaleza = debilidades.get(input -1);
+                    if (desafioActual.getModificadores().contains(newfortaleza)){
+                        System.out.println("Fortaleza ya en el desafio, escoja otra");
+                    } else {
+                        desafioActual.getModificadores().add(newfortaleza);
+                    }
+
+                } else if (input == debilidades.size() + 1) {
+                    Modificador newfortaleza = new Modificador();
+                    debilidades.add(newfortaleza);
+                } else {
+                    System.out.println("Valor no válido, por favor introduzca uno nuevo");
+                }
+            } while (!(input == debilidades.size()+2));
+        }
+    }
+
 
     public void bloquearJugador(Map<String, Usuario> mapaJugadores) {
         int contador = 0;
