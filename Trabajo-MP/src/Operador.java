@@ -199,16 +199,16 @@ public class Operador extends Usuario implements Serializable {
                 System.out.println(debilidades.size() + 2 + ". Listo!");
                 input = leerInt();
                 if (input > 0 && input <= debilidades.size()) {
-                    Modificador newfortaleza = debilidades.get(input -1);
-                    if (desafioActual.getModificadores().contains(newfortaleza)){
-                        System.out.println("Fortaleza ya en el desafio, escoja otra");
+                    Modificador newdebiliad = debilidades.get(input -1);
+                    if (desafioActual.getModificadores().contains(newdebiliad)){
+                        System.out.println("Debilidad ya en el desafio, escoja otra");
                     } else {
-                        desafioActual.getModificadores().add(newfortaleza);
+                        desafioActual.getModificadores().add(newdebiliad);
                     }
 
                 } else if (input == debilidades.size() + 1) {
-                    Modificador newfortaleza = new Modificador();
-                    debilidades.add(newfortaleza);
+                    Modificador newdebilidad = new Modificador();
+                    debilidades.add(newdebilidad);
                 }
             } while (!(input == debilidades.size()+2));
         }
