@@ -47,7 +47,7 @@ public abstract class Personaje implements Serializable, Cloneable {
         int opcion = 0;
         int intento = 0;
 
-        while (opcion != 3 || intento < 1) {
+        while (opcion != 3 && intento < 1) {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Gestionar armas");
             System.out.println("2. Gestionar armaduras");
