@@ -570,7 +570,7 @@ public class Operador extends Usuario implements Serializable {
                 System.out.println(debilidades.size() + 1 + ". Salir");
                 input = leerInt();
                 if (input > 0 && input <= debilidades.size()) {
-                    debilidades.get(input - 1).EditarHabilidadEspecial();
+                    debilidades.get(input - 1).EditarModificadorActual();
                     return true;
                 } else if (input == debilidades.size() + 1) {
                     return false;
@@ -596,7 +596,7 @@ public class Operador extends Usuario implements Serializable {
                 System.out.println(fortalezas.size() + 1 + ". Salir");
                 input = leerInt();
                 if (input > 0 && input <= fortalezas.size()) {
-                    fortalezas.get(input - 1).EditarHabilidadEspecial();
+                    fortalezas.get(input - 1).EditarModificadorActual();
                     return true;
                 } else if (input == fortalezas.size() + 1) {
                     return false;
@@ -681,9 +681,14 @@ public class Operador extends Usuario implements Serializable {
         do {
             opcion = leerInt();
             if (opcion == 1) {
-                personaje.setHabilidadEspecial(null);
-                System.out.println("¡Habilidad especial eliminada exitosamente!");
-                return true;
+                if(personaje.getHabilidadEspecial() == null){
+                    System.out.println("No hay habilidad especial para eliminar");
+                    return false;
+                } else {
+                    personaje.setHabilidadEspecial(null);
+                    System.out.println("¡Habilidad especial eliminada exitosamente!");
+                    return true;
+                }
             } else if (opcion == 2) {
                 return false;
             } else {

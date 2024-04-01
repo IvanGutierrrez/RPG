@@ -32,7 +32,7 @@ public class Modificador implements Serializable, Cloneable {
         }
     }
 
-    protected void EditarHabilidadEspecial() {
+    protected void EditarModificadorActual() {
         int ans;
         do {
             System.out.println("1. Modificar nombre");
