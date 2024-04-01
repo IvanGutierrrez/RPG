@@ -88,22 +88,6 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
 
 
     @Override
-    public void gestionEquipamiento() {
-        // TODO implement here
-    }
-
-    @Override
-    public void gestionarApuesta(int oro) {
-        // TODO implement here
-    }
-
-    @Override
-    public void editarAtributos() {
-        // TODO implement here
-    }
-
-
-    @Override
     public Cazador clone() {
         return (Cazador) super.clone();
     }

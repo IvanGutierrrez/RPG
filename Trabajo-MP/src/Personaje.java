@@ -116,10 +116,6 @@ public abstract class Personaje implements Serializable, Cloneable {
         }
     }
 
-    public abstract void gestionarApuesta(int oro);
-
-    public abstract void editarAtributos();
-
     public int getVersion(){
         return this.Version;
     }

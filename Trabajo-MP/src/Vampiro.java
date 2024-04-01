@@ -74,21 +74,6 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
         return suma;
     }
 
-    @Override
-    public void gestionEquipamiento() {
-        // TODO implement here
-    }
-
-    @Override
-    public void gestionarApuesta(int oro) {
-        // TODO implement here
-    }
-
-    @Override
-    public void editarAtributos() {
-        // TODO implement here
-    }
-
 
     @Override
     public Vampiro clone() {
