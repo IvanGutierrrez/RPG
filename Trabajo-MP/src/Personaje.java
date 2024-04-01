@@ -44,10 +44,10 @@ public abstract class Personaje implements Serializable, Cloneable {
     }
 
     public void gestionEquipamiento() {
-        int opcion = 0;
+        int opcion;
         int intento = 0;
 
-        while (opcion != 3 && intento < 2) {
+        do {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Gestionar armas");
             System.out.println("2. Gestionar armaduras");
@@ -62,7 +62,7 @@ public abstract class Personaje implements Serializable, Cloneable {
                 intento = intento + 1;
                 System.out.println("Opción no válida.");
             }
-        }
+        }  while (opcion != 3 && intento < 2);
     }
 
     private void gestionarArmas() {
