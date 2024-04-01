@@ -175,8 +175,7 @@ public class Jugador extends Usuario implements Serializable {
                         if (this.getPersonajeActivo() == null) {
                             this.selecPersonajeActivo(p);
                         }
-                        Personaje personaje = this.getPersonajeActivo();
-                        personaje.gestionEquipamiento();
+                        this.getPersonajeActivo().gestionEquipamiento();
                     } else if (opcion == 3) {
                         this.selecPersonajeActivo(p);
                     } else if (opcion == 4) {
