@@ -48,10 +48,14 @@ public class Combate implements Serializable {
         if(this.Ganador==this.JugadorRetado){
             double oro=this.PersonajeRetado.getOro()+this.OroApostado;
             this.PersonajeRetado.setOro(oro);
+            oro=this.PersonajeRetador.getOro()-this.OroApostado;
+            this.PersonajeRetador.setOro(oro);
             this.JugadorRetador.setUltimaDerrota(this.Fecha);
         }else if(this.Ganador==this.JugadorRetador){
             double oro=this.PersonajeRetador.getOro()+this.OroApostado;
             this.PersonajeRetador.setOro(oro);
+            oro=this.PersonajeRetado.getOro()-this.OroApostado;
+            this.PersonajeRetado.setOro(oro);
             this.JugadorRetado.setUltimaDerrota(this.Fecha);
         }
         this.PersonajeRetador.VolverAloNormal(vidaJugador1);
