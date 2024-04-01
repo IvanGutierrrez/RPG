@@ -203,6 +203,9 @@ public class Jugador extends Usuario implements Serializable {
                     this.setDesafio(null);
                 } else {
                     System.out.println("Se encuentra a la espera de validación de su desafio por parte de un operador, sea paciente porfavor");
+                    System.out.println("Presione Enter para continuar...");
+                    this.leerString();
+                    p.serializar();
                     break;
                 }
                 p.serializar();
