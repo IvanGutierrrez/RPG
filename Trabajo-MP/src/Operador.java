@@ -69,7 +69,6 @@ public class Operador extends Usuario implements Serializable {
             } else if (opcion == 4) {
                 this.editarPersonaje(p);
             } else if (opcion == 5) {
-                p.serializar();
                 System.out.println("Esperamos volverte a ver pronto");
             } else if (opcion == 6) {
                 int numBaja = 0;
@@ -87,6 +86,7 @@ public class Operador extends Usuario implements Serializable {
                 }
 
             }
+            p.serializar();
         }
     }
 
