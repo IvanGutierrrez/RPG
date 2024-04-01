@@ -332,7 +332,7 @@ public class Jugador extends Usuario implements Serializable {
             String nickRetado = this.leerString();
             Map<String,Usuario> mapaUsuarios = p.getMapUsuarios();
 
-            if (mapaUsuarios.containsKey(nickRetado) && mapaUsuarios.get(nickRetado) instanceof Jugador jugador && jugador.getDesafio() == null && !jugador.getBloqueado() && jugador.getPersonajeActivo() != null && this.getPersonajeActivo() != null){
+            if (mapaUsuarios.containsKey(nickRetado) && mapaUsuarios.get(nickRetado) instanceof Jugador jugador && jugador.getDesafio() == null && !jugador.getBloqueado() && jugador.getPersonajeActivo() != null && this != jugador){
                 if (jugador.getUltimaDerrota() != null) {
                     long diferenciaEnHoras = ChronoUnit.HOURS.between(jugador.getUltimaDerrota(), LocalDateTime.now());
                     if (diferenciaEnHoras >= 24){
