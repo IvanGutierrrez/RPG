@@ -132,11 +132,15 @@ public class Combate implements Serializable {
             this.Ganador=null;
         }else if(this.PersonajeRetador.Salud==0){
             this.Ganador=this.JugadorRetado;
+            this.getJugadorRetado().setTotalOroGanado((this.getJugadorRetado().getTotalOroGanado()+this.OroApostado));
+            this.getJugadorRetador().setTotalOroGanado((this.getJugadorRetador().getTotalOroGanado()-this.OroApostado));
             if (VidaEsbirros2>0){
                 this.JugadorConEsbirrosSinDerrotar=this.JugadorRetado;
             }
         }else if(this.PersonajeRetado.Salud==0){
             this.Ganador=this.JugadorRetador;
+            this.getJugadorRetado().setTotalOroGanado((this.getJugadorRetado().getTotalOroGanado()-this.OroApostado));
+            this.getJugadorRetador().setTotalOroGanado((this.getJugadorRetador().getTotalOroGanado()+this.OroApostado));
             if (VidaEsbirros1>0){
                 this.JugadorConEsbirrosSinDerrotar=this.JugadorRetador;
             }

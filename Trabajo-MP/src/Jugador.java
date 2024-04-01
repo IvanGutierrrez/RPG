@@ -11,22 +11,24 @@ import java.time.temporal.ChronoUnit;
  */
 public class Jugador extends Usuario implements Serializable {
 
-    private String NRegistro;
+    private String nRegistro;
 
-    private Personaje PersonajeActivo;
+    private Personaje personajeActivo;
 
-    private boolean Bloqueado;
+    private boolean bloqueado;
 
-    private Combate Desafio;
+    private Combate desafio;
 
-    private List<Personaje> Personajes;
+    private double totalOroGanado;
 
-    private List<Combate> HistorialCombates;
+    private List<Personaje> personajes;
+
+    private List<Combate> historialCombates;
 
     private LocalDateTime ultimaDerrota;
 
     public String getNRegistro() {
-        return NRegistro;
+        return nRegistro;
     }
 
     public final void setNRegistro(Partida p) {
@@ -49,47 +51,47 @@ public class Jugador extends Usuario implements Serializable {
             sb.append(letra2);
             sb.append(letra2);
         } while (!p.noExiste(sb.toString()));
-        this.NRegistro = sb.toString();
+        this.nRegistro = sb.toString();
     }
 
     public Personaje getPersonajeActivo() {
-        return PersonajeActivo;
+        return personajeActivo;
     }
 
     public void setPersonajeActivo(Personaje personajeActivo) {
-        PersonajeActivo = personajeActivo;
+        this.personajeActivo = personajeActivo;
     }
 
     public boolean getBloqueado() {
-        return Bloqueado;
+        return bloqueado;
     }
 
     public void setBloqueado(boolean bloqueado) {
-        Bloqueado = bloqueado;
+        this.bloqueado = bloqueado;
     }
 
     public Combate getDesafio() {
-        return Desafio;
+        return desafio;
     }
 
     public void setDesafio(Combate desafio) {
-        Desafio = desafio;
+        this.desafio = desafio;
     }
 
     public List<Personaje> getPersonajes() {
-        return Personajes;
+        return personajes;
     }
 
     public void setPersonajes(List<Personaje> personajes) {
-        Personajes = personajes;
+        this.personajes = personajes;
     }
 
     public List<Combate> getHistorialCombates() {
-        return HistorialCombates;
+        return historialCombates;
     }
 
     public void setHistorialCombates(List<Combate> historialCombates) {
-        HistorialCombates = historialCombates;
+        this.historialCombates = historialCombates;
     }
 
     public LocalDateTime getUltimaDerrota() {
@@ -141,6 +143,7 @@ public class Jugador extends Usuario implements Serializable {
             this.setPersonajeActivo(null);
             this.setPersonajes(null);
             this.setUltimaDerrota(null);
+            this.setTotalOroGanado(0);
         } else{
             this.setPass(null);
         }
@@ -149,7 +152,7 @@ public class Jugador extends Usuario implements Serializable {
     @Override
     public void Menu(Partida p) {
         int opcion = 0;
-        if (!this.Bloqueado) {
+        if (!this.bloqueado) {
             while (opcion != 8 && opcion != 9) {
                 if (getDesafio() == null) {
                     System.out.println("Eliga la opción");
@@ -164,7 +167,7 @@ public class Jugador extends Usuario implements Serializable {
                     System.out.println("9.-Dar de Baja Usuario");
                     opcion = this.leerInt();
                     if (opcion == 1) {
-                        this.Desafiar(p);
+                        this.desafiar(p);
                     } else if (opcion == 2) {
                         if (this.getPersonajeActivo() == null) {
                             this.selecPersonajeActivo(p);
@@ -174,9 +177,9 @@ public class Jugador extends Usuario implements Serializable {
                     } else if (opcion == 3) {
                         this.selecPersonajeActivo(p);
                     } else if (opcion == 4) {
-                        this.RegistrarPersonaje(p);
+                        this.registrarPersonaje(p);
                     } else if (opcion == 5) {
-                        this.DarDeBajaPersonaje();
+                        this.darDeBajaPersonaje();
                     } else if (opcion == 6) {
                         this.mostrarHistorial();
                     } else if (opcion == 7) {
@@ -186,21 +189,24 @@ public class Jugador extends Usuario implements Serializable {
                     } else if (opcion == 9) {
                         p.darDeBajaUsuario(this);
                     }
-                } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() == null) {
+                } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() == null && this.getDesafio().getRondas().isEmpty()) {
                     this.desafiadoResuelve();
-                } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() != null) {
+                    this.setDesafio(null);
+                } else if (this.getDesafio() != null && this.getDesafio().isValido()) {
                     this.getDesafio().mostrarResultado();
                     this.setDesafio(null);
                 } else {
                     System.out.println("Se encuentra a la espera de validación de su desafio por parte de un operador, sea paciente porfavor");
+                    break;
                 }
+                p.serializar();
             }
         } else {
             System.out.println("Este jugador esta bloqueado");
         }
     }
 
-    public void RegistrarPersonaje(Partida p) {
+    public void registrarPersonaje(Partida p) {
         List<Personaje> allCharacters = p.getListaPersonajes();
         boolean personajeElegido = false;
 
@@ -218,9 +224,9 @@ public class Jugador extends Usuario implements Serializable {
                 System.out.println("Ha seleccionado a " + personajeElegidoTmp.getNombre() );
                 personajeElegido = true;
                 Personaje personajeNuevo = personajeElegidoTmp.clone();
-                this.Personajes.add(personajeNuevo);
-                this.PersonajeActivo = personajeNuevo;
-                this.PersonajeActivo.gestionEquipamiento();
+                this.personajes.add(personajeNuevo);
+                this.personajeActivo = personajeNuevo;
+                this.personajeActivo.gestionEquipamiento();
             } else {
                 System.out.println("Opción no válida. Por favor, seleccione un número válido");
             }
@@ -231,27 +237,27 @@ public class Jugador extends Usuario implements Serializable {
         }
     }
 
-    public void DarDeBajaPersonaje() {
+    public void darDeBajaPersonaje() {
         boolean personajeElegido = false;
 
         for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
             System.out.println("Lista de personajes disponibles: ");
-            for (int i = 0; i < this.Personajes.size(); i++) {
-                System.out.println((i + 1) + ". " + this.Personajes.get(i).getNombre());
+            for (int i = 0; i < this.personajes.size(); i++) {
+                System.out.println((i + 1) + ". " + this.personajes.get(i).getNombre());
             }
 
             System.out.println("Seleccione un personaje:");
             int opc = this.leerInt();
 
-            if (opc >= 1 && opc <= this.Personajes.size()) {
-                Personaje personajeElegidoTmp = this.Personajes.get(opc - 1);
+            if (opc >= 1 && opc <= this.personajes.size()) {
+                Personaje personajeElegidoTmp = this.personajes.get(opc - 1);
                 System.out.println("Ha seleccionado a " + personajeElegidoTmp.getNombre() );
                 personajeElegido = true;
 
                 System.out.println("¿Seguro que quiere dar de baja este personaje definitivamente? (si desea continuar escriba: 1234)");
                 int conf = this.leerInt();
                 if (conf == 1234){
-                    this.Personajes.remove(opc-1);
+                    this.personajes.remove(opc-1);
                 }
             } else {
                 System.out.println("Opción no válida. Por favor, seleccione un número válido");
@@ -263,7 +269,7 @@ public class Jugador extends Usuario implements Serializable {
         }
     }
 
-    public void Desafiar(Partida p) {
+    public void desafiar(Partida p) {
         Jugador retado = this.pedirDesafiado(p);
         if (retado != null) {
             int apuesta = this.seleccionApuesta(retado);
@@ -277,18 +283,24 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     public void mostrarRanking(Map<String, Usuario> mapaJugadores) {
-        for (Map.Entry<String, Usuario> entry : mapaJugadores.entrySet()) {
-            Usuario usuario = entry.getValue();
-            if (usuario instanceof Jugador jugador){
-                System.out.println("Nombre: " + jugador.getNombre());
-                System.out.println("Número de Registro: " + jugador.getNRegistro());
-                System.out.println("Personaje Activo: " + jugador.getPersonajeActivo().getNombre());
-                System.out.println("Bloqueado: " + (jugador.getBloqueado() ? "Sí" : "No"));
-                System.out.println("Desafío: " + (jugador.getDesafio() != null ? "Sí" : "No"));
-                System.out.println("Última Derrota: " + jugador.getUltimaDerrota());
-                System.out.println("---------------------------------------------");
+        List<Jugador> jugadores = new ArrayList<>();
+        for (Usuario usuario : mapaJugadores.values()) {
+            if (usuario instanceof Jugador jugador) {
+                jugadores.add(jugador);
             }
+        }
 
+        jugadores.sort(Comparator.comparingDouble(Jugador::getTotalOroGanado).reversed());
+
+        for (Jugador jugador : jugadores) {
+            System.out.println("Nombre: " + jugador.getNombre());
+            System.out.println("Número de Registro: " + jugador.getNRegistro());
+            System.out.println("Indice de oro total: " + jugador.getTotalOroGanado());
+            System.out.println("Personaje Activo: " + jugador.getPersonajeActivo().getNombre());
+            System.out.println("Bloqueado: " + (jugador.getBloqueado() ? "Sí" : "No"));
+            System.out.println("Desafío: " + (jugador.getDesafio() != null ? "Sí" : "No"));
+            System.out.println("Última Derrota: " + jugador.getUltimaDerrota());
+            System.out.println("---------------------------------------------");
         }
     }
 
@@ -324,20 +336,20 @@ public class Jugador extends Usuario implements Serializable {
 
         for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
             System.out.println("Lista de personajes disponibles:");
-            for (int i = 0; i < this.Personajes.size(); i++) {
-                System.out.println((i + 1) + ". " + this.Personajes.get(i).getNombre());
+            for (int i = 0; i < this.personajes.size(); i++) {
+                System.out.println((i + 1) + ". " + this.personajes.get(i).getNombre());
             }
 
             System.out.println("Seleccione un personaje:");
             int opt = this.leerInt();
 
-            if (opt >= 1 && opt <= this.Personajes.size()) {
-                Personaje personajeElegidoTmp = this.Personajes.get(opt - 1);
+            if (opt >= 1 && opt <= this.personajes.size()) {
+                Personaje personajeElegidoTmp = this.personajes.get(opt - 1);
 
                 personajeElegidoTmp = p.checkVersion(personajeElegidoTmp);
 
-                this.PersonajeActivo = personajeElegidoTmp;
-                System.out.println("Se ha seleccionado a " + this.PersonajeActivo.getNombre() + " como el personaje activo");
+                this.personajeActivo = personajeElegidoTmp;
+                System.out.println("Se ha seleccionado a " + this.personajeActivo.getNombre() + " como el personaje activo");
                 personajeElegido = true;
             } else {
                 System.out.println("Opción no válida. Por favor, seleccione un número válido");
@@ -354,16 +366,16 @@ public class Jugador extends Usuario implements Serializable {
         System.out.println("¿Desea aceptar el desafio? (1 para aceptar)");
         int conf = this.leerInt();
         if (conf == 1) {
-            this.Desafio.combatir();
-            this.Desafio.mostrarResultado();
-            this.Desafio = null;
+            this.desafio.combatir();
+            this.desafio.mostrarResultado();
+            this.desafio = null;
         } else {
-            this.Desafio.cancelarCombate();
+            this.desafio.cancelarCombate();
         }
     }
 
     public void mostrarHistorial() {
-        for (Combate elemento : this.HistorialCombates) {
+        for (Combate elemento : this.historialCombates) {
             System.out.println("Jugador Retador: " + elemento.getJugadorRetador().getNombre());
             System.out.println("Jugador Retado: " + elemento.getJugadorRetado().getNombre());
             System.out.println("Oro Apostado: " + elemento.getOroApostado());
@@ -394,6 +406,14 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     public void anadirCombate(Combate combate) {
-        this.HistorialCombates.add(combate);
+        this.historialCombates.add(combate);
+    }
+
+    public double getTotalOroGanado() {
+        return totalOroGanado;
+    }
+
+    public void setTotalOroGanado(double totalOroGanado) {
+        this.totalOroGanado = totalOroGanado;
     }
 }

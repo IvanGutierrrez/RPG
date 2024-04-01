@@ -11,15 +11,15 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     protected HabilidadEspecial HabilidadEspecial;
 
-    protected List<Arma> Armas;
+    protected ArrayList<Arma> Armas;
 
-    protected List<Arma> ArmasActivas;
+    protected ArrayList<Arma> ArmasActivas;
 
-    protected List<Armadura> Armaduras;
+    protected ArrayList<Armadura> Armaduras;
 
     protected Armadura ArmaduraActiva;
 
-    protected List<Esbirro> Esbirros;
+    protected ArrayList<Esbirro> Esbirros;
 
     protected double Oro;
 
@@ -27,9 +27,9 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     protected double Poder;
 
-    protected List<Modificador> Debilidades;
+    protected ArrayList<Modificador> Debilidades;
 
-    protected List<Modificador> Fortalezas;
+    protected ArrayList<Modificador> Fortalezas;
 
     protected int Version;
 
@@ -143,14 +143,29 @@ public abstract class Personaje implements Serializable, Cloneable {
         try {
             Personaje clone = (Personaje) super.clone();
 
-            clone.Armas = new ArrayList<>(this.Armas);
+            clone.Armas = new ArrayList<>();
+            for (Arma arma : this.Armas) {
+                clone.Armas.add(arma.clone());
+            }
             clone.HabilidadEspecial = this.HabilidadEspecial.clone();
-            clone.ArmasActivas = new ArrayList<>(this.ArmasActivas);
-            clone.Armaduras = new ArrayList<>(this.Armaduras);
-            clone.Esbirros = new ArrayList<>(this.Esbirros);
-            clone.Debilidades = new ArrayList<>(this.Debilidades);
-            clone.Fortalezas = new ArrayList<>(this.Fortalezas);
-            clone.ArmaduraActiva = this.ArmaduraActiva.clone();
+            clone.ArmasActivas = new ArrayList<>();
+            clone.Armaduras = new ArrayList<>();
+            for (Armadura armadura : this.Armaduras) {
+                clone.Armaduras.add(armadura.clone());
+            }
+            clone.Esbirros = new ArrayList<>();
+            for (Esbirro esbirro : this.Esbirros) {
+                clone.Esbirros.add(esbirro.clone());
+            }
+            clone.Debilidades = new ArrayList<>();
+            for (Modificador debilidad : this.Debilidades) {
+                clone.Debilidades.add(debilidad.clone());
+            }
+            clone.Fortalezas = new ArrayList<>();
+            for (Modificador fortaleza : this.Fortalezas) {
+                clone.Fortalezas.add(fortaleza.clone());
+            }
+            clone.ArmaduraActiva = null;
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
