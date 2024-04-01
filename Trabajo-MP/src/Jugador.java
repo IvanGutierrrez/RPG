@@ -143,10 +143,8 @@ public class Jugador extends Usuario implements Serializable {
         if (num<=2) {
             this.setBloqueado(false);
             this.setDesafio(null);
-            this.setHistorialCombates(null);
             this.setNRegistro(p);
             this.setPersonajeActivo(null);
-            this.setPersonajes(null);
             this.setUltimaDerrota(null);
             this.setTotalOroGanado(0);
         } else{
