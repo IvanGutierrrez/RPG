@@ -73,7 +73,7 @@ public abstract class Personaje implements Serializable, Cloneable {
         System.out.println("Armas disponibles:");
         for (int i = 0; i < Armas.size(); i++) {
             Arma arma = Armas.get(i);
-            System.out.println((i + 1) + ". " + arma.getNombre() + " (Tipo: " + (arma.getTipo() ? "Tipo 1" : "Tipo 2") + ")");
+            System.out.println((i + 1) + ". " + arma.getNombre() + " (Tipo: " + (arma.getTipo() ? "Tipo 2" : "Tipo 1") + ")");
         }
         System.out.print("Seleccione un arma: ");
         int opcionArma = leerInt();
