@@ -149,48 +149,54 @@ public class Jugador extends Usuario implements Serializable {
     @Override
     public void Menu(Partida p) {
         int opcion = 0;
-
-        while(opcion != 8 && opcion != 9) {
-            if (getDesafio() == null) {
-                System.out.println("Eliga la opción");
-                System.out.println("1.-Desafiar");
-                System.out.println("2.-Gestionar Equipamineto");
-                System.out.println("3.-Cambiar Personaje Activo");
-                System.out.println("4.-Registrar Personaje Nuevo");
-                System.out.println("5.-Borrar Personaje Actual");
-                System.out.println("6.-Mostrar Historial de Combates");
-                System.out.println("7.-Mostrar Ranking de Jugadores");
-                System.out.println("8.-Cerrar Sesión");
-                System.out.println("9.-Dar de Baja Usuario");
-                opcion = this.leerInt();
-                if (opcion == 1) {
-                    this.Desafiar(p);
-                } else if (opcion == 2) {
-                    if (this.getPersonajeActivo() == null) {
+        if (!this.Bloqueado) {
+            while (opcion != 8 && opcion != 9) {
+                if (getDesafio() == null) {
+                    System.out.println("Eliga la opción");
+                    System.out.println("1.-Desafiar");
+                    System.out.println("2.-Gestionar Equipamineto");
+                    System.out.println("3.-Cambiar Personaje Activo");
+                    System.out.println("4.-Registrar Personaje Nuevo");
+                    System.out.println("5.-Borrar Personaje Actual");
+                    System.out.println("6.-Mostrar Historial de Combates");
+                    System.out.println("7.-Mostrar Ranking de Jugadores");
+                    System.out.println("8.-Cerrar Sesión");
+                    System.out.println("9.-Dar de Baja Usuario");
+                    opcion = this.leerInt();
+                    if (opcion == 1) {
+                        this.Desafiar(p);
+                    } else if (opcion == 2) {
+                        if (this.getPersonajeActivo() == null) {
+                            this.selecPersonajeActivo(p);
+                        }
+                        Personaje personaje = this.getPersonajeActivo();
+                        personaje.gestionEquipamiento();
+                    } else if (opcion == 3) {
                         this.selecPersonajeActivo(p);
+                    } else if (opcion == 4) {
+                        this.RegistrarPersonaje(p);
+                    } else if (opcion == 5) {
+                        this.DarDeBajaPersonaje();
+                    } else if (opcion == 6) {
+                        this.mostrarHistorial();
+                    } else if (opcion == 7) {
+                        this.mostrarRanking(p.getMapUsuarios());
+                    } else if (opcion == 8) {
+                        System.out.println("Esperamos volverte a ver pronto");
+                    } else if (opcion == 9) {
+                        p.darDeBajaUsuario(this);
                     }
-                    Personaje personaje = this.getPersonajeActivo();
-                    personaje.gestionEquipamiento();
-                } else if (opcion == 3) {
-                    this.selecPersonajeActivo(p);
-                } else if (opcion == 4) {
-                    this.RegistrarPersonaje(p);
-                } else if (opcion == 5) {
-                    this.DarDeBajaPersonaje();
-                } else if (opcion == 6) {
-                    this.mostrarHistorial();
-                } else if (opcion == 7) {
-                    this.mostrarRanking(p.getMapUsuarios());
-                } else if (opcion == 8) {
-                    System.out.println("Esperamos volverte a ver pronto");
-                } else if (opcion == 9) {
-                    p.darDeBajaUsuario(this);
+                } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() == null) {
+                    this.desafiadoResuelve();
+                } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() != null) {
+                    this.getDesafio().mostrarResultado();
+                    this.setDesafio(null);
+                } else {
+                    System.out.println("Se encuentra a la espera de validación de su desafio por parte de un operador, sea paciente porfavor");
                 }
-            } else if (this.getDesafio() != null && this.getDesafio().isValido()){
-                this.desafiadoResuelve();
-            } else {
-                System.out.println("Se encuentra a la espera de validación de su desafio por parte de un operador, sea paciente porfavor");
             }
+        } else {
+            System.out.println("Este jugador esta bloqueado");
         }
     }
 
@@ -350,7 +356,7 @@ public class Jugador extends Usuario implements Serializable {
         if (conf == 1) {
             this.Desafio.combatir();
             this.Desafio.mostrarResultado();
-            this.Desafio=null;
+            this.Desafio = null;
         } else {
             this.Desafio.cancelarCombate();
         }
@@ -365,9 +371,7 @@ public class Jugador extends Usuario implements Serializable {
             System.out.println("Fecha: " + elemento.getFecha());
             System.out.println("Ganador: " + (elemento.getGanador() != null ? elemento.getGanador().getNombre() : "N/A"));
             System.out.println("Jugadores con Esbirros Sin Derrotar:");
-            //for (Jugador jugador : elemento.getJugadorConEsbirrosSinDerrotar()) {
-            //    System.out.println("- " + jugador.getNombre());
-            //}
+            System.out.println(elemento.getJugadorConEsbirrosSinDerrotar().getNombre());
             System.out.println("Modificadores:");
             for (Modificador modificador : elemento.getModificadores()) {
                 System.out.println("- " + modificador.getNombre());
@@ -377,10 +381,6 @@ public class Jugador extends Usuario implements Serializable {
             System.out.println("Personaje Retado: " + elemento.getPersonajeRetado().getNombre());
             System.out.println("---------------------------------------------");
         }
-    }
-
-    public void bloquearse() {
-        this.Bloqueado = !this.Bloqueado;
     }
 
     private int leerInt(){
@@ -393,7 +393,7 @@ public class Jugador extends Usuario implements Serializable {
         return scanner.nextLine();
     }
 
-    public void AñadirCombate(Combate combate) {
+    public void anadirCombate(Combate combate) {
         this.HistorialCombates.add(combate);
     }
 }

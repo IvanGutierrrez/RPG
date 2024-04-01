@@ -56,8 +56,8 @@ public class Combate implements Serializable {
         }
         this.PersonajeRetador.VolverAloNormal(vidaJugador1);
         this.PersonajeRetado.VolverAloNormal(vidaJugador2);
-        this.JugadorRetador.AñadirCombate(this);
-        this.JugadorRetado.AñadirCombate(this);
+        this.JugadorRetador.anadirCombate(this);
+        this.JugadorRetado.anadirCombate(this);
 
     }
 
