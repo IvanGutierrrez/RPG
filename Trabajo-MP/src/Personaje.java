@@ -58,7 +58,7 @@ public abstract class Personaje implements Serializable, Cloneable {
                 gestionarArmas();
             } else if (opcion == 2) {
                 gestionarArmaduras();
-            } else if (opcion != 3){
+            } else {
                 intento = intento + 1;
                 System.out.println("Opción no válida.");
             }
@@ -83,7 +83,7 @@ public abstract class Personaje implements Serializable, Cloneable {
                 // Tipo 1
                 this.ArmasActivas.set(0, armaSeleccionada);
                 System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
-                System.out.print("Seleccione otro arma (si no desea otra arma introduzca 0): ");
+                System.out.print("Seleccione un arma: ");
                 opcionArma = leerInt();
                 if (opcionArma >= 1 && opcionArma <= Armas.size()) {
                     armaSeleccionada = Armas.get(opcionArma - 1);
@@ -94,8 +94,6 @@ public abstract class Personaje implements Serializable, Cloneable {
                         System.out.print("Este arma es de dos manos y solo tienes una disponible");
                         this.ArmasActivas.set(1, null);
                     }
-                } else {
-                    this.ArmasActivas.set(1, null);
                 }
             } else {
                 // Tipo 2

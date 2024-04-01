@@ -49,7 +49,7 @@ public class Armadura extends Equipo implements Serializable, Cloneable{
         Scanner scanner = new Scanner(System.in);
         String nombre;
         do {
-            System.out.println("Ingrese nombre del arma:");
+            System.out.println("Ingrese nombre de la armadura:");
             nombre = scanner.nextLine().trim();
         } while (nombre.isEmpty());
         return nombre;
@@ -61,7 +61,7 @@ public class Armadura extends Equipo implements Serializable, Cloneable{
             System.out.println("Ingrese el valor del modificador de defensa:");
             modif = leerDouble();
             if (modif <= 0) {
-                System.out.println("El valor debe ser mayor que 0.");
+                System.out.println("El valor debe ser mayor o igual a 0.");
             }
         } while (modif <= 0);
         return modif;

@@ -336,11 +336,10 @@ public class Jugador extends Usuario implements Serializable {
                 if (jugador.getUltimaDerrota() != null) {
                     long diferenciaEnHoras = ChronoUnit.HOURS.between(jugador.getUltimaDerrota(), LocalDateTime.now());
                     if (diferenciaEnHoras >= 24){
-                        return jugador;
+                        return (jugador);
                     } else { System.out.println("Jugador introducido no valido");}
                 } else {
-                    return jugador;
-                }
+                    return jugador;}
             } else { System.out.println("Jugador introducido no valido");}
         }
         return null;

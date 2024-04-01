@@ -160,11 +160,11 @@ public class Operador extends Usuario implements Serializable {
 
     public void ValidarFortalezas(Personaje personaje, Combate desafioActual){
         List<Modificador> fortalezas = personaje.getFortalezas();
-        if (fortalezas.isEmpty()) {
-            System.out.println("No hay fortalezas disponibles, cree nuevas");
-        } else {
+
             int input;
             do {
+                if (fortalezas.isEmpty()) {
+                    System.out.println("No hay fortalezas disponibles, cree nuevas");}
                 System.out.println("¿Qué fortaleza añadiras?");
                 for (int i = 0; i < fortalezas.size(); i++) {
                     System.out.println((i + 1) + ". " + fortalezas.get(i).getNombre());
@@ -183,38 +183,38 @@ public class Operador extends Usuario implements Serializable {
                     Modificador newfortaleza = new Modificador();
                     fortalezas.add(newfortaleza);
                 }
-            } while (!(input == fortalezas.size()+2));
-        }
+            } while (!(input == fortalezas.size()+2) && fortalezas.isEmpty());
+
     }
 
     public void ValidarDebilidades(Personaje personaje, Combate desafioActual){
         List<Modificador> debilidades = personaje.getDebilidades();
-        if (debilidades.isEmpty()) {
-            System.out.println("No hay debilidades disponibles, cree nuevas");
-        } else {
-            int input;
-            do {
-                System.out.println("¿Qué debilidades añadiras?");
-                for (int i = 0; i < debilidades.size(); i++) {
-                    System.out.println((i + 1) + ". " + debilidades.get(i).getNombre());
-                }
-                System.out.println(debilidades.size() + 1 + ". Crear Debilidad Nueva");
-                System.out.println(debilidades.size() + 2 + ". Listo!");
-                input = leerInt();
-                if (input > 0 && input <= debilidades.size()) {
-                    Modificador newdebiliad = debilidades.get(input -1);
-                    if (desafioActual.getModificadores().contains(newdebiliad)){
-                        System.out.println("Debilidad ya en el desafio, escoja otra");
-                    } else {
-                        desafioActual.getModificadores().add(newdebiliad);
-                    }
 
-                } else if (input == debilidades.size() + 1) {
-                    Modificador newdebilidad = new Modificador();
-                    debilidades.add(newdebilidad);
+        int input;
+        do {
+            if (debilidades.isEmpty()) {
+                System.out.println("No hay debilidades disponibles, cree nuevas");}
+            System.out.println("¿Qué debilidades añadiras?");
+            for (int i = 0; i < debilidades.size(); i++) {
+                System.out.println((i + 1) + ". " + debilidades.get(i).getNombre());
+            }
+            System.out.println(debilidades.size() + 1 + ". Crear Debilidad Nueva");
+            System.out.println(debilidades.size() + 2 + ". Listo!");
+            input = leerInt();
+            if (input > 0 && input <= debilidades.size()) {
+                Modificador newdebiliad = debilidades.get(input -1);
+                if (desafioActual.getModificadores().contains(newdebiliad)){
+                    System.out.println("Debilidad ya en el desafio, escoja otra");
+                } else {
+                    desafioActual.getModificadores().add(newdebiliad);
                 }
-            } while (!(input == debilidades.size()+2));
-        }
+
+            } else if (input == debilidades.size() + 1) {
+                Modificador newdebilidad = new Modificador();
+                debilidades.add(newdebilidad);
+            }
+        } while (!(input == debilidades.size()+2) && debilidades.isEmpty());
+
     }
 
 
