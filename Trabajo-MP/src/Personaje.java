@@ -83,6 +83,7 @@ public abstract class Personaje implements Serializable, Cloneable {
                 // Tipo 1
                 this.ArmasActivas.set(0, armaSeleccionada);
                 System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
+                System.out.print("Seleccione un arma: ");
                 opcionArma = leerInt();
                 if (opcionArma >= 1 && opcionArma <= Armas.size()) {
                     armaSeleccionada = Armas.get(opcionArma - 1);
