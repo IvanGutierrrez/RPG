@@ -51,14 +51,15 @@ public class Operador extends Usuario implements Serializable {
     @Override
     public void Menu(Partida p) {
         int opcion = 0;
-        while(opcion != 5 && opcion != 6) {
+        while(opcion != 6 && opcion != 7) {
             System.out.println("Eliga la opción");
             System.out.println("1.-Revisar Combates no validos");
             System.out.println("2.-Bloquear/Desbloquear Jugador");
             System.out.println("3.-Crear Personaje");
             System.out.println("4.-Editar Personaje");
-            System.out.println("5.-Cerrar Sesión");
-            System.out.println("6.-Dar de Baja Usuario");
+            System.out.println("5.-Remover Personaje");
+            System.out.println("6.-Cerrar Sesión");
+            System.out.println("7.-Dar de Baja Usuario");
             opcion = this.leerInt();
             if (opcion == 1) {
                 this.revisarCombatesNoVal(p);
@@ -69,8 +70,10 @@ public class Operador extends Usuario implements Serializable {
             } else if (opcion == 4) {
                 this.editarPersonaje(p);
             } else if (opcion == 5) {
-                System.out.println("Esperamos volverte a ver pronto");
+                this.removerPersonaje(p);
             } else if (opcion == 6) {
+                System.out.println("Esperamos volverte a ver pronto");
+            } else if (opcion == 7) {
                 int numBaja = 0;
                 System.out.println("¿Estas seguro?");
                 while (numBaja != 1 && numBaja != 2){
@@ -260,16 +263,41 @@ public class Operador extends Usuario implements Serializable {
             ans = leerInt();
             if(ans == 1){
                 Personaje nuevoPersonaje = new Vampiro();
+                añadirHabilidadEspecial(nuevoPersonaje);
                 partida.getListaPersonajes().add(nuevoPersonaje);
             } else if (ans == 2) {
                 Personaje nuevoPersonaje = new Licantropo();
+                añadirHabilidadEspecial(nuevoPersonaje);
                 partida.getListaPersonajes().add(nuevoPersonaje);
             } else if (ans == 3) {
                 Personaje nuevoPersonaje = new Cazador();
+                añadirHabilidadEspecial(nuevoPersonaje);
                 partida.getListaPersonajes().add(nuevoPersonaje);
             }
 
         } while (ans<=0 || ans >3);
+    }
+
+    public void removerPersonaje(Partida p) {
+        List<Personaje> listaPersonajes = p.getListaPersonajes();
+        System.out.println("Personaje a remover:");
+
+        int ans;
+        if (!listaPersonajes.isEmpty()){
+            do {
+                for (int i = 0; i < listaPersonajes.size(); i++){
+                    System.out.println(i+1 + ". " + listaPersonajes.get(i).getNombre());
+                }
+                System.out.println(listaPersonajes.size()+1 +". Salir");
+                ans = leerInt();
+                if (ans >= 1 && ans<=listaPersonajes.size()){
+                    listaPersonajes.remove(ans -1);
+                }
+            } while (ans!=listaPersonajes.size()+1);
+        } else {
+            System.out.println("Aun no hay personajes");
+        }
+
     }
 
     public void editarPersonaje(Partida p) {
@@ -647,15 +675,12 @@ public class Operador extends Usuario implements Serializable {
         boolean changed = false;
         do {
             System.out.println("1. Añadir Habilidad Especial");
-            System.out.println("2. Remover Habilidad Especial");
-            System.out.println("3. Editar Habilidad Especial");
-            System.out.println("4. Salir");
+            System.out.println("2. Editar Habilidad Especial");
+            System.out.println("3. Salir");
             ans = leerInt();
             if(ans == 1){
                 changed = añadirHabilidadEspecial(personaje);
-            } else if (ans == 2) {
-                changed = removerHabilidadEspecial(personaje);
-            } else if (ans == 3) {
+            } else if (ans == 1) {
                 if (personaje.getHabilidadEspecial() == null){
                     changed = false;
                     System.out.println("Personaje sin habilidad Especial");
@@ -668,34 +693,12 @@ public class Operador extends Usuario implements Serializable {
                 aux = changed;
             }
 
-        } while (ans!=4);
+        } while (ans!=3);
 
         return aux;
     }
 
-    private boolean removerHabilidadEspecial(Personaje personaje) {
-        System.out.println("¿Seguro que quieres eliminar la habilidad " + personaje.getHabilidadEspecial().getNombre()+ "?");
-        System.out.println("1. Sí");
-        System.out.println("2. Atrás");
-        int opcion;
-        do {
-            opcion = leerInt();
-            if (opcion == 1) {
-                if(personaje.getHabilidadEspecial() == null){
-                    System.out.println("No hay habilidad especial para eliminar");
-                    return false;
-                } else {
-                    personaje.setHabilidadEspecial(null);
-                    System.out.println("¡Habilidad especial eliminada exitosamente!");
-                    return true;
-                }
-            } else if (opcion == 2) {
-                return false;
-            } else {
-                System.out.println("Opción inválida, por favor selecciona 1 para sí o 2 para atrás.");
-            }
-        } while (true);
-    }
+
 
     private boolean añadirHabilidadEspecial(Personaje personaje) {
         HabilidadEspecial habilidadEspecial = new HabilidadEspecial();
