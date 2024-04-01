@@ -195,10 +195,10 @@ public class Jugador extends Usuario implements Serializable {
                     } else if (opcion == 9) {
                         p.darDeBajaUsuario(this);
                     }
-                } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() == null && (this.getDesafio().getRondas() == null || this.getDesafio().getRondas().isEmpty())) {
+                } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() == null && this.getDesafio().getJugadorRetador() != this && (this.getDesafio().getRondas() == null || this.getDesafio().getRondas().isEmpty())) {
                     this.desafiadoResuelve();
                     this.setDesafio(null);
-                } else if (this.getDesafio() != null && this.getDesafio().isValido()) {
+                } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getJugadorRetador() == this && ((this.getDesafio().getRondas() != null && !this.getDesafio().getRondas().isEmpty())) || this.getDesafio().getGanador() != null) {
                     this.getDesafio().mostrarResultado();
                     this.setDesafio(null);
                 } else {
