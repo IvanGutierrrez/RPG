@@ -14,7 +14,7 @@ public class Combate implements Serializable {
 
     private double OroApostado;
 
-    private List<Ronda> Rondas;
+    private ArrayList<Ronda> Rondas;
 
     private LocalDateTime Fecha;
 
@@ -22,7 +22,7 @@ public class Combate implements Serializable {
 
     private Jugador JugadorConEsbirrosSinDerrotar;
 
-    private List<Modificador> Modificadores;
+    private ArrayList<Modificador> Modificadores;
 
     private boolean Valido;
 
@@ -39,8 +39,8 @@ public class Combate implements Serializable {
         this.Fecha = fecha;
         this.Ganador = null;
         this.JugadorConEsbirrosSinDerrotar = null;
-        this.Modificadores = null;
-        this.Rondas = null;
+        this.Modificadores = new ArrayList<>();
+        this.Rondas = new ArrayList<>();
         this.Valido = false;
     }
 
@@ -230,11 +230,11 @@ public class Combate implements Serializable {
         OroApostado = oroApostado;
     }
 
-    public List<Ronda> getRondas() {
+    public ArrayList<Ronda> getRondas() {
         return Rondas;
     }
 
-    public void setRondas(List<Ronda> rondas) {
+    public void setRondas(ArrayList<Ronda> rondas) {
         Rondas = rondas;
     }
 
@@ -262,11 +262,11 @@ public class Combate implements Serializable {
         JugadorConEsbirrosSinDerrotar = jugadorConEsbirrosSinDerrotar;
     }
 
-    public List<Modificador> getModificadores() {
+    public ArrayList<Modificador> getModificadores() {
         return Modificadores;
     }
 
-    public void setModificadores(List<Modificador> modificadores) {
+    public void setModificadores(ArrayList<Modificador> modificadores) {
         Modificadores = modificadores;
     }
 
