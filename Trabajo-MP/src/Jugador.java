@@ -225,11 +225,22 @@ public class Jugador extends Usuario implements Serializable {
             if (opc >= 1 && opc <= allCharacters.size()) {
                 Personaje personajeElegidoTmp = allCharacters.get(opc - 1);
                 System.out.println("Ha seleccionado a " + personajeElegidoTmp.getNombre() );
-                personajeElegido = true;
-                Personaje personajeNuevo = personajeElegidoTmp.clone();
-                this.personajes.add(personajeNuevo);
-                this.personajeActivo = personajeNuevo;
-                this.personajeActivo.gestionEquipamiento();
+                boolean nombreRepetido = false;
+                for (Personaje personajeExistente : this.personajes) {
+                    if (personajeExistente.getNombre().equals(personajeElegidoTmp.getNombre())) {
+                        nombreRepetido = true;
+                        break;
+                    }
+                }
+                if (nombreRepetido) {
+                    System.out.println("Ya hay un personaje registrado con el mismo nombre. Por favor, seleccione otro.");
+                } else {
+                    personajeElegido = true;
+                    Personaje personajeNuevo = personajeElegidoTmp.clone();
+                    this.personajes.add(personajeNuevo);
+                    this.personajeActivo = personajeNuevo;
+                    this.personajeActivo.gestionEquipamiento();
+                }
             } else {
                 System.out.println("Opción no válida. Por favor, seleccione un número válido");
             }
