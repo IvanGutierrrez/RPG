@@ -123,6 +123,8 @@ public class Operador extends Usuario implements Serializable {
             opcionvalidar = this.leerInt();
             if (opcionvalidar == 1){
                 desafioActual.setValido(true);
+                ValidarRetador(desafioActual.getJugadorRetador());
+                ValidarRetado(desafioActual.getJugadorRetado());
                 System.out.println("Desafio Valido");
             } else if (opcionvalidar ==2) {
                 System.out.println("Desafio rechazado");
@@ -132,6 +134,24 @@ public class Operador extends Usuario implements Serializable {
         if (listaDesafiosSinValidar.isEmpty()){
             System.out.println("No hay desafios que validar.");
         }
+    }
+
+    public void ValidarRetador(Jugador jugador){
+        System.out.println("Personaje del Jugador Retador:");
+        System.out.println("Debilidades:");
+        ModificarDebilidades(jugador.getPersonajeActivo());
+        System.out.println("Fortalezas:");
+        ModificarFortalezas(jugador.getPersonajeActivo());
+        System.out.println("Jugador retador validado");
+    }
+
+    public void ValidarRetado(Jugador jugador){
+        System.out.println("Personaje del Jugador Retado:");
+        System.out.println("Debilidades:");
+        ModificarDebilidades(jugador.getPersonajeActivo());
+        System.out.println("Fortalezas:");
+        ModificarFortalezas(jugador.getPersonajeActivo());
+        System.out.println("Jugador retado validado");
     }
 
     public void bloquearJugador(Map<String, Usuario> mapaJugadores) {
