@@ -58,8 +58,6 @@ public abstract class Personaje implements Serializable, Cloneable {
                 gestionarArmas();
             } else if (opcion == 2) {
                 gestionarArmaduras();
-            } else if (opcion == 3) {
-                return;
             } else {
                 intento = intento + 1;
                 System.out.println("Opción no válida.");
