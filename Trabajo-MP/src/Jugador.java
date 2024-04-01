@@ -349,6 +349,8 @@ public class Jugador extends Usuario implements Serializable {
         int conf = this.leerInt();
         if (conf == 1) {
             this.Desafio.combatir();
+            this.Desafio.mostrarResultado();
+            this.Desafio=null;
         } else {
             this.Desafio.cancelarCombate();
         }
@@ -389,5 +391,9 @@ public class Jugador extends Usuario implements Serializable {
     private String leerString(){
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
+    }
+
+    public void AñadirCombate(Combate combate) {
+        this.HistorialCombates.add(combate);
     }
 }

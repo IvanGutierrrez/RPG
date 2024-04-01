@@ -14,7 +14,7 @@ public class Combate implements Serializable {
 
     private double OroApostado;
 
-    private String[] Rondas;
+    private List<Ronda> Rondas;
 
     private LocalDateTime Fecha;
 
@@ -44,29 +44,75 @@ public class Combate implements Serializable {
         this.Valido = false;
     }
 
-    public void calcularResutado() {
-        // TODO implement here
+    public void ResolverConbate(double vidaJugador1, double vidaJugador2) {
+        if(this.Ganador==this.JugadorRetado){
+            double oro=this.PersonajeRetado.getOro()+this.OroApostado;
+            this.PersonajeRetado.setOro(oro);
+            this.JugadorRetador.setUltimaDerrota(this.Fecha);
+        }else if(this.Ganador==this.JugadorRetador){
+            double oro=this.PersonajeRetador.getOro()+this.OroApostado;
+            this.PersonajeRetador.setOro(oro);
+            this.JugadorRetado.setUltimaDerrota(this.Fecha);
+        }
+        this.PersonajeRetador.VolverAloNormal(vidaJugador1);
+        this.PersonajeRetado.VolverAloNormal(vidaJugador2);
+        this.JugadorRetador.AñadirCombate(this);
+        this.JugadorRetado.AñadirCombate(this);
+
     }
 
     public void mostrarResultado() {
-        // TODO implement here
-    }
-
-    public void cancelarCombate() {
-        // TODO implement here
-    }
-
-    public void combatir() {
         System.out.println("Combate");
         System.out.printf("%-20s%-20s%n", this.getJugadorRetador(), this.getJugadorRetado());
         System.out.printf("%-20s%-20s%n", this.PersonajeRetador.getNombre(), this.PersonajeRetado.getNombre());
         System.out.println("DineroApostado: "+ this.OroApostado);
         System.out.println("Fecha: "+ this.Fecha);
+        System.out.println("Las modificaciones presentes en el combate son: ");
+        for (int i = 0; i < Modificadores.length; i++) {
+            System.out.print(Modificadores[i].getNombre()+" ");
+        }
+        waitForEnter();
+        System.out.println("A continuacion mostramos las rondas del combate:");
+        waitForEnter();
+        for (int i = 0; i < Rondas.size(); i++) {
+            Ronda ronda = Rondas.get(i);
+            ronda.mostrarRonda();
+            waitForEnter();
+        }
+        System.out.println(" ");
+        if(this.Ganador!=null){
+            System.out.println("El ganador del combate es: "+ this.Ganador);
+        }else{
+            System.out.println("El combate ha quedado en empate");
+        }
+        waitForEnter();
+    }
+    private void waitForEnter() {
+        System.out.println(" ");
+        System.out.println("Presiona Enter para continuar...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+
+    public void cancelarCombate() {
+        double oro=this.OroApostado*0.1;
+        oro=oro+this.PersonajeRetador.getOro();
+        this.PersonajeRetador.setOro(oro);
+        double penalizacion=this.OroApostado*0.1;
+        penalizacion=this.PersonajeRetado.getOro()-penalizacion;
+        this.PersonajeRetado.setOro(penalizacion);
+
+    }
+
+    public void combatir() {
+        double vidaJugador1=this.PersonajeRetador.getSalud();
+        double vidaJugador2=this.PersonajeRetado.getSalud();
         double Modificadores1=CalcularModificadores(this.Modificadores,this.PersonajeRetador);
         double Modificadores2=CalcularModificadores(this.Modificadores,this.PersonajeRetado);
         double VidaEsbirros1=this.PersonajeRetador.darVidaEsbirros();
         double VidaEsbirros2=this.PersonajeRetado.darVidaEsbirros();
-        while(this.PersonajeRetador.Salud==0 || this.PersonajeRetado.Salud==0 ){
+        int i=1;
+        while(this.PersonajeRetador.Salud!=0 && this.PersonajeRetado.Salud!=0 ){
             double PotencialAtq1=this.PersonajeRetador.calcularPotencialAtaque()+Modificadores1;
             double PotencialAtq2=this.PersonajeRetado.calcularPotencialAtaque()+Modificadores2;
             double PotencialDef1=this.PersonajeRetador.calcularPotencialDefensa()+Modificadores1;
@@ -77,9 +123,13 @@ public class Combate implements Serializable {
             double defensa2=calcularSuerte(PotencialDef2);
             CalcularRonda(ataque1,defensa2,VidaEsbirros2,this.getPersonajeRetador(),this.getPersonajeRetado());
             CalcularRonda(ataque2,defensa1,VidaEsbirros1,this.getPersonajeRetado(),this.getPersonajeRetador());
+            Ronda ronda= new Ronda(i,this.PersonajeRetador,this.PersonajeRetado,VidaEsbirros1,VidaEsbirros2,PotencialAtq1,PotencialAtq2,PotencialDef1,PotencialDef2,ataque1,ataque2,defensa1,defensa2);
+            this.Rondas.add(ronda);
+            i=i+1;
         }
         if(this.PersonajeRetador.Salud==0 && this.PersonajeRetado.Salud==0){
             System.out.println("Empate");
+            this.Ganador=null;
         }else if(this.PersonajeRetador.Salud==0){
             this.Ganador=this.JugadorRetado;
             if (VidaEsbirros2>0){
@@ -91,7 +141,7 @@ public class Combate implements Serializable {
                 this.JugadorConEsbirrosSinDerrotar=this.JugadorRetador;
             }
         }
-
+        ResolverConbate(vidaJugador1,vidaJugador2);
     }
 
     private double CalcularModificadores(Modificador[] modificadores, Personaje jugadorRetado) {
@@ -172,11 +222,11 @@ public class Combate implements Serializable {
         OroApostado = oroApostado;
     }
 
-    public String[] getRondas() {
+    public List<Ronda> getRondas() {
         return Rondas;
     }
 
-    public void setRondas(String[] rondas) {
+    public void setRondas(List<Ronda> rondas) {
         Rondas = rondas;
     }
 

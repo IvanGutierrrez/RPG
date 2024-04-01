@@ -15,6 +15,8 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
 
     private double Sangre;
 
+    public double getSangre(){return this.Sangre;}
+
     private void buildPersonajeFromInput() {
         this.Armas = new ArrayList<>();
         this.ArmasActivas = new ArrayList<>();
@@ -120,6 +122,12 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
     private double leerDouble() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextDouble();
+    }
+
+    @Override
+    public void VolverAloNormal(double vidaJugador2) {
+      super.Salud=vidaJugador2;
+      this.Sangre=0;
     }
 
     private int leerInt() {

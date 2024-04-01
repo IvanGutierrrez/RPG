@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * 
  */
-public class Esbirro implements Serializable, Cloneable{
+public abstract class Esbirro implements Serializable, Cloneable{
 
     public String Nombre;
 
@@ -56,4 +56,7 @@ public class Esbirro implements Serializable, Cloneable{
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
+
+    public abstract double obtenerSalud();
+
 }

@@ -53,6 +53,11 @@ public class Ghoul extends Esbirro implements Serializable, Cloneable{
         } while (ans!=4);
     }
 
+    @Override
+    public double obtenerSalud() {
+        return super.Salud;
+    }
+
     private void ghoulFromInput(){
         this.Nombre = inputNombre();
         this.Salud = inputSalud();

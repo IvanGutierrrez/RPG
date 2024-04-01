@@ -57,4 +57,9 @@ public class Humano extends Esbirro implements Serializable, Cloneable {
         } while (ans!=4);
     }
 
+    @Override
+    public double obtenerSalud() {
+        return super.Salud;
+    }
+
 }

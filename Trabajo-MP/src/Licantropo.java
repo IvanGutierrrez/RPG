@@ -15,6 +15,7 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
             this.Rabia=3;
         }
     }
+    public double getRabia(){return this.Rabia;}
 
     public Licantropo(){
         buildPersonajeFromInput();
@@ -97,6 +98,12 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
     private double leerDouble() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextDouble();
+    }
+
+    @Override
+    public void VolverAloNormal(double vidaJugador2) {
+        super.Salud=vidaJugador2;
+        this.Rabia=0;
     }
 
 }

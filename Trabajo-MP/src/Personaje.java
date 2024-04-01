@@ -165,7 +165,7 @@ public abstract class Personaje implements Serializable, Cloneable {
     public double darVidaEsbirros() {
         double suma = 0;
         for(int i = 0; i < Esbirros.size(); i++) {
-            suma=suma+Esbirros.get(i).getSalud();
+            suma=suma+Esbirros.get(i).obtenerSalud();
         }
         return suma;
     }
@@ -316,4 +316,6 @@ public abstract class Personaje implements Serializable, Cloneable {
     protected void setPoder(double poder) {
         Poder = poder;
     }
+
+    public abstract void VolverAloNormal(double vidaJugador2);
 }

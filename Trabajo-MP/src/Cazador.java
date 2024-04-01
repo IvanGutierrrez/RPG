@@ -47,6 +47,7 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
             this.Voluntad=0;
         }
     }
+    public double getVoluntad(){return this.Voluntad;}
 
     @Override
     public String getNombre() {
@@ -77,6 +78,12 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
     private double leerDouble() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextDouble();
+    }
+
+    @Override
+    public void VolverAloNormal(double vidaJugador2) {
+       super.Salud=vidaJugador2;
+       this.Voluntad=3;
     }
 
 

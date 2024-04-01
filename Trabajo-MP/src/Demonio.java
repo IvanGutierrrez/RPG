@@ -81,6 +81,16 @@ public class Demonio extends Esbirro implements Serializable, Cloneable{
         } while (ans!=6);
     }
 
+    @Override
+    public double obtenerSalud() {
+        double suma=0;
+        for(int i=0;i<this.Esbirros.size();i++){
+           suma=suma+this.Esbirros.get(i).obtenerSalud();
+        }
+        suma=suma+ super.Salud;
+        return suma;
+    }
+
     private void gestionEsbirros(Demonio demonio) {
         int ans;
         do {
