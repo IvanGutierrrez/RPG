@@ -124,7 +124,7 @@ public class Partida implements Serializable {
         }
     }
 
-    public void Play() {
+    public void Play() throws IOException {
         this.getUsuarioActivo().Menu(this);
         this.serializar();
     }
@@ -136,10 +136,8 @@ public class Partida implements Serializable {
         this.combateQueue.add(c);
     }
 
-    public void darDeBajaUsuario(Usuario user) {
-        int conf = this.leerInt();
-        System.out.println("¿Esta seguro de que quiere dar de baja este usuario? (1234 para confirmar)");
-        if (conf == 1234) {
+    public void darDeBajaUsuario(Usuario user) throws IOException {
+        if (user instanceof Jugador) {
             Map<String, Usuario> mapa = getMapUsuarios();
             for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
                 Usuario u = entry.getValue();
@@ -148,6 +146,28 @@ public class Partida implements Serializable {
                     break;
                 }
             }
+        } else{ //es un operador
+            File archivo = new File("Trabajo-MP/datos/operadores/operador");
+            FileReader fileReader = new FileReader(archivo);
+            BufferedReader buf = new BufferedReader(fileReader);
+            List<String> lineasNoEliminadas = new ArrayList<>();
+            String linea = buf.readLine(); // Lees la primera línea
+            lineasNoEliminadas.add(linea);
+            String[] result;
+            while ((linea = buf.readLine()) != null) {
+                result = linea.split(",");
+                if (!result[1].equals(user.getNick())){
+                    lineasNoEliminadas.add(linea);
+                }
+            }
+            buf.close(); // Importante cerrar el BufferedReader
+            archivo.delete();
+            archivo.createNewFile(); //si no existe lo crea si existe lo sobreescribe
+            BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, true)); // true para permitir la escritura al final del archivo
+            for (String lineaNoEliminada : lineasNoEliminadas) {
+                writer.write(lineaNoEliminada + "\n");
+            }
+            writer.close(); // Cerrar el escritor
         }
     }
 

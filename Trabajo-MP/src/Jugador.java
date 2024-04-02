@@ -1,5 +1,5 @@
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Scanner;
@@ -107,7 +107,24 @@ public class Jugador extends Usuario implements Serializable {
         this.ultimaDerrota = ultimaDerrota;
     }
 
-    public void preguntarDetallesJugador(Partida p) {
+    private boolean nickUnico(String nick) throws IOException {
+        File archivo = new File("Trabajo-MP/datos/operadores/operador");
+        FileReader fileReader = new FileReader(archivo);
+        BufferedReader buf = new BufferedReader(fileReader);
+        String linea = buf.readLine(); // Lees la primera línea
+        String[] result;
+        while ((linea = buf.readLine()) != null) {
+            result = linea.split(",");
+            if (result[1].equals(nick)){
+                buf.close(); // Importante cerrar el BufferedReader
+                return false;
+            }
+        }
+        buf.close(); // Importante cerrar el BufferedReader
+        return true;
+    }
+
+    public void preguntarDetallesJugador(Partida p) throws IOException {
         boolean ok = false;
         int num = 0;
         while (!ok && num<2){
@@ -121,7 +138,7 @@ public class Jugador extends Usuario implements Serializable {
                 }
                 System.out.println("Introduzca nick");
                 nick = this.leerString();
-            } while(!p.nickUnico(nick));
+            } while(!p.nickUnico(nick) && this.nickUnico(nick));
             this.setNick(nick);
 
             String pass = null;
@@ -153,7 +170,7 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     @Override
-    public void Menu(Partida p) {
+    public void Menu(Partida p) throws IOException {
         int opcion = 0;
         if (!this.bloqueado) {
             while (opcion != 8 && opcion != 9) {
@@ -193,7 +210,18 @@ public class Jugador extends Usuario implements Serializable {
                     } else if (opcion == 8) {
                         System.out.println("Esperamos volverte a ver pronto");
                     } else if (opcion == 9) {
-                        p.darDeBajaUsuario(this);
+                        int numBaja = 0;
+                        System.out.println("¿Estas seguro?");
+                        while (numBaja != 1 && numBaja != 2) {
+                            System.out.println("1.-Si, quiero darme de baja");
+                            System.out.println("2.-No, deseo volver");
+                            numBaja = this.leerInt();
+                            if (numBaja == 1) {
+                                p.darDeBajaUsuario(this);
+                            } else if (numBaja == 2) {
+                                opcion = 0; //vuelve al menu
+                            }
+                        }
                     }
                 } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() == null && this.getDesafio().getJugadorRetador() != this && (this.getDesafio().getRondas() == null || this.getDesafio().getRondas().isEmpty())) {
                     this.desafiadoResuelve();

@@ -1,5 +1,5 @@
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -18,15 +18,38 @@ public class Operador extends Usuario implements Serializable {
         this.setNombre(name);
     }
 
-    public void preguntarDetallesOperador() {
+    private boolean nickUnico(String nick) throws IOException {
+        File archivo = new File("Trabajo-MP/datos/operadores/operador");
+        FileReader fileReader = new FileReader(archivo);
+        BufferedReader buf = new BufferedReader(fileReader);
+        String linea = buf.readLine(); // Lees la primera línea
+        String[] result;
+        while ((linea = buf.readLine()) != null) {
+            result = linea.split(",");
+            if (result[1].equals(nick)){
+                buf.close(); // Importante cerrar el BufferedReader
+                return false;
+            }
+        }
+        buf.close(); // Importante cerrar el BufferedReader
+        return true;
+    }
+
+    public void preguntarDetallesOperador(Partida p) throws IOException {
         boolean ok = false;
         int num = 0;
         while (!ok && num<2){
             System.out.println("Introduzca nombre");
             String nombre = this.leerString();
             this.setNombre(nombre);
-            System.out.println("Introduzca nick");
-            String nick = this.leerString();
+            String nick = null;
+            do{
+                if (nick != null){
+                    System.out.println("Ese nick ya esta cogido");
+                }
+                System.out.println("Introduzca nick");
+                nick = this.leerString();
+            } while(!p.nickUnico(nick) && this.nickUnico(nick));
             this.setNick(nick);
             String pass = null;
             do {
@@ -49,7 +72,7 @@ public class Operador extends Usuario implements Serializable {
         }
     }
     @Override
-    public void Menu(Partida p) {
+    public void Menu(Partida p) throws IOException {
         int opcion = 0;
         while(opcion != 6 && opcion != 7) {
             System.out.println("Eliga la opción");
