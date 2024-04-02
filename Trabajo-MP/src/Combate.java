@@ -62,12 +62,14 @@ public class Combate implements Serializable {
         this.PersonajeRetado.VolverAloNormal(vidaJugador2);
         this.JugadorRetador.anadirCombate(this);
         this.JugadorRetado.anadirCombate(this);
+        //this.JugadorRetador.setDesafio(null);//preguntar
+        //this.JugadorRetado.setDesafio(null);//preguntar
 
     }
 
     public void mostrarResultado() {
         System.out.println("Combate");
-        System.out.printf("%-20s%-20s%n", this.getJugadorRetador(), this.getJugadorRetado());
+        System.out.printf("%-20s%-20s%n", this.getJugadorRetador().getNombre(), this.getJugadorRetado().getNombre());
         System.out.printf("%-20s%-20s%n", this.PersonajeRetador.getNombre(), this.PersonajeRetado.getNombre());
         System.out.println("DineroApostado: "+ this.OroApostado);
         System.out.println("Fecha: "+ this.Fecha);
@@ -85,7 +87,7 @@ public class Combate implements Serializable {
         }
         System.out.println(" ");
         if(this.Ganador!=null){
-            System.out.println("El ganador del combate es: "+ this.Ganador);
+            System.out.println("El ganador del combate es: "+ this.Ganador.getNombre());
         }else{
             System.out.println("El combate ha quedado en empate");
         }
@@ -105,6 +107,8 @@ public class Combate implements Serializable {
         double penalizacion=this.OroApostado*0.1;
         penalizacion=this.PersonajeRetado.getOro()-penalizacion;
         this.PersonajeRetado.setOro(penalizacion);
+        this.JugadorRetador.setDesafio(null);
+        this.JugadorRetado.setDesafio(null);
 
     }
 
@@ -116,7 +120,7 @@ public class Combate implements Serializable {
         double VidaEsbirros1=this.PersonajeRetador.darVidaEsbirros();
         double VidaEsbirros2=this.PersonajeRetado.darVidaEsbirros();
         int i=1;
-        while(this.PersonajeRetador.Salud!=0 && this.PersonajeRetado.Salud!=0 ){
+        while(this.PersonajeRetador.getSalud()!=0 && this.PersonajeRetado.getSalud()!=0 ){
             double PotencialAtq1=this.PersonajeRetador.calcularPotencialAtaque()+Modificadores1;
             double PotencialAtq2=this.PersonajeRetado.calcularPotencialAtaque()+Modificadores2;
             double PotencialDef1=this.PersonajeRetador.calcularPotencialDefensa()+Modificadores1;
@@ -125,23 +129,23 @@ public class Combate implements Serializable {
             double ataque2=calcularSuerte(PotencialAtq2);
             double defensa1=calcularSuerte(PotencialDef1);
             double defensa2=calcularSuerte(PotencialDef2);
-            CalcularRonda(ataque1,defensa2,VidaEsbirros2,this.getPersonajeRetador(),this.getPersonajeRetado());
-            CalcularRonda(ataque2,defensa1,VidaEsbirros1,this.getPersonajeRetado(),this.getPersonajeRetador());
+            VidaEsbirros2=CalcularRonda(ataque1,defensa2,VidaEsbirros2,this.getPersonajeRetador(),this.getPersonajeRetado());
+            VidaEsbirros1=CalcularRonda(ataque2,defensa1,VidaEsbirros1,this.getPersonajeRetado(),this.getPersonajeRetador());
             Ronda ronda= new Ronda(i,this.PersonajeRetador,this.PersonajeRetado,VidaEsbirros1,VidaEsbirros2,PotencialAtq1,PotencialAtq2,PotencialDef1,PotencialDef2,ataque1,ataque2,defensa1,defensa2);
             this.Rondas.add(ronda);
             i=i+1;
         }
-        if(this.PersonajeRetador.Salud==0 && this.PersonajeRetado.Salud==0){
+        if(this.PersonajeRetador.getSalud()==0 && this.PersonajeRetado.getSalud()==0){
             System.out.println("Empate");
             this.Ganador=null;
-        }else if(this.PersonajeRetador.Salud==0){
+        }else if(this.PersonajeRetador.getSalud()==0){
             this.Ganador=this.JugadorRetado;
             this.getJugadorRetado().setTotalOroGanado((this.getJugadorRetado().getTotalOroGanado()+this.OroApostado));
             this.getJugadorRetador().setTotalOroGanado((this.getJugadorRetador().getTotalOroGanado()-this.OroApostado));
             if (VidaEsbirros2>0){
                 this.JugadorConEsbirrosSinDerrotar=this.JugadorRetado;
             }
-        }else if(this.PersonajeRetado.Salud==0){
+        }else if(this.PersonajeRetado.getSalud()==0){
             this.Ganador=this.JugadorRetador;
             this.getJugadorRetado().setTotalOroGanado((this.getJugadorRetado().getTotalOroGanado()-this.OroApostado));
             this.getJugadorRetador().setTotalOroGanado((this.getJugadorRetador().getTotalOroGanado()+this.OroApostado));
@@ -157,7 +161,7 @@ public class Combate implements Serializable {
         for (int i = 0; i < jugadorRetado.Debilidades.size(); i++) {
             for (int j = 0; j < modificadores.size(); j++) {
                 if (jugadorRetado.Debilidades.get(i) == modificadores.get(j)) {
-                    suma=suma+jugadorRetado.Debilidades.get(i).getValor();
+                    suma=suma-jugadorRetado.Debilidades.get(i).getValor();
                 }
             }
         }
@@ -172,24 +176,25 @@ public class Combate implements Serializable {
         return suma;
     }
 
-    private void CalcularRonda(double ataque1, double defensa2, double VidaEsbirros2, Personaje personajeRetador, Personaje personajeRetado) {
+    private double CalcularRonda( double ataque1, double defensa2, double VidaEsbirros, Personaje personajeRetador, Personaje personajeRetado) {
         if(ataque1>=defensa2){
-            if(VidaEsbirros2>0){
-                VidaEsbirros2=VidaEsbirros2-1;
+            if(VidaEsbirros>0){
+                VidaEsbirros=VidaEsbirros-1;
             }else{
-                personajeRetado.Salud=personajeRetado.Salud-1;
-                if(personajeRetador instanceof Vampiro){
-                    ((Vampiro) personajeRetador).SubirSangre();
-                }
-                if(personajeRetado instanceof Licantropo){
-                    ((Licantropo) personajeRetado).SubirRabia();
+                double salud=personajeRetado.getSalud()-1;
+                personajeRetado.setSalud(salud);
+            }
+            if(personajeRetador instanceof Vampiro){
+                ((Vampiro) personajeRetador).SubirSangre();
+            }
+            if(personajeRetado instanceof Licantropo){
+                ((Licantropo) personajeRetado).SubirRabia();
 
-                } else if (personajeRetado instanceof Cazador) {
-                    ((Cazador) personajeRetado).BajarVoluntad();
-                }
-
+            } else if (personajeRetado instanceof Cazador) {
+                ((Cazador) personajeRetado).BajarVoluntad();
             }
         }
+        return VidaEsbirros;
     }
 
 

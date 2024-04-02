@@ -188,7 +188,9 @@ public abstract class Personaje implements Serializable, Cloneable {
     protected double DarValorAtqEquipo() {
         double suma=0;
         for(int i = 0; i < ArmasActivas.size(); i++) {
-            suma=suma+ArmasActivas.get(i).getModificador();
+            if(ArmasActivas.get(i)!=null) {
+                suma = suma + ArmasActivas.get(i).getModificador();
+            }
         }
         suma=suma+ArmaduraActiva.getModATQ();
 
@@ -198,7 +200,9 @@ public abstract class Personaje implements Serializable, Cloneable {
     protected double DarValorDefEquipo() {
         double suma=0;
         for(int i = 0; i < ArmasActivas.size(); i++) {
-            suma=suma+ArmasActivas.get(i).getModDFS();
+            if(ArmasActivas.get(i)!=null) {
+                suma = suma + ArmasActivas.get(i).getModDFS();
+            }
         }
         suma=suma+ArmaduraActiva.getModificador();
 

@@ -393,9 +393,10 @@ public class Jugador extends Usuario implements Serializable {
         if (conf == 1) {
             this.desafio.combatir();
             this.desafio.mostrarResultado();
-            this.desafio = null;
+
         } else {
             this.desafio.cancelarCombate();
+
         }
     }
 
