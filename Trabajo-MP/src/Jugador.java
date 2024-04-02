@@ -230,7 +230,7 @@ public class Jugador extends Usuario implements Serializable {
                     this.getDesafio().mostrarResultado();
                     this.setDesafio(null);
                 } else {
-                    System.out.println("Se encuentra a la espera de validación de su desafio por parte de un operador, sea paciente porfavor");
+                    System.out.println("Se encuentra a la espera de resolver un combate, sea paciente porfavor");
                     System.out.println("Presione Enter para continuar...");
                     this.leerString();
                     p.serializar();
@@ -435,9 +435,11 @@ public class Jugador extends Usuario implements Serializable {
             System.out.println("Oro Apostado: " + elemento.getOroApostado());
             System.out.println("Rondas: " + elemento.getRondas());
             System.out.println("Fecha: " + elemento.getFecha());
-            System.out.println("Ganador: " + (elemento.getGanador() != null ? elemento.getGanador().getNombre() : "N/A"));
-            System.out.println("Jugadores con Esbirros Sin Derrotar:");
-            System.out.println(elemento.getJugadorConEsbirrosSinDerrotar().getNombre());
+            System.out.println("Ganador: " + (elemento.getGanador() != null ? elemento.getGanador().getNombre() : "Empate"));
+            if (elemento.getJugadorConEsbirrosSinDerrotar() != null) {
+                System.out.println("Jugadores con Esbirros Sin Derrotar:");
+                System.out.println(elemento.getJugadorConEsbirrosSinDerrotar().getNombre());
+            }
             System.out.println("Modificadores:");
             for (Modificador modificador : elemento.getModificadores()) {
                 System.out.println("- " + modificador.getNombre());
