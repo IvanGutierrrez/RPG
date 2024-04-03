@@ -297,8 +297,8 @@ public class Combate implements Serializable {
     @Override
     public String toString() {
         return "Desafio Actual:\n" +
-                "Jugador Retador: " + JugadorRetador + "\n" +
-                "Jugador Retado: " + JugadorRetado + "\n" +
+                "Jugador Retador: " + JugadorRetador.getNick() + "\n" +
+                "Jugador Retado: " + JugadorRetado.getNick() + "\n" +
                 "Oro Apostado: " + OroApostado + "\n" +
                 "Fecha: '" + Fecha + '\'';
     }
