@@ -11,7 +11,7 @@ public class Demonio extends Esbirro implements Serializable, Cloneable{
 
     private String DescrPact;
 
-    private List<Esbirro> Esbirros;
+    private ArrayList<Esbirro> Esbirros;
 
 
     @Override

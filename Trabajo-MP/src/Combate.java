@@ -44,7 +44,7 @@ public class Combate implements Serializable {
         this.Valido = false;
     }
 
-    public void ResolverConbate(double vidaJugador1, double vidaJugador2) {
+    public void ResolverCombate(double vidaJugador1, double vidaJugador2) {
         if(this.Ganador==this.JugadorRetado){
             double oro=this.PersonajeRetado.getOro()+this.OroApostado;
             this.PersonajeRetado.setOro(oro);
@@ -62,8 +62,6 @@ public class Combate implements Serializable {
         this.PersonajeRetado.VolverAloNormal(vidaJugador2);
         this.JugadorRetador.anadirCombate(this);
         this.JugadorRetado.anadirCombate(this);
-        //this.JugadorRetador.setDesafio(null);//preguntar
-        //this.JugadorRetado.setDesafio(null);//preguntar
 
     }
 
@@ -101,9 +99,6 @@ public class Combate implements Serializable {
     }
 
     public void cancelarCombate() {
-        double oro=this.OroApostado*0.1;
-        oro=oro+this.PersonajeRetador.getOro();
-        this.PersonajeRetador.setOro(oro);
         double penalizacion=this.OroApostado*0.1;
         penalizacion=this.PersonajeRetado.getOro()-penalizacion;
         this.PersonajeRetado.setOro(penalizacion);
@@ -136,7 +131,6 @@ public class Combate implements Serializable {
             i=i+1;
         }
         if(this.PersonajeRetador.getSalud()==0 && this.PersonajeRetado.getSalud()==0){
-            System.out.println("Empate");
             this.Ganador=null;
         }else if(this.PersonajeRetador.getSalud()==0){
             this.Ganador=this.JugadorRetado;
@@ -153,7 +147,7 @@ public class Combate implements Serializable {
                 this.JugadorConEsbirrosSinDerrotar=this.JugadorRetador;
             }
         }
-        ResolverConbate(vidaJugador1,vidaJugador2);
+        ResolverCombate(vidaJugador1,vidaJugador2);
     }
 
     private double CalcularModificadores(List<Modificador> modificadores, Personaje jugadorRetado) {
@@ -176,8 +170,8 @@ public class Combate implements Serializable {
         return suma;
     }
 
-    private double CalcularRonda( double ataque1, double defensa2, double VidaEsbirros, Personaje personajeRetador, Personaje personajeRetado) {
-        if(ataque1>=defensa2){
+    private double CalcularRonda( double ataque, double defensa, double VidaEsbirros, Personaje personajeRetador, Personaje personajeRetado) {
+        if(ataque>=defensa){
             if(VidaEsbirros>0){
                 VidaEsbirros=VidaEsbirros-1;
             }else{
@@ -198,15 +192,15 @@ public class Combate implements Serializable {
     }
 
 
-    private double calcularSuerte(double potencialAtq1) {
+    private double calcularSuerte(double potencial) {
         double suma=0;
         Random random = new Random();
-        while(potencialAtq1!=0) {
+        while(potencial!=0) {
             int num = random.nextInt(6) + 1;
             if (num >= 5) {
                 suma = suma + 1;
             }
-            potencialAtq1=potencialAtq1-1;
+            potencial=potencial-1;
         }
         return suma;
     }
