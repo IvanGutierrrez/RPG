@@ -38,7 +38,7 @@ public class GestionInicioSesion {
     }
 
     public void inicioSesion(Partida p) throws IOException {
-        if (this.partidaExits()){
+        if (this.partidaExits() && (!p.getMapUsuarios().isEmpty() || this.existenOperadores())){ //si la partida existe y si hay algun jugador u operador
             int ok = 0;
             while (ok<2){
                 System.out.println("Introduzca su nick");
@@ -86,7 +86,7 @@ public class GestionInicioSesion {
         if (this.coincide(passEspecial)){
             System.out.println("Bienvenido operador");
             Operador op1 = new Operador();
-            op1.preguntarDetallesOperador();
+            op1.preguntarDetallesOperador(p);
             if (op1.getPass() != null){
                 p.setUsuarioActivo(op1);
                 this.añadirOperador(op1);
@@ -106,6 +106,19 @@ public class GestionInicioSesion {
         if (ok) {
             p.Play();
         }
+    }
+
+    private boolean existenOperadores() throws IOException {
+        File archivo = new File("Trabajo-MP/datos/operadores/operador");
+        FileReader fileReader = new FileReader(archivo);
+        BufferedReader buf = new BufferedReader(fileReader);
+        String linea = buf.readLine(); // Lees la primera línea
+        if ((buf.readLine()) != null) {
+            buf.close(); // Importante cerrar el BufferedReader
+            return true;
+        }
+        buf.close(); // Importante cerrar el BufferedReader
+        return false;
     }
 
     private void asegurarArchivos() {

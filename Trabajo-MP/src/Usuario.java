@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -37,7 +38,7 @@ public abstract class Usuario implements Serializable {
         this.pass = pass;
     }
 
-    public abstract void Menu(Partida p);
+    public abstract void Menu(Partida p) throws IOException;
 
     private int leerInt(){
         Scanner scanner = new Scanner(System.in);
