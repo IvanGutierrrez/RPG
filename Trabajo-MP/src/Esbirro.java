@@ -43,12 +43,12 @@ public abstract class Esbirro implements Serializable, Cloneable{
         Scanner scanner = new Scanner(System.in);
         double salud;
         do {
-            System.out.println("Ingrese la cantidad de salud:");
+            System.out.println("Ingrese la cantidad de salud (entre 1 y 3):");
             salud = scanner.nextDouble();
-            if (salud <= 0) {
-                System.out.println("La cantidad de salud debe ser mayor que 0.");
+            if (salud < 1 || salud > 3) {
+                System.out.println("La cantidad de salud debe estar entre 1 y 3, inclusive.");
             }
-        } while (salud <= 0);
+        } while (salud < 1 || salud > 3);
         return salud;
     }
 

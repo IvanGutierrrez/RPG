@@ -22,23 +22,10 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
         this.Fortalezas = new ArrayList<>();
         this.Version = 1;
         this.Nombre = inputNombre();
-        this.Voluntad = inputVoluntad();
+        this.Voluntad = 3;
         this.Oro = inputOro();
         this.Salud = inputSalud();
         this.Poder = inputPoder();
-    }
-
-
-    protected double inputVoluntad() {
-        double voluntad;
-        do {
-            System.out.println("Ingrese cantidad de voluntad:");
-            voluntad = leerDouble();
-            if (voluntad <= 0) {
-                System.out.println("El valor de voluntad debe ser mayor que 0.");
-            }
-        } while (voluntad <= 0);
-        return voluntad;
     }
 
     public void BajarVoluntad(){

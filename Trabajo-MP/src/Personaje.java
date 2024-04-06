@@ -291,24 +291,24 @@ public abstract class Personaje implements Serializable, Cloneable {
     protected double inputSalud() {
         double salud;
         do {
-            System.out.println("Ingrese cantidad de salud:");
+            System.out.println("Ingrese cantidad de salud (máximo 5, mínimo 0):");
             salud = leerDouble();
-            if (salud <= 0) {
-                System.out.println("El valor de salud debe ser mayor que 0.");
+            if (salud < 0 || salud > 5) {
+                System.out.println("La cantidad de salud debe estar entre 0 y 5, inclusive.");
             }
-        } while (salud <= 0);
+        } while (salud < 0 || salud > 5);
         return salud;
     }
 
     protected double inputPoder() {
         double poder;
         do {
-            System.out.println("Ingrese cantidad de poder:");
+            System.out.println("Ingrese cantidad de poder (entre 1 y 5):");
             poder = leerDouble();
-            if (poder <= 0) {
-                System.out.println("El valor de poder debe ser mayor que 0.");
+            if (poder < 1 || poder > 5) {
+                System.out.println("La cantidad de poder debe estar entre 1 y 5, inclusive.");
             }
-        } while (poder <= 0);
+        } while (poder < 1 || poder > 5);
         return poder;
     }
 

@@ -434,7 +434,9 @@ public class Operador extends Usuario implements Serializable {
             System.out.println("1. Crear ghoul");
             System.out.println("2. Crear demonio");
             System.out.println("3. Crear humano");
+            System.out.println("Recuerde que los vampiros no pueden tener esbirros humanos");
             ans = leerInt();
+
             if(ans == 1){
                 Esbirro esbirro = new Ghoul();
                 personaje.getEsbirros().add(esbirro);
@@ -444,9 +446,13 @@ public class Operador extends Usuario implements Serializable {
                 personaje.getEsbirros().add(esbirro);
                 return true;
             } else if (ans == 3) {
-                Esbirro esbirro = new Humano();
-                personaje.getEsbirros().add(esbirro);
-                return true;
+                if (personaje instanceof Vampiro) {
+                    System.out.println("¡Un vampiro no puede crear un esbirro humano!");
+                } else {
+                    Esbirro esbirro = new Humano();
+                    personaje.getEsbirros().add(esbirro);
+                    return true;
+                }
             }
 
         } while (ans<=0 || ans >3);

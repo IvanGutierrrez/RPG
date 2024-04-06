@@ -67,11 +67,15 @@ public class Modificador implements Serializable, Cloneable {
         Scanner scanner = new Scanner(System.in);
         double valor;
         do {
-            System.out.println("Ingrese el valor del modificador:");
+            System.out.println("Ingrese el valor del modificador (entre 1 y 5):");
             valor = scanner.nextDouble();
-        } while (valor < 0);
+            if (valor < 1 || valor > 5) {
+                System.out.println("El valor debe estar entre 1 y 5, inclusive.");
+            }
+        } while (valor < 1 || valor > 5);
         return valor;
     }
+
 
     private int leerInt(){
         Scanner scanner = new Scanner(System.in);

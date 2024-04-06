@@ -101,9 +101,12 @@ public class HabilidadEspecial implements Serializable, Cloneable{
         Scanner scanner = new Scanner(System.in);
         double valorATC;
         do {
-            System.out.println("Ingrese el valor de la habilidad especial para el ataque:");
+            System.out.println("Ingrese el valor de la habilidad especial para el ataque (entre 1 y 3):");
             valorATC = scanner.nextDouble();
-        } while (valorATC < 0);
+            if (valorATC < 1 || valorATC > 3) {
+                System.out.println("El valor debe estar entre 1 y 3, inclusive.");
+            }
+        } while (valorATC < 1 || valorATC > 3);
         return valorATC;
     }
 
@@ -111,9 +114,12 @@ public class HabilidadEspecial implements Serializable, Cloneable{
         Scanner scanner = new Scanner(System.in);
         double valorDFS;
         do {
-            System.out.println("Ingrese el valor de la habilidad especial para la defensa:");
+            System.out.println("Ingrese el valor de la habilidad especial para la defensa (entre 1 y 3):");
             valorDFS = scanner.nextDouble();
-        } while (valorDFS < 0);
+            if (valorDFS < 1 || valorDFS > 3) {
+                System.out.println("El valor debe estar entre 1 y 3, inclusive.");
+            }
+        } while (valorDFS < 1 || valorDFS > 3);
         return valorDFS;
     }
 

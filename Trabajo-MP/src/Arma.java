@@ -79,24 +79,24 @@ public class Arma extends Equipo implements Serializable, Cloneable {
     protected double inputModificador() {
         double modif;
         do {
-            System.out.println("Ingrese el valor del modificador de ayaque:");
+            System.out.println("Ingrese el valor del modificador de ataque (entre 1 y 3):");
             modif = leerDouble();
-            if (modif <= 0) {
-                System.out.println("El valor debe ser mayor que 0.");
+            if (modif < 1 || modif > 3) {
+                System.out.println("El valor debe estar entre 1 y 3, inclusive.");
             }
-        } while (modif <= 0);
+        } while (modif < 1 || modif > 3);
         return modif;
     }
 
     protected double inputModDFS() {
         double modif;
         do {
-            System.out.println("Ingrese el valor del modificador de defensa:");
+            System.out.println("Ingrese el valor del modificador de defensa (entre 1 y 3):");
             modif = leerDouble();
-            if (modif < 0) {
-                System.out.println("El valor debe ser mayor o igual a 0.");
+            if (modif < 1 || modif > 3) {
+                System.out.println("El valor debe estar entre 1 y 3, inclusive.");
             }
-        } while (modif < 0);
+        } while (modif < 1 || modif > 3);
         return modif;
     }
 

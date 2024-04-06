@@ -21,14 +21,15 @@ public class Ghoul extends Esbirro implements Serializable, Cloneable{
         Scanner scanner = new Scanner(System.in);
         double dependencia;
         do {
-            System.out.println("Ingrese la cantidad de dependencia:");
+            System.out.println("Ingrese la cantidad de dependencia (entre 1 y 5):");
             dependencia = scanner.nextDouble();
-            if (dependencia <= 0) {
-                System.out.println("La cantidad de dependencia debe ser mayor que 0.");
+            if (dependencia < 1 || dependencia > 5) {
+                System.out.println("La cantidad de dependencia debe estar entre 1 y 5, inclusive.");
             }
-        } while (dependencia <= 0);
+        } while (dependencia < 1 || dependencia > 5);
         return dependencia;
     }
+
 
     @Override
     protected void ModificarEsbirro(){

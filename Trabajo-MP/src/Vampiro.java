@@ -27,7 +27,7 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
         this.Version = 1;
         this.Nombre = inputNombre();
         this.Edad = inputEdad();
-        this.Sangre = inputSangre();
+        this.Sangre = 0;
         this.Oro = inputOro();
         this.Salud = inputSalud();
         this.Poder = inputPoder();
@@ -90,23 +90,6 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
             }
         } while (edad < 0);
         return edad;
-    }
-
-    protected double inputSangre() {
-        double sangre;
-        do {
-            System.out.println("Ingrese la cantidad de sangre:");
-            sangre = leerDouble();
-            if (sangre < 0) {
-                System.out.println("La cantidad de sangre debe ser mayor o igual a 0.");
-            }
-        } while (sangre < 0);
-        return sangre;
-    }
-
-    private double leerDouble() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextDouble();
     }
 
     @Override

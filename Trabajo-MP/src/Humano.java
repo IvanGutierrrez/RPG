@@ -29,8 +29,22 @@ public class Humano extends Esbirro implements Serializable, Cloneable {
         Scanner scanner = new Scanner(System.in);
         String lealtad;
         do {
-            System.out.println("Ingrese la lealtad:");
-            lealtad = scanner.nextLine().trim();
+            System.out.println("Ingrese la lealtad (1 para ALTA, 2 para NORMAL, 3 para BAJA):");
+            int opcion = scanner.nextInt();
+            switch (opcion) {
+                case 1:
+                    lealtad = "ALTA";
+                    break;
+                case 2:
+                    lealtad = "NORMAL";
+                    break;
+                case 3:
+                    lealtad = "BAJA";
+                    break;
+                default:
+                    System.out.println("Opción inválida. Por favor, seleccione 1, 2 o 3.");
+                    lealtad = "";
+            }
         } while (lealtad.isEmpty());
         return lealtad;
     }
