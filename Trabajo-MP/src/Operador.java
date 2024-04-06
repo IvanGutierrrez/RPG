@@ -709,7 +709,7 @@ public class Operador extends Usuario implements Serializable {
             ans = leerInt();
             if(ans == 1){
                 changed = añadirHabilidadEspecial(personaje);
-            } else if (ans == 1) {
+            } else if (ans == 2) {
                 if (personaje.getHabilidadEspecial() == null){
                     changed = false;
                     System.out.println("Personaje sin habilidad Especial");
