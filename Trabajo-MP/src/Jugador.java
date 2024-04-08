@@ -189,16 +189,15 @@ public class Jugador extends Usuario implements Serializable {
                     if (opcion == 1) {
                         this.desafiar(p);
                     } else if (opcion == 2) {
-                        if (this.getPersonajeActivo() == null) {
-                            this.selecPersonajeActivo(p);
-                        }
                         if (this.personajeActivo != null) {
                             this.getPersonajeActivo().gestionEquipamiento();
                         } else {
                             System.out.println("Seleccione un personaje antes de gestionar su equipamiento");
                         }
                     } else if (opcion == 3) {
-                        this.selecPersonajeActivo(p);
+                        if (!this.personajes.isEmpty()) {
+                            this.selecPersonajeActivo(p);
+                        }
                     } else if (opcion == 4) {
                         this.registrarPersonaje(p);
                     } else if (opcion == 5) {
