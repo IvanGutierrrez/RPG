@@ -201,7 +201,9 @@ public class Jugador extends Usuario implements Serializable {
                     } else if (opcion == 4) {
                         this.registrarPersonaje(p);
                     } else if (opcion == 5) {
-                        this.darDeBajaPersonaje();
+                        if (!this.personajes.isEmpty()) {
+                            this.darDeBajaPersonaje();
+                        }
                     } else if (opcion == 6) {
                         this.mostrarHistorial();
                     } else if (opcion == 7) {
