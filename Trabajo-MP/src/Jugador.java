@@ -286,34 +286,35 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     public void darDeBajaPersonaje() {
-        boolean personajeElegido = false;
-
-        for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
-            System.out.println("Lista de personajes disponibles: ");
-            for (int i = 0; i < this.personajes.size(); i++) {
-                System.out.println((i + 1) + ". " + this.personajes.get(i).getNombre());
-            }
-
-            System.out.println("Seleccione un personaje:");
-            int opc = this.leerInt();
-
-            if (opc >= 1 && opc <= this.personajes.size()) {
-                Personaje personajeElegidoTmp = this.personajes.get(opc - 1);
-                System.out.println("Ha seleccionado a " + personajeElegidoTmp.getNombre() );
-                personajeElegido = true;
-
-                System.out.println("¿Seguro que quiere dar de baja este personaje definitivamente? (si desea continuar escriba: 1234)");
-                int conf = this.leerInt();
-                if (conf == 1234){
-                    this.personajes.remove(opc-1);
+        if (this.personajes != null) {
+            boolean personajeElegido = false;
+            for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
+                System.out.println("Lista de personajes disponibles: ");
+                for (int i = 0; i < this.personajes.size(); i++) {
+                    System.out.println((i + 1) + ". " + this.personajes.get(i).getNombre());
                 }
-            } else {
-                System.out.println("Opción no válida. Por favor, seleccione un número válido");
-            }
-        }
 
-        if (!personajeElegido) {
-            System.out.println("Se han agotado los intentos para seleccionar un personaje");
+                System.out.println("Seleccione un personaje:");
+                int opc = this.leerInt();
+
+                if (opc >= 1 && opc <= this.personajes.size()) {
+                    Personaje personajeElegidoTmp = this.personajes.get(opc - 1);
+                    System.out.println("Ha seleccionado a " + personajeElegidoTmp.getNombre());
+                    personajeElegido = true;
+
+                    System.out.println("¿Seguro que quiere dar de baja este personaje definitivamente? (si desea continuar escriba: 1234)");
+                    int conf = this.leerInt();
+                    if (conf == 1234) {
+                        this.personajes.remove(opc - 1);
+                    }
+                } else {
+                    System.out.println("Opción no válida. Por favor, seleccione un número válido");
+                }
+            }
+
+            if (!personajeElegido) {
+                System.out.println("Se han agotado los intentos para seleccionar un personaje");
+            }
         }
     }
 
@@ -346,7 +347,9 @@ public class Jugador extends Usuario implements Serializable {
             System.out.println("Nombre: " + jugador.getNombre());
             System.out.println("Número de Registro: " + jugador.getNRegistro());
             System.out.println("Indice de oro total: " + jugador.getTotalOroGanado());
-            System.out.println("Personaje Activo: " + jugador.getPersonajeActivo().getNombre());
+            if (jugador.getPersonajeActivo() != null) {
+                System.out.println("Personaje Activo: " + jugador.getPersonajeActivo().getNombre());
+            }
             System.out.println("Bloqueado: " + (jugador.getBloqueado() ? "Sí" : "No"));
             System.out.println("Desafío: " + (jugador.getDesafio() != null ? "Sí" : "No"));
             System.out.println("Última Derrota: " + jugador.getUltimaDerrota());
