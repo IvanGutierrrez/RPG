@@ -180,7 +180,7 @@ public class Jugador extends Usuario implements Serializable {
                     System.out.println("2.-Gestionar Equipamineto");
                     System.out.println("3.-Cambiar Personaje Activo");
                     System.out.println("4.-Registrar Personaje Nuevo");
-                    System.out.println("5.-Borrar Personaje Actual");
+                    System.out.println("5.-Borrar Personaje");
                     System.out.println("6.-Mostrar Historial de Combates");
                     System.out.println("7.-Mostrar Ranking de Jugadores");
                     System.out.println("8.-Cerrar Sesión");
@@ -306,6 +306,9 @@ public class Jugador extends Usuario implements Serializable {
                     System.out.println("¿Seguro que quiere dar de baja este personaje definitivamente? (si desea continuar escriba: 1234)");
                     int conf = this.leerInt();
                     if (conf == 1234) {
+                        if (this.personajeActivo == this.personajes.get(opc - 1)){
+                            this.personajeActivo = null;
+                        }
                         this.personajes.remove(opc - 1);
                     }
                 } else {
