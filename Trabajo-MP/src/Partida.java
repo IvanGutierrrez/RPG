@@ -191,7 +191,9 @@ public class Partida implements Serializable {
         pOutdated = pNew.clone();
         pOutdated.setOro(oro);
         System.out.println("El personaje ha sido actualizado por un operador");
-        pOutdated.gestionEquipamiento();
+        System.out.println("Mire las nuevas armas y armaduras disponibles:");
+        pOutdated.gestionarArmas();
+        pOutdated.gestionarArmaduras();
         return pOutdated;
     }
 }

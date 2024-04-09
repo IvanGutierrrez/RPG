@@ -292,7 +292,9 @@ public class Jugador extends Usuario implements Serializable {
                     Personaje personajeNuevo = personajeElegidoTmp.clone();
                     this.personajes.add(personajeNuevo);
                     this.personajeActivo = personajeNuevo;
-                    this.personajeActivo.gestionEquipamiento();
+                    System.out.println("Vamos a equipar a tu personaje...");
+                    this.personajeActivo.gestionarArmas();
+                    this.personajeActivo.gestionarArmaduras();
                 }
             } else {
                 System.out.println("Opción no válida. Por favor, seleccione un número válido");

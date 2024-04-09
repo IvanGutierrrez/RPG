@@ -65,7 +65,7 @@ public abstract class Personaje implements Serializable, Cloneable {
         }  while (opcion != 3 && intento < 2);
     }
 
-    private void gestionarArmas() {
+    public void gestionarArmas() {
         if (this.ArmasActivas.isEmpty()) {
             ArmasActivas.add(null);
             ArmasActivas.add(null);
@@ -75,50 +75,57 @@ public abstract class Personaje implements Serializable, Cloneable {
             Arma arma = Armas.get(i);
             System.out.println((i + 1) + ". " + arma.getNombre() + " (Tipo: " + (arma.getTipo() ? "Tipo 2" : "Tipo 1") + ")");
         }
-        System.out.print("Seleccione un arma: ");
-        int opcionArma = leerInt();
-        if (opcionArma >= 1 && opcionArma <= Armas.size()) {
-            Arma armaSeleccionada = Armas.get(opcionArma - 1);
-            if (!armaSeleccionada.getTipo()) {
-                // Tipo 1
-                this.ArmasActivas.set(0, armaSeleccionada);
-                System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
-                System.out.print("Seleccione un arma: ");
-                opcionArma = leerInt();
-                if (opcionArma >= 1 && opcionArma <= Armas.size()) {
-                    armaSeleccionada = Armas.get(opcionArma - 1);
-                    if (!armaSeleccionada.getTipo()) {
-                        this.ArmasActivas.set(1, armaSeleccionada);
-                        System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
-                    } else {
-                        System.out.print("Este arma es de dos manos y solo tienes una disponible");
-                        this.ArmasActivas.set(1, null);
-                    }
+
+        int opcionArma = 0;
+        while (opcionArma < 1 || opcionArma > Armas.size()) {
+            System.out.print("Seleccione un arma: ");
+            opcionArma = leerInt();
+            if (opcionArma >= 1 && opcionArma <= Armas.size()) {
+                Arma armaSeleccionada = Armas.get(opcionArma - 1);
+                if (!armaSeleccionada.getTipo()) {
+                    // Tipo 1
+                    this.ArmasActivas.set(0, armaSeleccionada);
+                    System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
+                    System.out.print("Seleccione otro arma (en caso de no querer otro arma introduzca 0): ");
+                    int opcionArma2 = leerInt();
+                    if (opcionArma2 >= 1 && opcionArma2 <= Armas.size()) {
+                        armaSeleccionada = Armas.get(opcionArma2 - 1);
+                        if (!armaSeleccionada.getTipo()) {
+                            this.ArmasActivas.set(1, armaSeleccionada);
+                            System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
+                        } else {
+                            System.out.print("Este arma es de dos manos y solo tienes una mano disponible");
+                            this.ArmasActivas.set(1, null);
+                        }
+                    } else { this.ArmasActivas.set(1, null); }
+                } else {
+                    // Tipo 2
+                    this.ArmasActivas.set(0, armaSeleccionada);
+                    this.ArmasActivas.set(1, null);
+                    System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
                 }
             } else {
-                // Tipo 2
-                this.ArmasActivas.set(0, armaSeleccionada);
-                this.ArmasActivas.set(1, null);
-                System.out.println("Has seleccionado el arma: " + armaSeleccionada.getNombre());
+                System.out.println("Selección de arma inválida.");
             }
-        } else {
-            System.out.println("Selección de arma inválida.");
         }
     }
 
-    private void gestionarArmaduras() {
+    public void gestionarArmaduras() {
         System.out.println("Armaduras disponibles:");
         for (int i = 0; i < Armaduras.size(); i++) {
             System.out.println((i + 1) + ". " + Armaduras.get(i).getNombre());
         }
-        System.out.print("Seleccione una armadura: ");
-        int opcionArmadura = leerInt();
 
-        if (opcionArmadura >= 1 && opcionArmadura <= Armaduras.size()) {
-            System.out.println("Has seleccionado la armadura: " + Armaduras.get(opcionArmadura - 1).getNombre());
-            this.ArmaduraActiva = Armaduras.get(opcionArmadura - 1);
-        } else {
-            System.out.println("Selección de armadura inválida.");
+        int opcionArmadura = 0;
+        while (opcionArmadura < 1 || opcionArmadura > Armaduras.size()) {
+            System.out.print("Seleccione una armadura: ");
+            opcionArmadura = leerInt();
+            if (opcionArmadura >= 1 && opcionArmadura <= Armaduras.size()) {
+                System.out.println("Has seleccionado la armadura: " + Armaduras.get(opcionArmadura - 1).getNombre());
+                this.ArmaduraActiva = Armaduras.get(opcionArmadura - 1);
+            } else {
+                System.out.println("Selección de armadura inválida.");
+            }
         }
     }
 
