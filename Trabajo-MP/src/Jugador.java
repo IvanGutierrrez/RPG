@@ -413,6 +413,7 @@ public class Jugador extends Usuario implements Serializable {
     public void selecPersonajeActivo(Partida p) {
         boolean personajeElegido = false;
         if (this.personajes.isEmpty()) {
+            System.out.println("No tienes personajes, vamos a registrarte uno");
             this.registrarPersonaje(p);
         }
 
