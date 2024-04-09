@@ -728,7 +728,6 @@ public class Operador extends Usuario implements Serializable {
     }
 
 
-
     private boolean añadirHabilidadEspecial(Personaje personaje) {
         HabilidadEspecial habilidadEspecial = new HabilidadEspecial();
         personaje.setHabilidadEspecial(habilidadEspecial);

@@ -171,15 +171,6 @@ public class Partida implements Serializable {
         }
     }
 
-    public void getPersonaje() {
-        // TODO implement here
-    }
-
-    public Personaje seleccionPersonaje() {
-        // TODO implement here
-        return null;
-    }
-
     public Personaje checkVersion(Personaje p) {
         String nombre = p.getNombre();
         for (Personaje personje: this.ListaPersonajes){
@@ -201,15 +192,5 @@ public class Partida implements Serializable {
         System.out.println("El personaje ha sido actualizado por un operador");
         pOutdated.gestionEquipamiento();
         return pOutdated;
-    }
-
-    private int leerInt(){
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
-
-    private String leerString(){
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
     }
 }
