@@ -70,12 +70,12 @@ public class Armadura extends Equipo implements Serializable, Cloneable{
     protected double inputModATK() {
         double modif;
         do {
-            System.out.println("Ingrese el valor del modificador de ataque (entre 1 y 3):");
+            System.out.println("Ingrese el valor del modificador de ataque (entre 0 y 3):");
             modif = leerDouble();
-            if (modif < 1 || modif > 3) {
-                System.out.println("El valor debe estar entre 1 y 3, inclusive.");
+            if (modif < 0 || modif > 3) {
+                System.out.println("El valor debe estar entre 0 y 3, inclusive.");
             }
-        } while (modif < 1 || modif > 3);
+        } while (modif < 0 || modif > 3);
         return modif;
     }
 
