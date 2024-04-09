@@ -71,7 +71,6 @@ public class Partida implements Serializable {
         for (Map.Entry<String, Usuario> entry : mapa.entrySet()) {
             Usuario u = entry.getValue();
             if (u.getNick().equals(nick) && u.getPass().equals(pass)){
-                System.out.println("ayuda");
                 return u;
             }
         }
