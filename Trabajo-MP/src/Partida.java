@@ -173,6 +173,7 @@ public class Partida implements Serializable {
 
     public Personaje checkVersion(Personaje p) {
         String nombre = p.getNombre();
+
         for (Personaje personje: this.ListaPersonajes){
             if (Objects.equals(personje.getNombre(), nombre)){
                 if (personje.getVersion() == p.getVersion()){
