@@ -448,6 +448,7 @@ public class Operador extends Usuario implements Serializable {
             } else if (ans == 3) {
                 if (personaje instanceof Vampiro) {
                     System.out.println("¡Un vampiro no puede crear un esbirro humano!");
+                    ans=-1;
                 } else {
                     Esbirro esbirro = new Humano();
                     personaje.getEsbirros().add(esbirro);

@@ -26,7 +26,6 @@ public abstract class Esbirro implements Serializable, Cloneable{
     }
 
     protected void ModificarEsbirro(){
-
     }
 
     protected String inputNombre() {
