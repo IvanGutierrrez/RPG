@@ -93,8 +93,8 @@ public class GestionInicioSesion {
                 ok = true;
             }
         } else {
+            System.out.println("Bienvenido jugador");
             if (this.existenOperadores() && !p.getListaPersonajes().isEmpty() && p.existenArmasArmaduras()) {
-                System.out.println("Bienvenido jugador");
                 Jugador j1 = new Jugador();
                 j1.preguntarDetallesJugador(p);
                 if (j1.getPass() != null) {
