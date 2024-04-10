@@ -195,4 +195,16 @@ public class Partida implements Serializable {
         pOutdated.gestionarArmaduras();
         return pOutdated;
     }
+
+    public boolean existenArmasArmaduras(){
+        if (!this.getListaPersonajes().isEmpty()){
+            for (Personaje personaje : this.getListaPersonajes()) {
+                if (personaje.getArmas().isEmpty() || personaje.getArmaduras().isEmpty()){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }

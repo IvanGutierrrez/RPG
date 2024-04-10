@@ -93,7 +93,7 @@ public class GestionInicioSesion {
                 ok = true;
             }
         } else {
-            if (this.existenOperadores() && !p.getListaPersonajes().isEmpty()) {
+            if (this.existenOperadores() && !p.getListaPersonajes().isEmpty() && p.existenArmasArmaduras()) {
                 System.out.println("Bienvenido jugador");
                 Jugador j1 = new Jugador();
                 j1.preguntarDetallesJugador(p);
@@ -104,7 +104,7 @@ public class GestionInicioSesion {
                     ok = true;
                 }
             } else{
-                System.out.println("No hay ningun personaje creado, espere a que un operador lo añada");
+                System.out.println("No hay ningun personaje creado o existen personajes sin armas o armaduras, espere a que un operador lo añada");
             }
         }
         if (ok) {
