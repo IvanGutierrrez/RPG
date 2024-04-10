@@ -417,28 +417,29 @@ public class Jugador extends Usuario implements Serializable {
         if (this.personajes.isEmpty()) {
             System.out.println("No tienes personajes, vamos a registrarte uno");
             this.registrarPersonaje(p);
-        }
+        } else {
+            for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
+                System.out.println("Lista de personajes disponibles:");
+                for (int i = 0; i < this.personajes.size(); i++) {
+                    System.out.println((i + 1) + ". " + this.personajes.get(i).getNombre());
+                }
 
-        for (int intento = 0; intento <= 2 && !personajeElegido; intento++) {
-            System.out.println("Lista de personajes disponibles:");
-            for (int i = 0; i < this.personajes.size(); i++) {
-                System.out.println((i + 1) + ". " + this.personajes.get(i).getNombre());
+                System.out.println("Seleccione un personaje:");
+                int opt = this.leerInt();
+
+                if (opt >= 1 && opt <= this.personajes.size()) {
+                    this.personajeActivo = this.personajes.get(opt - 1);
+                    ;
+                    System.out.println("Se ha seleccionado a " + this.personajeActivo.getNombre() + " como el personaje activo");
+                    personajeElegido = true;
+                } else {
+                    System.out.println("Opción no válida. Por favor, seleccione un número válido");
+                }
             }
 
-            System.out.println("Seleccione un personaje:");
-            int opt = this.leerInt();
-
-            if (opt >= 1 && opt <= this.personajes.size()) {
-                this.personajeActivo = this.personajes.get(opt - 1);;
-                System.out.println("Se ha seleccionado a " + this.personajeActivo.getNombre() + " como el personaje activo");
-                personajeElegido = true;
-            } else {
-                System.out.println("Opción no válida. Por favor, seleccione un número válido");
+            if (!personajeElegido) {
+                System.out.println("Se han agotado los intentos para seleccionar un personaje activo");
             }
-        }
-
-        if (!personajeElegido) {
-            System.out.println("Se han agotado los intentos para seleccionar un personaje activo");
         }
     }
 
