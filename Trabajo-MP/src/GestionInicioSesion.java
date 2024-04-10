@@ -79,32 +79,36 @@ public class GestionInicioSesion {
     }
 
     public void registrarse(Partida p) throws IOException {
-        boolean ok = false;
-        //Si esta vacia la carpeta no deserializamos y dejamos la partida a null
-        System.out.println("Introduzca contraseña especial");
-        String passEspecial = this.leerString();
-        if (this.coincide(passEspecial)){
-            System.out.println("Bienvenido operador");
-            Operador op1 = new Operador();
-            op1.preguntarDetallesOperador(p);
-            if (op1.getPass() != null){
-                p.setUsuarioActivo(op1);
-                this.añadirOperador(op1);
-                ok = true;
+        if (this.existenOperadores() && !p.getListaPersonajes().isEmpty()) {
+            boolean ok = false;
+            //Si esta vacia la carpeta no deserializamos y dejamos la partida a null
+            System.out.println("Introduzca contraseña especial");
+            String passEspecial = this.leerString();
+            if (this.coincide(passEspecial)) {
+                System.out.println("Bienvenido operador");
+                Operador op1 = new Operador();
+                op1.preguntarDetallesOperador(p);
+                if (op1.getPass() != null) {
+                    p.setUsuarioActivo(op1);
+                    this.añadirOperador(op1);
+                    ok = true;
+                }
+            } else {
+                System.out.println("Bienvenido jugador");
+                Jugador j1 = new Jugador();
+                j1.preguntarDetallesJugador(p);
+                if (j1.getPass() != null) {
+                    p.setUsuarioActivo(j1);
+                    p.getMapUsuarios().put(j1.getNick(), j1);
+                    System.out.println(p.getMapUsuarios().get(j1.getNick()).getPass());
+                    ok = true;
+                }
+            }
+            if (ok) {
+                p.Play();
             }
         } else{
-            System.out.println("Bienvenido jugador");
-            Jugador j1 = new Jugador();
-            j1.preguntarDetallesJugador(p);
-            if (j1.getPass() != null) {
-                p.setUsuarioActivo(j1);
-                p.getMapUsuarios().put(j1.getNick(), j1);
-                System.out.println(p.getMapUsuarios().get(j1.getNick()).getPass());
-                ok = true;
-            }
-        }
-        if (ok) {
-            p.Play();
+            System.out.println("No hay ningun personaje creado, espere a que un operador lo añada");
         }
     }
 
