@@ -34,14 +34,13 @@ public class Demonio extends Esbirro implements Serializable, Cloneable{
     }
 
     protected boolean inputPacto() {
-        Scanner scanner = new Scanner(System.in);
         int opcion;
         boolean pacto;
         do {
             System.out.println("¿El personaje tiene pacto?");
             System.out.println("1. Sí");
             System.out.println("2. No");
-            opcion = scanner.nextInt();
+            opcion = leerInt();
             if (opcion != 1 && opcion != 2) {
                 System.out.println("Opción incorrecta. Por favor, ingrese 1 o 2.");
             }

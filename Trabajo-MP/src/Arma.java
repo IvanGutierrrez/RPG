@@ -101,12 +101,11 @@ public class Arma extends Equipo implements Serializable, Cloneable {
     }
 
     protected boolean inputTipo() {
-        Scanner scanner = new Scanner(System.in);
         int tipoInput;
         boolean tipo = false;
         do {
             System.out.println("Ingrese 1 para 'Arma de una mano' o 2 para 'Arma de dos manos':");
-            tipoInput = scanner.nextInt();
+            tipoInput = leerInt();
             if (tipoInput == 1) {
                 tipo = false;  // Arma de una mano
             } else if (tipoInput == 2) {
@@ -125,10 +124,32 @@ public class Arma extends Equipo implements Serializable, Cloneable {
 
     private double leerDouble() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextDouble();
+        boolean ok = false;
+        double num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un numero real");
+            }
+        }
+        return num;
     }
     private int leerInt(){
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        boolean ok = false;
+        int num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un entero");
+            }
+        }
+        return num;
     }
 }

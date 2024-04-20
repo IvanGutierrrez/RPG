@@ -64,11 +64,10 @@ public class Modificador implements Serializable, Cloneable {
     }
 
     private double inputValor() {
-        Scanner scanner = new Scanner(System.in);
         double valor;
         do {
             System.out.println("Ingrese el valor del modificador (entre 1 y 5):");
-            valor = scanner.nextDouble();
+            valor = leerDouble();
             if (valor < 1 || valor > 5) {
                 System.out.println("El valor debe estar entre 1 y 5, inclusive.");
             }
@@ -79,6 +78,33 @@ public class Modificador implements Serializable, Cloneable {
 
     private int leerInt(){
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        boolean ok = false;
+        int num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un entero");
+            }
+        }
+        return num;
+    }
+
+    private double leerDouble(){
+        Scanner scanner = new Scanner(System.in);
+        boolean ok = false;
+        double num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un nnumero real");
+            }
+        }
+        return num;
     }
 }

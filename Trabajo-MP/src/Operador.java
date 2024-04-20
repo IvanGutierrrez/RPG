@@ -911,7 +911,18 @@ public class Operador extends Usuario implements Serializable {
 
     private int leerInt(){
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        boolean ok = false;
+        int num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un entero");
+            }
+        }
+        return num;
     }
 
     private String leerString(){

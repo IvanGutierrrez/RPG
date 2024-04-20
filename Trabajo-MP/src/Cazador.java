@@ -64,7 +64,18 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
 
     private double leerDouble() {
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextDouble();
+        boolean ok = false;
+        double num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un numero real");
+            }
+        }
+        return num;
     }
 
     @Override

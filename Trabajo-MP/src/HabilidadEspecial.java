@@ -80,7 +80,34 @@ public class HabilidadEspecial implements Serializable, Cloneable{
 
     private int leerInt(){
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        boolean ok = false;
+        int num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un entero");
+            }
+        }
+        return num;
+    }
+
+    private double leerDouble(){
+        Scanner scanner = new Scanner(System.in);
+        boolean ok = false;
+        double num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un numero real");
+            }
+        }
+        return num;
     }
 
     public String getNombre() {
@@ -102,7 +129,7 @@ public class HabilidadEspecial implements Serializable, Cloneable{
         double valorATC;
         do {
             System.out.println("Ingrese el valor de la habilidad especial para el ataque (entre 1 y 3):");
-            valorATC = scanner.nextDouble();
+            valorATC = leerDouble();
             if (valorATC < 1 || valorATC > 3) {
                 System.out.println("El valor debe estar entre 1 y 3, inclusive.");
             }
@@ -111,11 +138,10 @@ public class HabilidadEspecial implements Serializable, Cloneable{
     }
 
     private double inputValorDFS() {
-        Scanner scanner = new Scanner(System.in);
         double valorDFS;
         do {
             System.out.println("Ingrese el valor de la habilidad especial para la defensa (entre 1 y 3):");
-            valorDFS = scanner.nextDouble();
+            valorDFS = leerDouble();
             if (valorDFS < 1 || valorDFS > 3) {
                 System.out.println("El valor debe estar entre 1 y 3, inclusive.");
             }
@@ -124,11 +150,10 @@ public class HabilidadEspecial implements Serializable, Cloneable{
     }
 
     private double inputCoste() {
-        Scanner scanner = new Scanner(System.in);
         double coste;
         do {
             System.out.println("Ingrese el costo de la habilidad especial:");
-            coste = scanner.nextDouble();
+            coste = leerDouble();
         } while (coste < 0);
         return coste;
     }

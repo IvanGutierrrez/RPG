@@ -53,7 +53,34 @@ public abstract class Esbirro implements Serializable, Cloneable{
 
     protected int leerInt(){
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        boolean ok = false;
+        int num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un entero");
+            }
+        }
+        return num;
+    }
+
+    protected double leerDouble(){
+        Scanner scanner = new Scanner(System.in);
+        boolean ok = false;
+        double num = 0;
+        while (!ok) {
+            try {
+                String n = scanner.nextLine();
+                num = Integer.parseInt(n);
+                ok = true;
+            } catch (NumberFormatException e){
+                System.out.println("Caracter no valido, introduzca un numero real");
+            }
+        }
+        return num;
     }
 
     public abstract double obtenerSalud();
