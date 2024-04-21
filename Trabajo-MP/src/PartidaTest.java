@@ -38,32 +38,54 @@ class PartidaTest {
 
     @Test
     public void testSerializar() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
-        File datos = new File("Trabajo-MP/datos");
+        File datos = new File("Trabajo-MP/datos/partida/partida.dat");
         datos.delete();
 
         GestionInicioSesion instancia = new GestionInicioSesion();
+        Method metodoPrivado2 = instancia.getClass().getDeclaredMethod("asegurarArchivos");
+        metodoPrivado2.setAccessible(true);
+        metodoPrivado2.invoke(instancia);
+
         Method metodoPrivado = instancia.getClass().getDeclaredMethod("partidaExits");
         metodoPrivado.setAccessible(true);
 
         //para que funcione hace falta borrar manualmente la carpeta de datos
         assertEquals(false,metodoPrivado.invoke(instancia));
 
+        Jugador j =  new Jugador();
+        j.setNick("J1");
         Partida p = new Partida();
+        p.getMapUsuarios().put("J1",j);
         p.serializar();
 
         assertEquals(true,metodoPrivado.invoke(instancia));
+
+        Partida p2 = p.deserializar();
+
+        assertEquals(true,p2.getMapUsuarios().containsKey("J1"));
     }
 
     @Test
     public void testDeserializar() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        File datos = new File("Trabajo-MP/datos/partida/partida.dat");
+        datos.delete();
+
+        GestionInicioSesion instancia = new GestionInicioSesion();
+        Method metodoPrivado2 = instancia.getClass().getDeclaredMethod("asegurarArchivos");
+        metodoPrivado2.setAccessible(true);
+        metodoPrivado2.invoke(instancia);
+
         Partida p = new Partida();
+
+        assertEquals(null,p.deserializar());
+
         Operador op = new Operador("nombre","nick","password");
         p.getMapUsuarios().put("nick",op);
         p.serializar();
-
         Partida p2 = p.deserializar();
 
-        assertEquals(true,p.getMapUsuarios().get("nick").getNick().equals(p2.getMapUsuarios().get("nick").getNick()));
+
+        assertEquals(true,p2.getMapUsuarios().containsKey("nick"));
     }
 
     @Test
@@ -74,6 +96,9 @@ class PartidaTest {
         j.setNombre("NJ1");
         j.setPass("password");
         p.getMapUsuarios().put("J1",j);
+
+        assertEquals(true,p.getMapUsuarios().containsValue(j));
+
         p.darDeBajaUsuario(j);
 
         assertEquals(false,p.getMapUsuarios().containsValue(j));
@@ -87,15 +112,10 @@ class PartidaTest {
         Method metodoPrivado2 = instancia.getClass().getDeclaredMethod("existeOperador", String.class);
         metodoPrivado2.setAccessible(true);
 
+        assertEquals(true,metodoPrivado2.invoke(instancia, op.getNick()));
+
         p.darDeBajaUsuario(op);
+
         assertEquals(false,metodoPrivado2.invoke(instancia, op.getNick()));
-    }
-
-    @Test
-    public void testCheckVersion() {
-    }
-
-    @Test
-    public void testExistenArmasArmaduras() {
     }
 }

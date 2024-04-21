@@ -14,12 +14,18 @@ class GestionInicioSesionTest {
         Method metodoPrivado = instancia.getClass().getDeclaredMethod("existenOperadores");
         metodoPrivado.setAccessible(true);
 
+        File archivo = new File("Trabajo-MP/datos/operadores/operador");
+        archivo.delete();
+        Method metodoPrivado2 = instancia.getClass().getDeclaredMethod("asegurarArchivos");
+        metodoPrivado2.setAccessible(true);
+        metodoPrivado2.invoke(instancia);
+
         assertEquals(false,metodoPrivado.invoke(instancia));
 
         Operador op = new Operador("Nombre","Nick","password");
-        Method metodoPrivado2 = instancia.getClass().getDeclaredMethod("añadirOperador", Operador.class);
-        metodoPrivado2.setAccessible(true);
-        metodoPrivado2.invoke(instancia,op);
+        Method metodoPrivado3 = instancia.getClass().getDeclaredMethod("añadirOperador", Operador.class);
+        metodoPrivado3.setAccessible(true);
+        metodoPrivado3.invoke(instancia,op);
 
         assertEquals(true,metodoPrivado.invoke(instancia));
 
@@ -56,6 +62,9 @@ class GestionInicioSesionTest {
         GestionInicioSesion instancia = new GestionInicioSesion();
         Method metodoPrivado = instancia.getClass().getDeclaredMethod("partidaExits");
         metodoPrivado.setAccessible(true);
+
+        File partida = new File("Trabajo-MP/datos/partida/partida.dat");
+        partida.delete();
 
         assertEquals(false,metodoPrivado.invoke(instancia));
 
