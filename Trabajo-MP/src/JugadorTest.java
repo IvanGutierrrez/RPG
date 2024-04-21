@@ -35,9 +35,10 @@ class JugadorTest {
 
         j1.setNick("1");
         metodoPrivado.invoke(j1,p);
-        p.getMapUsuarios().put("1",j1);
 
-        assertEquals(true,this.NRegistroUnico("S23RR",p));
+        assertEquals(true,this.NRegistroUnico(j1.getNRegistro(),p));
+
+        p.getMapUsuarios().put("1",j1);
 
         assertEquals(false,this.NRegistroUnico(j1.getNRegistro(),p));
     }
