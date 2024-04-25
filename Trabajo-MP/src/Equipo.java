@@ -14,6 +14,17 @@ public class Equipo implements Serializable, Cloneable{
     public Equipo(){}
 
 
+    // Setter para Nombre
+    public void setNombre(String nombre) {
+        Nombre = nombre;
+    }
+
+
+    public void setModificador(double modificador) {
+        Modificador = modificador;
+    }
+
+
     @Override
     public Equipo clone() {
         try {

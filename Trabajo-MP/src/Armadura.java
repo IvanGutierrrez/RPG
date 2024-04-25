@@ -15,6 +15,10 @@ public class Armadura extends Equipo implements Serializable, Cloneable{
         buildArmaduraFromInput();
     }
 
+    public void setModATQ(double modATQ) {
+        ModATQ = modATQ;
+    }
+
 
     public void buildArmaduraFromInput() {
         this.Nombre = inputNombre();

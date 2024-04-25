@@ -17,6 +17,10 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
     }
     public double getRabia(){return this.Rabia;}
 
+    public void setRabia(double rabia) {
+        Rabia = rabia;
+    }
+
     public Licantropo(){
         buildPersonajeFromInput();
     }

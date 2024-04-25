@@ -366,4 +366,20 @@ public abstract class Personaje implements Serializable, Cloneable {
     }
 
     public abstract void VolverAloNormal(double vidaJugador2);
+
+
+    // Setter para ArmasActivas
+    public void setArmasActivas(Arma armasActivas) {
+        ArmasActivas.set(0,armasActivas);
+        ArmasActivas.set(1,null);
+    }
+
+    public Armadura getArmaduraActiva() {
+        return ArmaduraActiva;
+    }
+
+    // Setter para ArmaduraActiva
+    public void setArmaduraActiva(Armadura armaduraActiva) {
+        ArmaduraActiva = armaduraActiva;
+    }
 }

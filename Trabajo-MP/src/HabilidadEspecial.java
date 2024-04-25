@@ -158,4 +158,30 @@ public class HabilidadEspecial implements Serializable, Cloneable{
         return coste;
     }
 
+    public void setNombre(String nombre) {
+        Nombre = nombre;
+    }
+
+    // Métodos getter y setter para ValorATC
+    public double getValorATC() {
+        return ValorATC;
+    }
+
+    public void setValorATC(double valorATC) {
+        ValorATC = valorATC;
+    }
+
+    // Métodos getter y setter para ValorDFS
+    public double getValorDFS() {
+        return ValorDFS;
+    }
+
+    public void setValorDFS(double valorDFS) {
+        ValorDFS = valorDFS;
+    }
+
+    public void setCoste(double coste) {
+        Coste = coste;
+    }
+
 }
