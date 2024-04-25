@@ -370,8 +370,8 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     // Setter para ArmasActivas
     public void setArmasActivas(Arma armasActivas) {
-        ArmasActivas.set(0,armasActivas);
-        ArmasActivas.set(1,null);
+        ArmasActivas.add(0,armasActivas);
+        ArmasActivas.add(1,null);
     }
 
     public Armadura getArmaduraActiva() {

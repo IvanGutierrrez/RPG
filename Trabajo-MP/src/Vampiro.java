@@ -15,6 +15,18 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
 
     private double Sangre;
 
+    public Vampiro(int sangre) {
+        this.Armas = new ArrayList<>();
+        this.ArmasActivas = new ArrayList<>();
+        this.Armaduras = new ArrayList<>();
+        this.Esbirros = new ArrayList<>();
+        this.Debilidades = new ArrayList<>();
+        this.Fortalezas = new ArrayList<>();
+        this.Version = 1;
+        this.Sangre = sangre;
+
+    }
+
     public double getSangre(){return this.Sangre;}
 
     public void setSangre(double sangre) {
@@ -23,7 +35,7 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
 
     private void buildPersonajeFromInput() {
         this.Armas = new ArrayList<>();
-        this.ArmasActivas = new ArrayList<>();
+        this.ArmasActivas = new ArrayList<>(2);
         this.Armaduras = new ArrayList<>();
         this.Esbirros = new ArrayList<>();
         this.Debilidades = new ArrayList<>();

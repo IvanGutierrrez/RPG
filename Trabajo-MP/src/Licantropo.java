@@ -9,6 +9,17 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
 
     private double Rabia;
 
+    public Licantropo(int rabia) {
+        this.Armas = new ArrayList<>();
+        this.ArmasActivas = new ArrayList<>(2);
+        this.Armaduras = new ArrayList<>();
+        this.Esbirros = new ArrayList<>();
+        this.Debilidades = new ArrayList<>();
+        this.Fortalezas = new ArrayList<>();
+        this.Version = 1;
+        this.Rabia=rabia;
+    }
+
     public void SubirRabia(){
         this.Rabia=this.Rabia+1;
         if(this.Rabia>3){

@@ -19,6 +19,12 @@ public class HabilidadEspecial implements Serializable, Cloneable{
         buildHabilidadEspecialFromInput();
     }
 
+    public HabilidadEspecial(int i, int i1, int i2) {
+        this.ValorATC=i;
+        this.ValorDFS=i1;
+        this.Coste=i2;
+    }
+
     @Override
     public HabilidadEspecial clone() {
         try {

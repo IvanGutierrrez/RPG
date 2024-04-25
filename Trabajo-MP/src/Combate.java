@@ -166,7 +166,6 @@ public class Combate implements Serializable {
                 }
             }
         }
-        System.out.println("modificadores presente jugador: "+suma);
         return suma;
     }
 

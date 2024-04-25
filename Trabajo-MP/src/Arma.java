@@ -31,6 +31,11 @@ public class Arma extends Equipo implements Serializable, Cloneable {
         buildArmaFromInput();
     }
 
+    public Arma(double mod,boolean tipo){
+        this.ModDFS=mod;
+        this.Tipo=tipo;
+    }
+
 
     public void buildArmaFromInput() {
         this.Nombre = inputNombre();
