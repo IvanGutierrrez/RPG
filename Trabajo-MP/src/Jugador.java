@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 import java.util.Scanner;
@@ -465,7 +466,12 @@ public class Jugador extends Usuario implements Serializable {
             System.out.println("Jugador Retado: " + elemento.getJugadorRetado().getNombre());
             System.out.println("Oro Apostado: " + elemento.getOroApostado());
             System.out.println("Rondas: " + elemento.getRondas());
-            System.out.println("Fecha: " + elemento.getFecha());
+
+            LocalDateTime fecha = elemento.getFecha();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String fechaFormateada = fecha.format(formatter);
+            System.out.println("Fecha: " + fechaFormateada);
+
             System.out.println("Ganador: " + (elemento.getGanador() != null ? elemento.getGanador().getNombre() : "Empate"));
             if (elemento.getJugadorConEsbirrosSinDerrotar() != null) {
                 System.out.println("Jugadores con Esbirros Sin Derrotar:");
