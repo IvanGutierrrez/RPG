@@ -86,4 +86,40 @@ class OperadorTest {
         metodoPrivado.invoke(operador, jugador);
         assertFalse(jugador.getBloqueado());
     }
+    @Test
+    public void removerarmadurasVacias() throws ReflectiveOperationException {
+        Operador operador = new Operador();
+        Personaje personaje = new Licantropo(9);
+        Method metodoPrivado = operador.getClass().getDeclaredMethod("removerArmadura", Personaje.class);
+        metodoPrivado.setAccessible(true);
+        assertFalse((Boolean) metodoPrivado.invoke(operador, personaje));
+    }
+
+    @Test
+    public void removerarmasVacias() throws ReflectiveOperationException {
+        Operador operador = new Operador();
+        Personaje personaje = new Licantropo(9);
+        Method metodoPrivado = operador.getClass().getDeclaredMethod("removerArma", Personaje.class);
+        metodoPrivado.setAccessible(true);
+        assertFalse((Boolean) metodoPrivado.invoke(operador, personaje));
+    }
+
+    @Test
+    public void editarArmadurasVacias() throws ReflectiveOperationException {
+        Operador operador = new Operador();
+        Personaje personaje = new Licantropo(9);
+        Method metodoPrivado = operador.getClass().getDeclaredMethod("editarArmadura", Personaje.class);
+        metodoPrivado.setAccessible(true);
+        assertFalse((Boolean) metodoPrivado.invoke(operador, personaje));
+    }
+
+    @Test
+    public void editarArmasVacias() throws ReflectiveOperationException {
+        Operador operador = new Operador();
+        Personaje personaje = new Licantropo(9);
+        Method metodoPrivado = operador.getClass().getDeclaredMethod("editarArma", Personaje.class);
+        metodoPrivado.setAccessible(true);
+        assertFalse((Boolean) metodoPrivado.invoke(operador, personaje));
+    }
+
 }
