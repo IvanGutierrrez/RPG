@@ -268,7 +268,7 @@ public class Operador extends Usuario implements Serializable {
         }
     }
 
-    private void bloquarse(Jugador jugador){
+    protected void bloquarse(Jugador jugador){
         if (jugador.getBloqueado()){
             jugador.setBloqueado(false);
             System.out.println("Jugador " + jugador.getNick() + " exitosamente desbloqueado");

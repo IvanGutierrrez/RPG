@@ -74,7 +74,16 @@ class OperadorTest {
         System.setIn(System.in);
     }
 
-    public void testBloqueo(){
-
+    @Test
+    public void testBloqueo() throws ReflectiveOperationException {
+        Operador operador = new Operador();
+        Jugador jugador = new Jugador();
+        jugador.setBloqueado(false);
+        Method metodoPrivado = operador.getClass().getDeclaredMethod("bloquarse", Jugador.class);
+        metodoPrivado.setAccessible(true);
+        metodoPrivado.invoke(operador, jugador);
+        assertTrue(jugador.getBloqueado());
+        metodoPrivado.invoke(operador, jugador);
+        assertFalse(jugador.getBloqueado());
     }
 }
