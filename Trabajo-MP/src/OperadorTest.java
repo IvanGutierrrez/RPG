@@ -43,37 +43,6 @@ class OperadorTest {
         assertEquals(false,metodoPrivado.invoke(instancia,"nick2"));
     }
 
-
-
-    @Test
-    public void testRemoverPersonaje_EliminarPersonajeExistente() throws IOException {
-
-        Partida partida = new Partida();
-        Operador operador = new Operador();
-
-        String inputSimulado = "1\n" +
-                "2\n" +
-                "3\n" +
-                "2\n";
-        InputStream entradaSimulada = new ByteArrayInputStream(inputSimulado.getBytes());
-
-        System.setIn(entradaSimulada);
-
-
-        operador.Menu(partida);
-
-
-        List<Personaje> listaPersonajes = partida.getListaPersonajes();
-
-
-
-        operador.removerPersonaje(partida);
-        assertTrue(listaPersonajes.isEmpty());
-
-
-        System.setIn(System.in);
-    }
-
     @Test
     public void testBloqueo() throws ReflectiveOperationException {
         Operador operador = new Operador();
@@ -120,6 +89,35 @@ class OperadorTest {
         Method metodoPrivado = operador.getClass().getDeclaredMethod("editarArma", Personaje.class);
         metodoPrivado.setAccessible(true);
         assertFalse((Boolean) metodoPrivado.invoke(operador, personaje));
+    }
+
+    @Test
+    public void testRemoverPersonaje_EliminarPersonajeExistente() throws IOException {
+
+        Partida partida = new Partida();
+        Operador operador = new Operador();
+
+        String inputSimulado = "1\n" +
+                "2\n" +
+                "3\n" +
+                "2\n";
+        InputStream entradaSimulada = new ByteArrayInputStream(inputSimulado.getBytes());
+
+        System.setIn(entradaSimulada);
+
+
+        operador.Menu(partida);
+
+
+        List<Personaje> listaPersonajes = partida.getListaPersonajes();
+
+
+
+        operador.removerPersonaje(partida);
+        assertTrue(listaPersonajes.isEmpty());
+
+
+        System.setIn(System.in);
     }
 
 }
