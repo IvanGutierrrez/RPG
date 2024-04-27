@@ -223,7 +223,7 @@ public class Jugador extends Usuario implements Serializable {
                                 opcion = 0; //vuelve al menu
                             }
                         }
-                    }
+                    } else {System.out.println("Opcion no valida");}
                 } else if (this.getDesafio() != null && this.getDesafio().isValido() && this.getDesafio().getGanador() == null && this.getDesafio().getJugadorRetador() != this && (this.getDesafio().getRondas() == null || this.getDesafio().getRondas().isEmpty())) {
                     this.desafiadoResuelve();
                     this.setDesafio(null);
