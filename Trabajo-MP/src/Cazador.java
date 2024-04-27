@@ -12,6 +12,7 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
     }
 
     private double Voluntad;
+    private transient Scanner scanner = ScannerSingleton.getInstance();
 
     private void buildPersonajeFromInput() {
         this.Armas = new ArrayList<>();
@@ -63,7 +64,6 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
     }
 
     private double leerDouble() {
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         double num = 0;
         while (!ok) {
@@ -88,6 +88,11 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
     @Override
     public Cazador clone() {
         return (Cazador) super.clone();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 
 }

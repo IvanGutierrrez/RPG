@@ -11,6 +11,7 @@ public class Arma extends Equipo implements Serializable, Cloneable {
 
     private boolean Tipo;
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
 
     @Override
     public Arma clone() {
@@ -72,7 +73,6 @@ public class Arma extends Equipo implements Serializable, Cloneable {
     }
 
     protected String inputNombre() {
-        Scanner scanner = new Scanner(System.in);
         String nombre;
         do {
             System.out.println("Ingrese nombre del arma:");
@@ -128,7 +128,6 @@ public class Arma extends Equipo implements Serializable, Cloneable {
     }
 
     private double leerDouble() {
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         double num = 0;
         while (!ok) {
@@ -143,7 +142,6 @@ public class Arma extends Equipo implements Serializable, Cloneable {
         return num;
     }
     private int leerInt(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         int num = 0;
         while (!ok) {
@@ -156,5 +154,10 @@ public class Arma extends Equipo implements Serializable, Cloneable {
             }
         }
         return num;
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 }

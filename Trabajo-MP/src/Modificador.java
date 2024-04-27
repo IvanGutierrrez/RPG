@@ -11,6 +11,8 @@ public class Modificador implements Serializable, Cloneable {
 
     private double Valor;
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
+
     public Modificador(){
         buildModificadorFromInput();
     }
@@ -22,6 +24,7 @@ public class Modificador implements Serializable, Cloneable {
     public double getValor() {
         return Valor;
     }
+
 
     @Override
     public Modificador clone() {
@@ -54,7 +57,6 @@ public class Modificador implements Serializable, Cloneable {
     }
 
     private String inputNombre() {
-        Scanner scanner = new Scanner(System.in);
         String nombre;
         do {
             System.out.println("Ingrese nombre del modificador:");
@@ -77,7 +79,6 @@ public class Modificador implements Serializable, Cloneable {
 
 
     private int leerInt(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         int num = 0;
         while (!ok) {
@@ -93,7 +94,6 @@ public class Modificador implements Serializable, Cloneable {
     }
 
     private double leerDouble(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         double num = 0;
         while (!ok) {
@@ -106,5 +106,10 @@ public class Modificador implements Serializable, Cloneable {
             }
         }
         return num;
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 }

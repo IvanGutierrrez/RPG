@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class Partida implements Serializable {
 
-
     public Partida(){
         Map<String,Usuario> m = new HashMap<>();
         this.setMapJugadores(m);
@@ -113,6 +112,7 @@ public class Partida implements Serializable {
 
             // Leer la instancia de la clase Game desde el archivo
             Partida loadedGame = (Partida) ois.readObject();
+            Scanner scanner = ScannerSingleton.getInstance();
 
             System.out.println("Partida cargada correctamente");
             return loadedGame;
@@ -207,4 +207,6 @@ public class Partida implements Serializable {
         }
         return false;
     }
+
+
 }

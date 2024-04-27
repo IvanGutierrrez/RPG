@@ -1,9 +1,12 @@
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,4 +44,37 @@ class OperadorTest {
     }
 
 
+
+    @Test
+    public void testRemoverPersonaje_EliminarPersonajeExistente() throws IOException {
+
+        Partida partida = new Partida();
+        Operador operador = new Operador();
+
+        String inputSimulado = "1\n" +
+                "2\n" +
+                "3\n" +
+                "2\n";
+        InputStream entradaSimulada = new ByteArrayInputStream(inputSimulado.getBytes());
+
+        System.setIn(entradaSimulada);
+
+
+        operador.Menu(partida);
+
+
+        List<Personaje> listaPersonajes = partida.getListaPersonajes();
+
+
+
+        operador.removerPersonaje(partida);
+        assertTrue(listaPersonajes.isEmpty());
+
+
+        System.setIn(System.in);
+    }
+
+    public void testBloqueo(){
+
+    }
 }

@@ -11,6 +11,8 @@ public abstract class Esbirro implements Serializable, Cloneable{
 
     public double Salud;
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
+
 
     public String getNombre(){return this.Nombre;}
 
@@ -29,7 +31,6 @@ public abstract class Esbirro implements Serializable, Cloneable{
     }
 
     protected String inputNombre() {
-        Scanner scanner = new Scanner(System.in);
         String nombre;
         do {
             System.out.println("Ingrese el nombre del Esbirro:");
@@ -39,11 +40,10 @@ public abstract class Esbirro implements Serializable, Cloneable{
     }
 
     protected double inputSalud() {
-        Scanner scanner = new Scanner(System.in);
         double salud;
         do {
             System.out.println("Ingrese la cantidad de salud (entre 1 y 3):");
-            salud = scanner.nextDouble();
+            salud = leerDouble();
             if (salud < 1 || salud > 3) {
                 System.out.println("La cantidad de salud debe estar entre 1 y 3, inclusive.");
             }
@@ -52,7 +52,6 @@ public abstract class Esbirro implements Serializable, Cloneable{
     }
 
     protected int leerInt(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         int num = 0;
         while (!ok) {
@@ -68,7 +67,6 @@ public abstract class Esbirro implements Serializable, Cloneable{
     }
 
     protected double leerDouble(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         double num = 0;
         while (!ok) {
@@ -84,5 +82,10 @@ public abstract class Esbirro implements Serializable, Cloneable{
     }
 
     public abstract double obtenerSalud();
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
+    }
 
 }

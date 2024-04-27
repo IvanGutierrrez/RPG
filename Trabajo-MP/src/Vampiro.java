@@ -7,9 +7,11 @@ import java.util.*;
  */
 public class Vampiro extends Personaje implements Serializable, Cloneable {
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
     public Vampiro() {
         buildPersonajeFromInput();
     }
+
 
     private int Edad;
 
@@ -115,7 +117,6 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
     }
 
     private int leerInt() {
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         int num = 0;
         while (!ok) {
@@ -128,6 +129,11 @@ public class Vampiro extends Personaje implements Serializable, Cloneable {
             }
         }
         return num;
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 
 }

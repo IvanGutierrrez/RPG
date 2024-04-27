@@ -8,6 +8,7 @@ import java.util.*;
 public class Licantropo extends Personaje implements Serializable, Cloneable {
 
     private double Rabia;
+    private transient Scanner scanner = ScannerSingleton.getInstance();
 
     public Licantropo(int rabia) {
         this.Armas = new ArrayList<>();
@@ -90,4 +91,8 @@ public class Licantropo extends Personaje implements Serializable, Cloneable {
         this.Rabia=0;
     }
 
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
+    }
 }

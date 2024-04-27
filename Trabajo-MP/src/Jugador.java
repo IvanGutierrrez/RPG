@@ -28,6 +28,8 @@ public class Jugador extends Usuario implements Serializable {
 
     private LocalDateTime ultimaDerrota;
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
+
     public String getNRegistro() {
         return nRegistro;
     }
@@ -489,7 +491,6 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     private int leerInt(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         int num = 0;
         while (!ok) {
@@ -505,7 +506,6 @@ public class Jugador extends Usuario implements Serializable {
     }
 
     private String leerString(){
-        Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
 
@@ -520,4 +520,10 @@ public class Jugador extends Usuario implements Serializable {
     public void setTotalOroGanado(double totalOroGanado) {
         this.totalOroGanado = totalOroGanado;
     }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
+    }
+
 }

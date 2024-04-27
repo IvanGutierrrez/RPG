@@ -15,6 +15,8 @@ public class HabilidadEspecial implements Serializable, Cloneable{
 
     private double Coste;
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
+
     public HabilidadEspecial(){
         buildHabilidadEspecialFromInput();
     }
@@ -85,7 +87,7 @@ public class HabilidadEspecial implements Serializable, Cloneable{
     }
 
     private int leerInt(){
-        Scanner scanner = new Scanner(System.in);
+
         boolean ok = false;
         int num = 0;
         while (!ok) {
@@ -101,7 +103,6 @@ public class HabilidadEspecial implements Serializable, Cloneable{
     }
 
     private double leerDouble(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         double num = 0;
         while (!ok) {
@@ -121,7 +122,6 @@ public class HabilidadEspecial implements Serializable, Cloneable{
     }
 
     private String inputNombre() {
-        Scanner scanner = new Scanner(System.in);
         String nombre;
         do {
             System.out.println("Ingrese nombre de la habilidad especial:");
@@ -131,7 +131,6 @@ public class HabilidadEspecial implements Serializable, Cloneable{
     }
 
     private double inputValorATC() {
-        Scanner scanner = new Scanner(System.in);
         double valorATC;
         do {
             System.out.println("Ingrese el valor de la habilidad especial para el ataque (entre 1 y 3):");
@@ -188,6 +187,11 @@ public class HabilidadEspecial implements Serializable, Cloneable{
 
     public void setCoste(double coste) {
         Coste = coste;
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 
 }

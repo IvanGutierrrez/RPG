@@ -63,4 +63,5 @@ public class Ghoul extends Esbirro implements Serializable, Cloneable{
         this.Salud = inputSalud();
         this.Dependencia = inputDependencia();
     }
+
 }

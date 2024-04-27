@@ -30,6 +30,8 @@ public class Combate implements Serializable {
 
     private Personaje PersonajeRetado;
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
+
     public Combate (Jugador retador, Jugador retado,int apuesta, Personaje personajeRetador, Personaje personajeRetado, LocalDateTime fecha) {
         this.JugadorRetador = retador;
         this.JugadorRetado = retado;
@@ -94,7 +96,6 @@ public class Combate implements Serializable {
     private void waitForEnter() {
         System.out.println(" ");
         System.out.println("Presiona Enter para continuar...");
-        Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
 
@@ -299,5 +300,10 @@ public class Combate implements Serializable {
                 "Jugador Retado: " + JugadorRetado.getNick() + "\n" +
                 "Oro Apostado: " + OroApostado + "\n" +
                 "Fecha: '" + Fecha + '\'';
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 }

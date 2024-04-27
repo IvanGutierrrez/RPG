@@ -40,25 +40,6 @@ public abstract class Usuario implements Serializable {
 
     public abstract void Menu(Partida p) throws IOException;
 
-    private int leerInt(){
-        Scanner scanner = new Scanner(System.in);
-        boolean ok = false;
-        int num = 0;
-        while (!ok) {
-            try {
-                String n = scanner.nextLine();
-                num = Integer.parseInt(n);
-                ok = true;
-            } catch (NumberFormatException e){
-                System.out.println("Caracter no valido, introduzca un entero");
-            }
-        }
-        return num;
-    }
 
-    private String leerString(){
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
 
 }

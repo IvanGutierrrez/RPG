@@ -33,6 +33,8 @@ public abstract class Personaje implements Serializable, Cloneable {
 
     protected int Version;
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
+
     public String getNombre() {return this.Nombre;}
 
     public abstract double calcularPotencialAtaque();
@@ -180,7 +182,6 @@ public abstract class Personaje implements Serializable, Cloneable {
     }
 
     private int leerInt(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         int num = 0;
         while (!ok) {
@@ -276,7 +277,6 @@ public abstract class Personaje implements Serializable, Cloneable {
     }
 
     private double leerDouble() {
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         double num = 0;
         while (!ok) {
@@ -305,7 +305,6 @@ public abstract class Personaje implements Serializable, Cloneable {
     }
 
     protected String inputNombre() {
-        Scanner scanner = new Scanner(System.in);
         String nombre;
         do {
             System.out.println("Ingrese el nombre:");
@@ -381,5 +380,10 @@ public abstract class Personaje implements Serializable, Cloneable {
     // Setter para ArmaduraActiva
     public void setArmaduraActiva(Armadura armaduraActiva) {
         ArmaduraActiva = armaduraActiva;
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 }

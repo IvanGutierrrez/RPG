@@ -6,6 +6,7 @@ import java.util.*;
  * 
  */
 public class Operador extends Usuario implements Serializable {
+    private transient Scanner scanner = ScannerSingleton.getInstance();
 
     public Operador(){
         this.setNick(null);
@@ -910,7 +911,6 @@ public class Operador extends Usuario implements Serializable {
 
 
     private int leerInt(){
-        Scanner scanner = new Scanner(System.in);
         boolean ok = false;
         int num = 0;
         while (!ok) {
@@ -926,7 +926,11 @@ public class Operador extends Usuario implements Serializable {
     }
 
     private String leerString(){
-        Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 }

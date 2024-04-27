@@ -13,6 +13,8 @@ public class Demonio extends Esbirro implements Serializable, Cloneable{
 
     private ArrayList<Esbirro> Esbirros;
 
+    private transient Scanner scanner = ScannerSingleton.getInstance();
+
 
     @Override
     public Demonio clone() {
@@ -189,7 +191,6 @@ public class Demonio extends Esbirro implements Serializable, Cloneable{
     }
 
     private String inputDescrPacto() {
-        Scanner scanner = new Scanner(System.in);
         String descrPacto;
         do {
             System.out.println("Ingrese la descripción del pacto:");
@@ -200,5 +201,10 @@ public class Demonio extends Esbirro implements Serializable, Cloneable{
 
     public List<Esbirro> getEsbirros() {
         return Esbirros;
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.scanner = ScannerSingleton.getInstance();
     }
 }
