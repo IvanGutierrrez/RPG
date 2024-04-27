@@ -373,7 +373,9 @@ public class Jugador extends Usuario implements Serializable {
             }
             System.out.println("Bloqueado: " + (jugador.getBloqueado() ? "Sí" : "No"));
             System.out.println("Desafío: " + (jugador.getDesafio() != null ? "Sí" : "No"));
-            System.out.println("Última Derrota: " + jugador.getUltimaDerrota());
+            if (jugador.getUltimaDerrota() != null) {
+                System.out.println("Última Derrota: " + jugador.getUltimaDerrota());
+            }
             System.out.println("---------------------------------------------");
         }
     }
