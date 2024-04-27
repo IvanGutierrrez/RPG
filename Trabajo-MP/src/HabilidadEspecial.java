@@ -108,7 +108,7 @@ public class HabilidadEspecial implements Serializable, Cloneable{
         while (!ok) {
             try {
                 String n = scanner.nextLine();
-                num = Integer.parseInt(n);
+                num = Double.parseDouble(n);
                 ok = true;
             } catch (NumberFormatException e){
                 System.out.println("Caracter no valido, introduzca un numero real");

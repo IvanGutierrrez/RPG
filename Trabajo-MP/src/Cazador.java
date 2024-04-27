@@ -63,21 +63,6 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
         return suma;
     }
 
-    private double leerDouble() {
-        boolean ok = false;
-        double num = 0;
-        while (!ok) {
-            try {
-                String n = scanner.nextLine();
-                num = Integer.parseInt(n);
-                ok = true;
-            } catch (NumberFormatException e){
-                System.out.println("Caracter no valido, introduzca un numero real");
-            }
-        }
-        return num;
-    }
-
     @Override
     public void VolverAloNormal(double vidaJugador2) {
        super.Salud=vidaJugador2;

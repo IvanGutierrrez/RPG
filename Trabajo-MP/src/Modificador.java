@@ -99,10 +99,10 @@ public class Modificador implements Serializable, Cloneable {
         while (!ok) {
             try {
                 String n = scanner.nextLine();
-                num = Integer.parseInt(n);
+                num = Double.parseDouble(n);
                 ok = true;
             } catch (NumberFormatException e){
-                System.out.println("Caracter no valido, introduzca un nnumero real");
+                System.out.println("Caracter no valido, introduzca un numero real");
             }
         }
         return num;

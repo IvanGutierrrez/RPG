@@ -285,7 +285,7 @@ public abstract class Personaje implements Serializable, Cloneable {
                 num = Double.parseDouble(n);
                 ok = true;
             } catch (NumberFormatException e) {
-                System.out.println("Caracter no valido, introduzca un entero");
+                System.out.println("Caracter no valido, introduzca un numero real");
             }
         }
         return num;
