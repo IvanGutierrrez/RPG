@@ -159,6 +159,9 @@ public class HabilidadEspecial implements Serializable, Cloneable{
         do {
             System.out.println("Ingrese el costo de la habilidad especial:");
             coste = leerDouble();
+            if (coste < 0) {
+                System.out.println("El coste no puede ser negativo.");
+            }
         } while (coste < 0);
         return coste;
     }
