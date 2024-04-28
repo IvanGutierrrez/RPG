@@ -106,16 +106,17 @@ class OperadorTest {
         System.setIn(entradaSimulada);
 
 
-        operador.Menu(partida);
+        operador.crearPersonaje(partida);
 
 
         List<Personaje> listaPersonajes = partida.getListaPersonajes();
 
+        inputSimulado = "1\n";
+        entradaSimulada = new ByteArrayInputStream(inputSimulado.getBytes());
 
-
+        System.setIn(entradaSimulada);
         operador.removerPersonaje(partida);
         assertTrue(listaPersonajes.isEmpty());
-
 
         System.setIn(System.in);
     }
