@@ -259,6 +259,9 @@ public class Jugador extends Usuario implements Serializable {
                 }
                 this.personajes.remove(i);
             } else {
+                if (personajeActual == this.personajeActivo){
+                    this.personajeActivo = null;
+                }
                 this.personajes.set(i, personajeActualizado);
             }
         }
