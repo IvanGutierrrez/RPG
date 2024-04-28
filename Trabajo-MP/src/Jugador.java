@@ -253,15 +253,12 @@ public class Jugador extends Usuario implements Serializable {
         for (int i = 0; i < this.personajes.size(); i++) {
             Personaje personajeActual = this.personajes.get(i);
             Personaje personajeActualizado = p.checkVersion(personajeActual);
+            if (personajeActual == this.personajeActivo){
+                this.personajeActivo = null;
+            }
             if (personajeActualizado == null) {
-                if (personajeActual == this.personajeActivo){
-                    this.personajeActivo = null;
-                }
                 this.personajes.remove(i);
             } else {
-                if (personajeActual == this.personajeActivo){
-                    this.personajeActivo = null;
-                }
                 this.personajes.set(i, personajeActualizado);
             }
         }
