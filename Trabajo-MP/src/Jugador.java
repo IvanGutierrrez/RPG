@@ -290,9 +290,7 @@ public class Jugador extends Usuario implements Serializable {
                 }
                 if (nombreRepetido) {
                     System.out.println("Ya hay un personaje registrado con el mismo nombre. Por favor, seleccione otro.");
-                    if (allCharacters.size() == 1) {
-                        break;
-                    }
+                    break;
                 } else {
                     personajeElegido = true;
                     Personaje personajeNuevo = personajeElegidoTmp.clone();
