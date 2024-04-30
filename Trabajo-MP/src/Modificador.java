@@ -17,6 +17,10 @@ public class Modificador implements Serializable, Cloneable {
         buildModificadorFromInput();
     }
 
+    public Modificador(int valor) {
+        this.Valor=valor;
+    }
+
     public String getNombre() {
         return Nombre;
     }
@@ -111,5 +115,9 @@ public class Modificador implements Serializable, Cloneable {
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
         in.defaultReadObject();
         this.scanner = ScannerSingleton.getInstance();
+    }
+
+    public void SetValor(double v) {
+        this.Valor=v;
     }
 }

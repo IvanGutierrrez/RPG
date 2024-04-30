@@ -468,7 +468,7 @@ public class Jugador extends Usuario implements Serializable {
             System.out.println("Jugador Retador: " + elemento.getJugadorRetador().getNombre());
             System.out.println("Jugador Retado: " + elemento.getJugadorRetado().getNombre());
             System.out.println("Oro Apostado: " + elemento.getOroApostado());
-            System.out.println("Rondas: " + elemento.getRondas());
+            System.out.println("Nº Rondas: " + elemento.getRondas().size());
 
             LocalDateTime fecha = elemento.getFecha();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

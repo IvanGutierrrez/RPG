@@ -386,4 +386,12 @@ public abstract class Personaje implements Serializable, Cloneable {
         in.defaultReadObject();
         this.scanner = ScannerSingleton.getInstance();
     }
+
+
+    public void setFortalezas(Modificador mod) {
+        this.Fortalezas.add(mod);
+    }
+    public void setDebilidades(Modificador mod) {
+        this.Debilidades.add(mod);
+    }
 }

@@ -151,7 +151,7 @@ public class Combate implements Serializable {
         ResolverCombate(vidaJugador1,vidaJugador2);
     }
 
-    private double CalcularModificadores(List<Modificador> modificadores, Personaje jugadorRetado) {
+    public double CalcularModificadores(List<Modificador> modificadores, Personaje jugadorRetado) {
         double suma=0;
         for (int i = 0; i < jugadorRetado.Debilidades.size(); i++) {
             for (int j = 0; j < modificadores.size(); j++) {
