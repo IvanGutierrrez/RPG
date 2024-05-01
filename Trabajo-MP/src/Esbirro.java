@@ -18,6 +18,8 @@ public abstract class Esbirro implements Serializable, Cloneable{
 
     public double getSalud(){return this.Salud;}
 
+    public void setSalud(double salud){this.Salud=salud;}
+
     @Override
     public Esbirro clone() {
         try {

@@ -1,7 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -36,8 +34,8 @@ class CombateTest {
         Arma arma = new Arma(0, true);
 
         arma.setModificador(1);
-        personaje1.setArmasActivas(arma);
-        personaje2.setArmasActivas(arma);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
         //armadura
         Armadura armadura = new Armadura(0);
         armadura.setModificador(1);
@@ -82,7 +80,7 @@ class CombateTest {
         Arma arma = new Arma(0, true);
 
         arma.setModificador(1);
-        personaje1.setArmasActivas(arma);
+        personaje1.setArmasActivasPruebas(arma,null);
         //armadura
         Armadura armadura = new Armadura(0);
         armadura.setModificador(1);
@@ -129,8 +127,8 @@ class CombateTest {
         Arma arma = new Arma(0, true);
 
         arma.setModificador(1);
-        personaje1.setArmasActivas(arma);
-        personaje2.setArmasActivas(arma);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
         //armadura
         Armadura armadura = new Armadura(0);
         armadura.setModificador(1);
@@ -180,8 +178,8 @@ class CombateTest {
         // Arma
         Arma arma = new Arma(0, true);
         arma.setModificador(1);
-        personaje1.setArmasActivas(arma);
-        personaje2.setArmasActivas(arma);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
 
         // Armadura
         Armadura armadura = new Armadura(0);
@@ -248,8 +246,8 @@ class CombateTest {
         // Arma
         Arma arma = new Arma(0, true);
         arma.setModificador(1);
-        personaje1.setArmasActivas(arma);
-        personaje2.setArmasActivas(arma);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
 
         // Armadura
         Armadura armadura = new Armadura(0);
@@ -302,8 +300,8 @@ class CombateTest {
         // Arma
         Arma arma = new Arma(0, true);
         arma.setModificador(1);
-        personaje1.setArmasActivas(arma);
-        personaje2.setArmasActivas(arma);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
 
         // Armadura
         Armadura armadura = new Armadura(0);
@@ -355,8 +353,8 @@ class CombateTest {
         // Arma
         Arma arma = new Arma(0, true);
         arma.setModificador(1);
-        personaje1.setArmasActivas(arma);
-        personaje2.setArmasActivas(arma);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
 
         // Armadura
         Armadura armadura = new Armadura(0);
@@ -412,13 +410,11 @@ class CombateTest {
 
         // Configurar Vampiro
         personaje1.setSalud(4);
-        double vidaInicial1 = 4;
         personaje1.setPoder(2);
         personaje1.setOro(1000);
 
         // Configurar cazador
         personaje2.setSalud(4);
-        double vidaInicial2 = 4;
         personaje2.setPoder(2);
         personaje2.setOro(1000);
 
@@ -430,8 +426,8 @@ class CombateTest {
         // Arma
         Arma arma = new Arma(0, true);
         arma.setModificador(1);
-        personaje1.setArmasActivas(arma);
-        personaje2.setArmasActivas(arma);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
 
         // Armadura
         Armadura armadura = new Armadura(0);
@@ -466,6 +462,179 @@ class CombateTest {
 
         assertEquals(0,ModPers1);
         assertEquals(0,ModPers2);
+
+
+    }
+    @Test
+    public void TestCalcularRondaVidaEsbirros(){
+        // Crear los jugadores
+        Jugador jugador1 = new Jugador();
+        Jugador jugador2 = new Jugador();
+
+        jugador1.setNombre("J1");
+        jugador2.setNombre("J2");
+
+        // Crear los personajes, un vampiro y un cazador
+        Vampiro personaje1 = new Vampiro(0);
+        Cazador personaje2 = new Cazador(3);
+
+        // Configurar Vampiro
+        personaje1.setSalud(4);
+        personaje1.setPoder(2);
+        personaje1.setOro(1000);
+        personaje1.setSangre(1);//le añadimos 1 de sangre al vampiro
+
+        // Configurar cazador
+        personaje2.setSalud(4);
+        personaje2.setPoder(2);
+        personaje2.setOro(1000);
+
+        // Habilidad especial
+        HabilidadEspecial hab1 = new HabilidadEspecial(1, 1, 3);
+        personaje1.setHabilidadEspecial(hab1);
+        personaje2.setHabilidadEspecial(hab1);
+
+        // Arma
+        Arma arma = new Arma(0, true);
+        arma.setModificador(1);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
+
+        // Armadura
+        Armadura armadura = new Armadura(0);
+        armadura.setModificador(1);
+        armadura.setModATQ(0);
+        personaje1.setArmaduraActiva(armadura);
+        personaje2.setArmaduraActiva(armadura);
+        //El personaje 1 atacara al persoanje 2, por lo que asignamos unos valores en los que el ataque supere a la defensa
+        double ataque=5;
+        double defensa=4;
+        double vidaEsbirros=2;
+
+        // Crear el combate
+        int apuesta = 100;
+        Combate combate = new Combate(jugador1, jugador2, apuesta, personaje1, personaje2, LocalDateTime.now());
+        combate.setValido(true);
+        vidaEsbirros=combate.CalcularRonda(ataque,defensa,vidaEsbirros,personaje1,personaje2);
+
+        assertEquals(1,vidaEsbirros);//la vida de los esbirros se debe decrementar
+        assertEquals(4,personaje2.getSalud());//la del personaje no.
+        assertEquals(5,personaje1.getSangre());//el atacante es un vampiro y como tiene exito en su ataque se le debe incrementar su sangre en 4 puntos
+        assertEquals(3,personaje2.getVoluntad());//La voluntad del cazador debe ser la misma ya que no pierde vida.
+
+
+    }
+    @Test
+    public void TestCalcularRondaSinVidaEsbirros(){
+        // Crear los jugadores
+        Jugador jugador1 = new Jugador();
+        Jugador jugador2 = new Jugador();
+
+        jugador1.setNombre("J1");
+        jugador2.setNombre("J2");
+
+        // Crear los personajes, un vampiro y un cazador
+        Licantropo personaje1 = new Licantropo(0);
+        Cazador personaje2 = new Cazador(3);
+
+        // Configurar Vampiro
+        personaje1.setSalud(4);
+        personaje1.setPoder(2);
+        personaje1.setOro(1000);
+
+        // Configurar cazador
+        personaje2.setSalud(4);
+        personaje2.setPoder(2);
+        personaje2.setOro(1000);
+
+        // Habilidad especial
+        HabilidadEspecial hab1 = new HabilidadEspecial(1, 1, 3);
+        personaje1.setHabilidadEspecial(hab1);
+        personaje2.setHabilidadEspecial(hab1);
+
+        // Arma
+        Arma arma = new Arma(0, true);
+        arma.setModificador(1);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
+
+        // Armadura
+        Armadura armadura = new Armadura(0);
+        armadura.setModificador(1);
+        armadura.setModATQ(0);
+        personaje1.setArmaduraActiva(armadura);
+        personaje2.setArmaduraActiva(armadura);
+        //El personaje 1 atacara al persoanje 2, por lo que asignamos unos valores en los que el ataque supere a la defensa
+        double ataque=5;
+        double defensa=4;
+        double vidaEsbirros=0;
+
+        // Crear el combate
+        int apuesta = 100;
+        Combate combate = new Combate(jugador1, jugador2, apuesta, personaje1, personaje2, LocalDateTime.now());
+        combate.setValido(true);
+        vidaEsbirros=combate.CalcularRonda(ataque,defensa,vidaEsbirros,personaje1,personaje2);
+
+        assertEquals(0,vidaEsbirros);//la vida de los esbirros debe segir siendo 0
+        assertEquals(3,personaje2.getSalud());//la del personaje debe decrementar.
+        assertEquals(2,personaje2.getVoluntad());//La voluntad del cazador debe decrementar ya que pierde vida.
+
+
+    }
+    @Test
+    public void TestCalcularRondaVictoriaDefensa(){
+        // Crear los jugadores
+        Jugador jugador1 = new Jugador();
+        Jugador jugador2 = new Jugador();
+
+        jugador1.setNombre("J1");
+        jugador2.setNombre("J2");
+
+        // Crear los personajes, un vampiro y un cazador
+        Licantropo personaje1 = new Licantropo(0);
+        Cazador personaje2 = new Cazador(3);
+
+        // Configurar Vampiro
+        personaje1.setSalud(4);
+        personaje1.setPoder(2);
+        personaje1.setOro(1000);
+
+        // Configurar cazador
+        personaje2.setSalud(4);
+        personaje2.setPoder(2);
+        personaje2.setOro(1000);
+
+        // Habilidad especial
+        HabilidadEspecial hab1 = new HabilidadEspecial(1, 1, 3);
+        personaje1.setHabilidadEspecial(hab1);
+        personaje2.setHabilidadEspecial(hab1);
+
+        // Arma
+        Arma arma = new Arma(0, true);
+        arma.setModificador(1);
+        personaje1.setArmasActivasPruebas(arma,null);
+        personaje2.setArmasActivasPruebas(arma,null);
+
+        // Armadura
+        Armadura armadura = new Armadura(0);
+        armadura.setModificador(1);
+        armadura.setModATQ(0);
+        personaje1.setArmaduraActiva(armadura);
+        personaje2.setArmaduraActiva(armadura);
+        //El personaje 1 atacara al persoanje 2, por lo que asignamos unos valores en los que el ataque supere a la defensa
+        double ataque=2;
+        double defensa=4;
+        double vidaEsbirros=1;
+
+        // Crear el combate
+        int apuesta = 100;
+        Combate combate = new Combate(jugador1, jugador2, apuesta, personaje1, personaje2, LocalDateTime.now());
+        combate.setValido(true);
+        vidaEsbirros=combate.CalcularRonda(ataque,defensa,vidaEsbirros,personaje1,personaje2);
+
+        assertEquals(1,vidaEsbirros);//la vida de los esbirros debe segir siendo 0
+        assertEquals(4,personaje2.getSalud());//la salud del persoanje se debe mantener.
+        assertEquals(3,personaje2.getVoluntad());//La voluntad del cazador se amntendra como esta.
 
 
     }

@@ -15,6 +15,15 @@ public class Demonio extends Esbirro implements Serializable, Cloneable{
 
     private transient Scanner scanner = ScannerSingleton.getInstance();
 
+    public void setEsbirroDemonio(Esbirro e){
+        this.Esbirros.add(e);
+    }
+
+    public Demonio(int i) {
+        super();
+        this.Esbirros=new ArrayList<>();
+    }
+
 
     @Override
     public Demonio clone() {

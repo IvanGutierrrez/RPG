@@ -368,9 +368,9 @@ public abstract class Personaje implements Serializable, Cloneable {
 
 
     // Setter para ArmasActivas
-    public void setArmasActivas(Arma armasActivas) {
-        ArmasActivas.add(0,armasActivas);
-        ArmasActivas.add(1,null);
+    public void setArmasActivasPruebas(Arma armaActiva1, Arma armaActiva2) {
+        ArmasActivas.add(0,armaActiva1);
+        ArmasActivas.add(1,armaActiva2);
     }
 
     public Armadura getArmaduraActiva() {
@@ -387,7 +387,9 @@ public abstract class Personaje implements Serializable, Cloneable {
         this.scanner = ScannerSingleton.getInstance();
     }
 
-
+    public void setEsbirros(Esbirro e){
+        this.Esbirros.add(e);
+    }
     public void setFortalezas(Modificador mod) {
         this.Fortalezas.add(mod);
     }

@@ -14,6 +14,10 @@ public class Cazador extends Personaje implements Serializable, Cloneable {
     private double Voluntad;
     private transient Scanner scanner = ScannerSingleton.getInstance();
 
+    public void setVoluntad(int voluntad){
+        this.Voluntad=voluntad;
+    }
+
     public Cazador(int voluntad) {
         this.Armas = new ArrayList<>();
         this.ArmasActivas = new ArrayList<>(2);

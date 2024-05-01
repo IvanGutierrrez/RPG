@@ -170,22 +170,23 @@ public class Combate implements Serializable {
         return suma;
     }
 
-    private double CalcularRonda( double ataque, double defensa, double VidaEsbirros, Personaje personajeRetador, Personaje personajeRetado) {
+    public double CalcularRonda( double ataque, double defensa, double VidaEsbirros, Personaje PersonajeAtacante, Personaje PersonajeDefensor) {
         if(ataque>=defensa){
             if(VidaEsbirros>0){
                 VidaEsbirros=VidaEsbirros-1;
             }else{
-                double salud=personajeRetado.getSalud()-1;
-                personajeRetado.setSalud(salud);
-            }
-            if(personajeRetador instanceof Vampiro){
-                ((Vampiro) personajeRetador).SubirSangre();
-            }
-            if(personajeRetado instanceof Licantropo){
-                ((Licantropo) personajeRetado).SubirRabia();
+                double salud=PersonajeDefensor.getSalud()-1;
+                PersonajeDefensor.setSalud(salud);
 
-            } else if (personajeRetado instanceof Cazador) {
-                ((Cazador) personajeRetado).BajarVoluntad();
+                if(PersonajeDefensor instanceof Licantropo){
+                    ((Licantropo) PersonajeDefensor).SubirRabia();
+
+                } else if (PersonajeDefensor instanceof Cazador) {
+                    ((Cazador) PersonajeDefensor).BajarVoluntad();
+                }
+            }
+            if(PersonajeAtacante instanceof Vampiro){
+                ((Vampiro) PersonajeAtacante).SubirSangre();
             }
         }
         return VidaEsbirros;

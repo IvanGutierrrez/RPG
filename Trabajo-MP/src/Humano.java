@@ -9,6 +9,10 @@ public class Humano extends Esbirro implements Serializable, Cloneable {
 
     private String Lealtad;
 
+    public Humano(int i) {
+        super();
+    }
+
 
     @Override
     public Humano clone() {

@@ -9,6 +9,10 @@ public class Ghoul extends Esbirro implements Serializable, Cloneable{
 
     private double Dependencia;
 
+    public Ghoul(int i) {
+        super();
+    }
+
     @Override
     public Ghoul clone() {
         return (Ghoul) super.clone();
