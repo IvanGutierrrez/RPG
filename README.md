@@ -6,3 +6,10 @@ Aplicación de escritorio RPG sin interfaz gráfica, realizada en la asignatura 
 
 - Tener java instalado (preferiblemente el jdk 21) y un IDE (en particual fue desarrollado con IntelliJ)
 - Ir hasta el Trabajo-MP/src/JuegoMP.java y ejecutar el main del fichero .java
+
+# Desarrolladores
+
+- Jorge Andrés Echevarría
+- Arturo Enrique Gutiérrez Mirandona
+- Víctor Bartolomé Letosa
+- Iván Gutiérrez González
